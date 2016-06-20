@@ -263,12 +263,14 @@ Partial Class HostsMain
         Me.LbAbout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.LbAbout.Cursor = System.Windows.Forms.Cursors.Hand
         Me.LbAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.LbAbout.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LbAbout.ForeColor = System.Drawing.Color.DeepPink
         Me.LbAbout.Location = New System.Drawing.Point(278, 39)
         Me.LbAbout.Margin = New System.Windows.Forms.Padding(1)
         Me.LbAbout.Name = "LbAbout"
         Me.LbAbout.Size = New System.Drawing.Size(180, 17)
         Me.LbAbout.TabIndex = 15
-        Me.LbAbout.Text = "Click here to the Git Repo"
+        Me.LbAbout.Text = "Visit Github Repository"
         Me.LbAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'HostsMain
