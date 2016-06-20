@@ -329,7 +329,8 @@
             rtbOuts.SaveFile("C:\Users\" & Environment.UserName & "\Desktop\hosts", RichTextBoxStreamType.PlainText)
             If My.Computer.FileSystem.FileExists("C:\Users\" & Environment.UserName & "\Desktop\hosts") Then
                 LbSave.Text = "Click here to Save to Desktop [" & GetFileSize(My.Computer.FileSystem.GetFileInfo("C:\Users\" & Environment.UserName & "\Desktop\hosts").Length) & "]"
-                Process.Start("C:\Users\" & Environment.UserName & "\Desktop")
+                'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
+                Process.Start("explorer", "/select, C:\Users\" & Environment.UserName & "\Desktop\hosts")
             End If
         End If
     End Sub

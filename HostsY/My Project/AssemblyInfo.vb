@@ -14,7 +14,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Just a simplified and multi-threaded revamp of HostsX for Windows.")> 
 <Assembly: AssemblyCompany("CodeMock")> 
 <Assembly: AssemblyProduct("HostsY")> 
-<Assembly: AssemblyCopyright("Copyright ©  2016")> 
+<Assembly: AssemblyCopyright("Copyright © 2016")> 
 <Assembly: AssemblyTrademark("Laicure Leviare Icarus")> 
 
 <Assembly: ComVisible(False)> 
@@ -33,7 +33,7 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("2016.6.20.1425")> 
-<Assembly: AssemblyFileVersion("2016.6.20.1425")> 
-
+<Assembly: AssemblyVersion("1.0.0.*")> 
+<Assembly: AssemblyFileVersion("1.0.0.*")> 
+<Assembly: AssemblyInformationalVersion("1.0.0.*")> 
 <Assembly: NeutralResourcesLanguageAttribute("en")> 
