@@ -312,7 +312,7 @@
 
     Private Sub LbSave_Click(sender As Object, e As EventArgs) Handles LbSave.Click
         If LbSave.Cursor = Cursors.Hand Then
-            If My.Computer.FileSystem.FileExists("C:\Users\" & Environment.UserName & "\hosts") Then
+            If My.Computer.FileSystem.FileExists("C:\Users\" & Environment.UserName & "\Desktop\hosts") Then
                 If MessageBox.Show("Previously saved hosts file found!" & vbCrLf & "Do you still want to save?", "Confirm Overwrite!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
                     Try
                         My.Computer.FileSystem.DeleteFile("C:\Users\" & Environment.UserName & "\Desktop\hosts", FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently)
