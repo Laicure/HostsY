@@ -41,6 +41,7 @@ Partial Class HostsMain
         Me.bgGenerate = New System.ComponentModel.BackgroundWorker()
         Me.LbStatus = New System.Windows.Forms.Label()
         Me.LbAbout = New System.Windows.Forms.Label()
+        Me.fdBrowse = New System.Windows.Forms.FolderBrowserDialog()
         Me.panLists.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -273,6 +274,10 @@ Partial Class HostsMain
         Me.LbAbout.Text = "Visit Github Repository"
         Me.LbAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
+        'fdBrowse
+        '
+        Me.fdBrowse.Description = "Select a folder for Export"
+        '
         'HostsMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -325,4 +330,5 @@ Partial Class HostsMain
     Friend WithEvents bgGenerate As System.ComponentModel.BackgroundWorker
     Friend WithEvents LbStatus As System.Windows.Forms.Label
     Friend WithEvents LbAbout As System.Windows.Forms.Label
+    Friend WithEvents fdBrowse As System.Windows.Forms.FolderBrowserDialog
 End Class

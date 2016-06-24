@@ -221,7 +221,7 @@
         Dim FinalList As New List(Of String)
         FinalList.Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W-ed: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B-ed: " & FormatNumber(BlackList.Count, 0), "").ToString)
         FinalList.Add("# As of " & Format(Now, "MM/dd/yyyy hh:mm:ss tt"))
-        FinalList.Add("# Simplified version of github.com/Laicure/HostsX")
+        FinalList.Add("# Generated using github.com/Laicure/HostsY")
         FinalList.Add("")
         FinalList.Add("# Sources [" & FormatNumber(SourceList.Count, 0) & "]")
         FinalList.AddRange(SourceList.Select(Function(x) "# " & x))
@@ -262,7 +262,7 @@
             rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & rtbLogs.Text
 
             LbSave.Cursor = Cursors.Hand
-            LbSave.Text = "Click here to Save to Desktop"
+            LbSave.Text = "Click here to Save to a Location"
         End If
         rtbLogs.Text = "~ Took " & Microsoft.VisualBasic.Left(DateTime.Now.Subtract(startExec).ToString, 11) & vbCrLf & rtbLogs.Text
 
@@ -312,26 +312,28 @@
 
     Private Sub LbSave_Click(sender As Object, e As EventArgs) Handles LbSave.Click
         If LbSave.Cursor = Cursors.Hand Then
-            If My.Computer.FileSystem.FileExists("C:\Users\" & Environment.UserName & "\Desktop\hosts") Then
-                If MessageBox.Show("Previously saved hosts file found!" & vbCrLf & "Do you still want to save?", "Confirm Overwrite!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                    Try
-                        My.Computer.FileSystem.DeleteFile("C:\Users\" & Environment.UserName & "\Desktop\hosts", FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently)
-                    Catch ex As Exception
-                        MessageBox.Show(Err.Description, Err.Source, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                        Exit Sub
-                    End Try
-                Else
-                    Exit Sub
-                End If
-            End If
+            If fdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
+                Dim succ As Boolean = False
+                Try
+                    If My.Computer.FileSystem.FileExists(fdBrowse.SelectedPath & "\hosts") Then
+                        My.Computer.FileSystem.DeleteFile(fdBrowse.SelectedPath & "\hosts", FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently, FileIO.UICancelOption.ThrowException)
+                    End If
+                    rtbOuts.SaveFile(fdBrowse.SelectedPath & "\hosts", RichTextBoxStreamType.PlainText)
+                    succ = True
+                Catch ex As Exception
+                    rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & Err.Description & vbCrLf & rtbLogs.Text
+                End Try
 
-            'save to user's Desktop
-            rtbOuts.SaveFile("C:\Users\" & Environment.UserName & "\Desktop\hosts", RichTextBoxStreamType.PlainText)
-            If My.Computer.FileSystem.FileExists("C:\Users\" & Environment.UserName & "\Desktop\hosts") Then
-                LbSave.Text = "Click here to Save to Desktop [" & GetFileSize(My.Computer.FileSystem.GetFileInfo("C:\Users\" & Environment.UserName & "\Desktop\hosts").Length) & "]"
-                'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
-                Process.Start("explorer", "/select, C:\Users\" & Environment.UserName & "\Desktop\hosts")
+            If succ Then
+                    If My.Computer.FileSystem.FileExists(fdBrowse.SelectedPath & "\hosts") Then
+                        Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(fdBrowse.SelectedPath & "\hosts").Length)
+                        LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
+                        rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
+                        'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
+                        Process.Start("explorer", "/select, " & fdBrowse.SelectedPath & "\hosts")
+                    End If
             End If
+        End If
         End If
     End Sub
 
