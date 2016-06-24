@@ -216,10 +216,10 @@
         Next
         Erase arrTemp
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Appending Loopbacks, Blacklist and everything.." & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Append Entry Count and etc~
         Dim FinalList As New List(Of String)
-        FinalList.Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W-ed: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B-ed: " & FormatNumber(BlackList.Count, 0), "").ToString)
+        FinalList.Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
         FinalList.Add("# As of " & Format(Now, "MM/dd/yyyy hh:mm:ss tt"))
         FinalList.Add("# Generated using github.com/Laicure/HostsY")
         FinalList.Add("")
@@ -235,7 +235,7 @@
             FinalList.AddRange(BlackList.Select(Function(x) TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & x))
             FinalList.Add("")
         End If
-        FinalList.Add("# Domains [" & FormatNumber(uniCount, 0) & "]")
+        FinalList.Add("# Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
         FinalList.AddRange(UniHash)
 
         LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Generating Preview...", MethodInvoker))
