@@ -2,7 +2,7 @@
     Dim SourceL() As String = Nothing
     Dim WhiteL() As String = Nothing
     Dim BlackL() As String = Nothing
-    Dim startExec As DateTime = CDate("11/13/1988 11:59:59 PM")
+    Dim startExec As DateTime = Now
 
     Private Sub HostsMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "HostsY v" & My.Application.Info.Version.ToString
@@ -53,9 +53,9 @@
         '### Retrieve all Source Data
         startExec = Now
         LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Preparing List...", MethodInvoker))
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt MM/dd/yyyy") & "] Generation Started!" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Download and Validate Source List
         LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
         Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
@@ -64,7 +64,7 @@
 
         If SourceList.Count = 0 Then
             LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
-            rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] No valid sources listed!" & vbCrLf & rtbLogs.Text, MethodInvoker))
+            rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] No valid sources listed!" & vbCrLf & rtbLogs.Text, MethodInvoker))
             Exit Sub
         End If
 
@@ -74,7 +74,7 @@
             Exit Sub
         End If
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Validate whitelist
         LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist", MethodInvoker))
         Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
@@ -87,7 +87,7 @@
             Exit Sub
         End If
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Validate and match blacklist
         LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist", MethodInvoker))
         Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
@@ -114,7 +114,7 @@
             End If
 
             Dim arstring As String = arrTemp(i)
-            rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Reading " & arstring & "..." & vbCrLf & rtbLogs.Text, MethodInvoker))
+            rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Reading " & arstring & "..." & vbCrLf & rtbLogs.Text, MethodInvoker))
             Using clie As New Net.WebClient
                 Dim readd As New IO.StreamReader(clie.OpenRead(arrTemp(i)))
                 Dim SourcedD As String = readd.ReadToEnd
@@ -124,7 +124,7 @@
         Erase arrTemp
 
         '### Clean Source data
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Cleaning Data" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Cleaning Data" & vbCrLf & rtbLogs.Text, MethodInvoker))
         LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cleaning Data...", MethodInvoker))
         'Remove Comments
         Dim UniHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")))
@@ -139,7 +139,7 @@
         End If
 
         'Remove Comment Suffix
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Removing Suffixed Comments" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Removing Suffixed Comments" & vbCrLf & rtbLogs.Text, MethodInvoker))
         arrTemp = UniHash.ToArray
         UniHash.Clear()
         UniHash.TrimExcess()
@@ -158,7 +158,7 @@
         Next
         Erase arrTemp
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Merging Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Merging Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Remove Loopbacks
         UniHash = New HashSet(Of String)(UniHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
         UniHash.TrimExcess()
@@ -182,7 +182,7 @@
             Exit Sub
         End If
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Sorting Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Sorting Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Sort if enabled
         If chSort.Checked Then
             UniHash = New HashSet(Of String)(UniHash.OrderBy(Function(x) x))
@@ -198,7 +198,7 @@
         End If
 
         LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Finalizing Data...", MethodInvoker))
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Adding Target IP" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Adding Target IP" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'finalize unified data (add target IP and comment/remove items from WhiteList)
         Dim uniCount As Integer = UniHash.Count
         Dim TargetIP As String = txtTargetIP.Text.Trim
@@ -216,11 +216,11 @@
         Next
         Erase arrTemp
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Append Entry Count and etc~
         Dim FinalList As New List(Of String)
         FinalList.Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
-        FinalList.Add("# As of " & Format(Now, "MM/dd/yyyy hh:mm:ss tt"))
+        FinalList.Add("# As of " & Format(Now, "MM/dd/yyyy hh:mm:ss.ff tt"))
         FinalList.Add("# Generated using github.com/Laicure/HostsY")
         FinalList.Add("")
         FinalList.Add("# Sources [" & FormatNumber(SourceList.Count, 0) & "]")
@@ -239,7 +239,7 @@
         FinalList.AddRange(UniHash)
 
         LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Generating Preview...", MethodInvoker))
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt") & "] Generating Preview" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Generating Preview" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
         'Preview
         rtbOuts.Invoke(DirectCast(Sub() rtbOuts.Text = String.Join(vbCrLf, FinalList), MethodInvoker))
@@ -256,10 +256,10 @@
         butGenerate.Text = "Start Generation"
         If e.Cancelled Then
             LbStatus.Text = "Cancelled! :D"
-            rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt MM/dd/yyyy") & "] Generation Cancelled!" & vbCrLf & rtbLogs.Text
+            rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Cancelled!" & vbCrLf & rtbLogs.Text
         Else
             LbStatus.Text = "Done Generating! :D"
-            rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & rtbLogs.Text
+            rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & rtbLogs.Text
 
             LbSave.Cursor = Cursors.Hand
             LbSave.Text = "Click here to Save to a Location"
@@ -321,19 +321,19 @@
                     rtbOuts.SaveFile(fdBrowse.SelectedPath & "\hosts", RichTextBoxStreamType.PlainText)
                     succ = True
                 Catch ex As Exception
-                    rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & Err.Description & vbCrLf & rtbLogs.Text
+                    rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & Err.Description & vbCrLf & rtbLogs.Text
                 End Try
 
-            If succ Then
+                If succ Then
                     If My.Computer.FileSystem.FileExists(fdBrowse.SelectedPath & "\hosts") Then
                         Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(fdBrowse.SelectedPath & "\hosts").Length)
                         LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
-                        rtbLogs.Text = "[" & Format(Now, "hh:mm:ss tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
+                        rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
                         'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
                         Process.Start("explorer", "/select, " & fdBrowse.SelectedPath & "\hosts")
                     End If
+                End If
             End If
-        End If
         End If
     End Sub
 
