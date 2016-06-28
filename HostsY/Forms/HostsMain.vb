@@ -10,6 +10,10 @@
     End Sub
 
     Private Sub butGenerate_Click(sender As Object, e As EventArgs) Handles butGenerate.Click
+        If String.IsNullOrWhiteSpace(rtbSources.Text) Then
+            Exit Sub
+        End If
+
         If butGenerate.Text = "Cancel Generation" Then
             bgGenerate.CancelAsync()
             butGenerate.Text = "Start Generation"
@@ -27,7 +31,11 @@
         End If
 
         'deactivate controls
-        panLists.Enabled = False
+        'panLists.Enabled = False
+        rtbSources.ReadOnly = True
+        rtbWhites.ReadOnly = True
+        rtbBlacks.ReadOnly = True
+
         rtbSources.SelectionStart = 0
         rtbWhites.SelectionStart = 0
         rtbBlacks.SelectionStart = 0
@@ -116,12 +124,22 @@
             Dim arstring As String = arrTemp(i)
             rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Reading " & arstring & "..." & vbCrLf & rtbLogs.Text, MethodInvoker))
             Using clie As New Net.WebClient
-                Dim readd As New IO.StreamReader(clie.OpenRead(arrTemp(i)))
-                Dim SourcedD As String = readd.ReadToEnd
-                UniString += SourcedD & vbCrLf
+                Try
+                    Dim readd As New IO.StreamReader(clie.OpenRead(arrTemp(i)))
+                    Dim SourcedD As String = readd.ReadToEnd
+                    UniString += SourcedD & vbCrLf
+                Catch ex As Exception
+                    rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text, MethodInvoker))
+                End Try
             End Using
         Next
         Erase arrTemp
+
+        '### if UniString empty
+        If IsNothing(UniString) Then
+            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Nothing to Generate", MethodInvoker))
+            Exit Sub
+        End If
 
         '### Clean Source data
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Cleaning Data" & vbCrLf & rtbLogs.Text, MethodInvoker))
@@ -182,6 +200,12 @@
             Exit Sub
         End If
 
+        '### Empty List check
+        If String.IsNullOrWhiteSpace(String.Join(" ", UniHash)) Then
+            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Empty Parsed List", MethodInvoker))
+            Exit Sub
+        End If
+
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Sorting Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Sort if enabled
         If chSort.Checked Then
@@ -212,7 +236,9 @@
                 Exit Sub
             End If
 
-            UniHash.Add(TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i))
+            If Not String.IsNullOrWhiteSpace(arrTemp(i)) Then
+                UniHash.Add(TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i))
+            End If
         Next
         Erase arrTemp
 
@@ -247,22 +273,33 @@
 
     Private Sub bgGenerate_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgGenerate.RunWorkerCompleted
         'reactivate controls
-        panLists.Enabled = True
+        'panLists.Enabled = True
+        rtbSources.ReadOnly = False
+        rtbWhites.ReadOnly = False
+        rtbBlacks.ReadOnly = False
+
         chSort.Enabled = True
         chTabs.Enabled = True
         txtTargetIP.Enabled = True
-        rtbOuts.SelectionStart = 0
 
         butGenerate.Text = "Start Generation"
         If e.Cancelled Then
             LbStatus.Text = "Cancelled! :D"
             rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Cancelled!" & vbCrLf & rtbLogs.Text
+            rtbOuts.Text = "Cancelled! :P"
         Else
-            LbStatus.Text = "Done Generating! :D"
-            rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & rtbLogs.Text
+            If LbStatus.Text = "Nothing to Generate" Then
+                rtbOuts.Text = "No valid source to parse!"
+            ElseIf LbStatus.Text = "Empty Parsed List" Then
+                rtbOuts.Text = "Parsed List Empty!"
+            Else
+                LbStatus.Text = "Done Generating! :D"
 
-            LbSave.Cursor = Cursors.Hand
-            LbSave.Text = "Click here to Save to a Location"
+                LbSave.Cursor = Cursors.Hand
+                LbSave.Text = "Click here to Save to a Location"
+            End If
+            rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & rtbLogs.Text
+            rtbOuts.SelectionStart = 0
         End If
         rtbLogs.Text = "~ Took " & Microsoft.VisualBasic.Left(DateTime.Now.Subtract(startExec).ToString, 11) & vbCrLf & rtbLogs.Text
 
@@ -280,7 +317,7 @@
     End Sub
 
     Private Sub rtbSources_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbSources.KeyDown
-        If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V Then
+        If Not rtbSources.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
             e.SuppressKeyPress = True
             rtbSources.Paste(DataFormats.GetFormat(DataFormats.Text))
             rtbSources.SelectionStart = 0
@@ -288,7 +325,7 @@
     End Sub
 
     Private Sub rtbWhites_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbWhites.KeyDown
-        If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V Then
+        If Not rtbWhites.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
             e.SuppressKeyPress = True
             rtbWhites.Paste(DataFormats.GetFormat(DataFormats.Text))
             rtbWhites.SelectionStart = 0
@@ -296,7 +333,7 @@
     End Sub
 
     Private Sub rtbBlacks_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbBlacks.KeyDown
-        If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V Then
+        If Not rtbBlacks.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
             e.SuppressKeyPress = True
             rtbBlacks.Paste(DataFormats.GetFormat(DataFormats.Text))
             rtbBlacks.SelectionStart = 0
