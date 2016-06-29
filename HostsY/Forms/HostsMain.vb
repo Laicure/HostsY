@@ -17,6 +17,7 @@
         If butGenerate.Text = "Cancel Generation" Then
             bgGenerate.CancelAsync()
             butGenerate.Text = "Start Generation"
+            LbStatus.Text = "Canceling..."
             Exit Sub
         End If
 
@@ -26,12 +27,11 @@
         End If
 
         '### Confirm Generation
-        If MessageBox.Show("Are you sure to Generate?", "Confirm Generate!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
-            Exit Sub
-        End If
+        'If MessageBox.Show("Are you sure to Generate?", "Confirm Generate!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
+        '    Exit Sub
+        'End If
 
         'deactivate controls
-        'panLists.Enabled = False
         rtbSources.ReadOnly = True
         rtbWhites.ReadOnly = True
         rtbBlacks.ReadOnly = True
@@ -41,13 +41,14 @@
         rtbBlacks.SelectionStart = 0
         chSort.Enabled = False
         chTabs.Enabled = False
-        txtTargetIP.Enabled = False
+        txtTargetIP.ReadOnly = True
         LbSave.Cursor = Cursors.Default
         LbSave.Text = ""
 
         'reset content
         rtbLogs.Clear()
         rtbOuts.Text = "Generating..."
+        LbStatus.Text = "Generating..."
 
         'set vars
         butGenerate.Text = "Cancel Generation"
@@ -60,9 +61,8 @@
     Private Sub bgGenerate_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgGenerate.DoWork
         '### Retrieve all Source Data
         startExec = Now
-        LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Preparing List...", MethodInvoker))
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!" & vbCrLf & rtbLogs.Text, MethodInvoker))
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Download and Validate Source List
         LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
@@ -77,7 +77,6 @@
         End If
 
         If bgGenerate.CancellationPending Then
-            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cancelling...", MethodInvoker))
             e.Cancel = True
             Exit Sub
         End If
@@ -90,7 +89,6 @@
         rtbWhites.Invoke(DirectCast(Sub() rtbWhites.Text = String.Join(vbCrLf, WhiteList), MethodInvoker))
 
         If bgGenerate.CancellationPending Then
-            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cancelling...", MethodInvoker))
             e.Cancel = True
             Exit Sub
         End If
@@ -103,12 +101,10 @@
         rtbBlacks.Invoke(DirectCast(Sub() rtbBlacks.Text = String.Join(vbCrLf, BlackList), MethodInvoker))
 
         If bgGenerate.CancellationPending Then
-            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cancelling...", MethodInvoker))
             e.Cancel = True
             Exit Sub
         End If
 
-        LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Compiling List...", MethodInvoker))
         'Source data Compile to one
         Dim UniString As String = Nothing
         Dim arrTemp() As String = SourceList.ToArray
@@ -116,7 +112,6 @@
         SourceList.TrimExcess()
         For i As Integer = 0 To arrTemp.Count - 1
             If bgGenerate.CancellationPending Then
-                LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cancelling...", MethodInvoker))
                 e.Cancel = True
                 Exit Sub
             End If
@@ -135,6 +130,11 @@
         Next
         Erase arrTemp
 
+        If bgGenerate.CancellationPending Then
+            e.Cancel = True
+            Exit Sub
+        End If
+
         '### if UniString empty
         If IsNothing(UniString) Then
             LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Nothing to Generate", MethodInvoker))
@@ -143,7 +143,6 @@
 
         '### Clean Source data
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Cleaning Data" & vbCrLf & rtbLogs.Text, MethodInvoker))
-        LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cleaning Data...", MethodInvoker))
         'Remove Comments
         Dim UniHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")))
 
@@ -151,7 +150,6 @@
         UniHash = New HashSet(Of String)(UniHash.Select(Function(x) IIf(System.Text.RegularExpressions.Regex.Match(x, "^((([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))\ ").Success, Microsoft.VisualBasic.Right(x, Len(x) - (x.IndexOf(" ") + 1)), x).ToString))
 
         If bgGenerate.CancellationPending Then
-            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cancelling...", MethodInvoker))
             e.Cancel = True
             Exit Sub
         End If
@@ -163,7 +161,6 @@
         UniHash.TrimExcess()
         For i As Integer = 0 To arrTemp.Count - 1
             If bgGenerate.CancellationPending Then
-                LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cancelling...", MethodInvoker))
                 e.Cancel = True
                 Exit Sub
             End If
@@ -175,6 +172,11 @@
             End If
         Next
         Erase arrTemp
+
+        If bgGenerate.CancellationPending Then
+            e.Cancel = True
+            Exit Sub
+        End If
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Merging Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Remove Loopbacks
@@ -195,7 +197,6 @@
         BlackList.TrimExcess()
 
         If bgGenerate.CancellationPending Then
-            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cancelling...", MethodInvoker))
             e.Cancel = True
             Exit Sub
         End If
@@ -206,41 +207,40 @@
             Exit Sub
         End If
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Sorting Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Sorting List" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Sort if enabled
         If chSort.Checked Then
             UniHash = New HashSet(Of String)(UniHash.OrderBy(Function(x) x))
-            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Sorting Data...", MethodInvoker))
         Else
             UniHash = New HashSet(Of String)(UniHash)
         End If
 
         If bgGenerate.CancellationPending Then
-            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cancelling...", MethodInvoker))
             e.Cancel = True
             Exit Sub
         End If
 
-        LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Finalizing Data...", MethodInvoker))
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Adding Target IP" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'finalize unified data (add target IP and comment/remove items from WhiteList)
         Dim uniCount As Integer = UniHash.Count
         Dim TargetIP As String = txtTargetIP.Text.Trim
-        arrTemp = UniHash.ToArray
+        arrTemp = UniHash.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
         UniHash.Clear()
         UniHash.TrimExcess()
         For i As Integer = 0 To arrTemp.Count - 1
             If bgGenerate.CancellationPending Then
-                LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Cancelling...", MethodInvoker))
                 e.Cancel = True
                 Exit Sub
             End If
 
-            If Not String.IsNullOrWhiteSpace(arrTemp(i)) Then
-                UniHash.Add(TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i))
-            End If
+            UniHash.Add(TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i))
         Next
         Erase arrTemp
+
+        If bgGenerate.CancellationPending Then
+            e.Cancel = True
+            Exit Sub
+        End If
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Append Entry Count and etc~
@@ -264,7 +264,11 @@
         FinalList.Add("# Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
         FinalList.AddRange(UniHash)
 
-        LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Generating Preview...", MethodInvoker))
+        If bgGenerate.CancellationPending Then
+            e.Cancel = True
+            Exit Sub
+        End If
+
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Generating Preview" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
         'Preview
@@ -280,7 +284,7 @@
 
         chSort.Enabled = True
         chTabs.Enabled = True
-        txtTargetIP.Enabled = True
+        txtTargetIP.ReadOnly = False
 
         butGenerate.Text = "Start Generation"
         If e.Cancelled Then
@@ -320,7 +324,6 @@
         If Not rtbSources.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
             e.SuppressKeyPress = True
             rtbSources.Paste(DataFormats.GetFormat(DataFormats.Text))
-            rtbSources.SelectionStart = 0
         End If
     End Sub
 
@@ -328,7 +331,6 @@
         If Not rtbWhites.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
             e.SuppressKeyPress = True
             rtbWhites.Paste(DataFormats.GetFormat(DataFormats.Text))
-            rtbWhites.SelectionStart = 0
         End If
     End Sub
 
@@ -336,7 +338,6 @@
         If Not rtbBlacks.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
             e.SuppressKeyPress = True
             rtbBlacks.Paste(DataFormats.GetFormat(DataFormats.Text))
-            rtbBlacks.SelectionStart = 0
         End If
     End Sub
 
@@ -352,13 +353,10 @@
             If fdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
                 Dim succ As Boolean = False
                 Try
-                    If My.Computer.FileSystem.FileExists(fdBrowse.SelectedPath & "\hosts") Then
-                        My.Computer.FileSystem.DeleteFile(fdBrowse.SelectedPath & "\hosts", FileIO.UIOption.OnlyErrorDialogs, FileIO.RecycleOption.DeletePermanently, FileIO.UICancelOption.ThrowException)
-                    End If
                     rtbOuts.SaveFile(fdBrowse.SelectedPath & "\hosts", RichTextBoxStreamType.PlainText)
                     succ = True
                 Catch ex As Exception
-                    rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & Err.Description & vbCrLf & rtbLogs.Text
+                    rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text
                 End Try
 
                 If succ Then
@@ -377,5 +375,6 @@
     Private Sub LbAbout_Click(sender As Object, e As EventArgs) Handles LbAbout.Click
         Process.Start("https://github.com/Laicure/HostsY")
     End Sub
+
 End Class
 
