@@ -301,7 +301,6 @@ Partial Class HostsMain
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(800, 550)
-        Me.MinimizeBox = False
         Me.MinimumSize = New System.Drawing.Size(800, 550)
         Me.Name = "HostsMain"
         Me.Padding = New System.Windows.Forms.Padding(1)

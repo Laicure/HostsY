@@ -7,6 +7,12 @@
     Private Sub HostsMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "HostsY v" & My.Application.Info.Version.ToString
         Me.Icon = My.Resources.Hosts
+
+        Buff.DoubleBuff(rtbOuts)
+        Buff.DoubleBuff(rtbBlacks)
+        Buff.DoubleBuff(rtbLogs)
+        Buff.DoubleBuff(rtbSources)
+        Buff.DoubleBuff(rtbWhites)
     End Sub
 
     Private Sub butGenerate_Click(sender As Object, e As EventArgs) Handles butGenerate.Click

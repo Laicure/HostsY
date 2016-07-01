@@ -12,4 +12,13 @@
         Return sizer
     End Function
 #End Region
+#Region "DoubleBuffered Buff // Use Buff.DoubleBuff(<Control>)"
+    Friend NotInheritable Class Buff
+        Friend Shared Sub DoubleBuff(Contt As Control)
+            Dim ConttType As Type = Contt.[GetType]()
+            Dim propInfo As System.Reflection.PropertyInfo = ConttType.GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance Or System.Reflection.BindingFlags.NonPublic)
+            propInfo.SetValue(Contt, True, Nothing)
+        End Sub
+    End Class
+#End Region
 End Module
