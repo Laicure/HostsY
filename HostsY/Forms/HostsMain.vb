@@ -68,8 +68,10 @@
         '### Retrieve all Source Data
         startExec = Now
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!" & vbCrLf & rtbLogs.Text, MethodInvoker))
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(Sub()
+                                      rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!"
+                                      rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text
+                                  End Sub, MethodInvoker))
         'Download and Validate Source List
         LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
         Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
@@ -251,24 +253,26 @@
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Append Entry Count and etc~
         Dim FinalList As New List(Of String)
-        FinalList.Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
-        FinalList.Add("# As of " & Format(Now, "MM/dd/yyyy hh:mm:ss.ff tt"))
-        FinalList.Add("# Generated using github.com/Laicure/HostsY")
-        FinalList.Add("")
-        FinalList.Add("# Sources [" & FormatNumber(SourceList.Count, 0) & "]")
-        FinalList.AddRange(SourceList.Select(Function(x) "# " & x))
-        FinalList.Add("")
-        FinalList.Add("# Loopbacks")
-        FinalList.Add("127.0.0.1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
-        FinalList.Add("::1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
-        FinalList.Add("")
-        If BlackList.Count > 0 Then
-            FinalList.Add("# Blacklist [" & FormatNumber(BlackList.Count, 0) & "]")
-            FinalList.AddRange(BlackList.Select(Function(x) TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & x))
-            FinalList.Add("")
-        End If
-        FinalList.Add("# Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
-        FinalList.AddRange(UniHash)
+        With FinalList
+            .Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
+            .Add("# As of " & Format(Now, "MM/dd/yyyy hh:mm:ss.ff tt"))
+            .Add("# Generated using github.com/Laicure/HostsY")
+            .Add("")
+            .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & "]")
+            .AddRange(SourceList.Select(Function(x) "# " & x))
+            .Add("")
+            .Add("# Loopbacks")
+            .Add("127.0.0.1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
+            .Add("::1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
+            .Add("")
+            If BlackList.Count > 0 Then
+                .Add("# Blacklist [" & FormatNumber(BlackList.Count, 0) & "]")
+                .AddRange(BlackList.Select(Function(x) TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & x))
+                .Add("")
+            End If
+            .Add("# Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
+            .AddRange(UniHash)
+        End With
 
         If bgGenerate.CancellationPending Then
             e.Cancel = True
