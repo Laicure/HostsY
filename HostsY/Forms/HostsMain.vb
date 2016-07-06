@@ -358,33 +358,40 @@
         End If
     End Sub
 
-    Private Sub LbSave_Click(sender As Object, e As EventArgs) Handles LbSave.Click
-        If LbSave.Cursor = Cursors.Hand Then
-            If fdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
-                Dim succ As Boolean = False
-                Try
-                    rtbOuts.SaveFile(fdBrowse.SelectedPath & "\hosts", RichTextBoxStreamType.PlainText)
-                    succ = True
-                Catch ex As Exception
-                    rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text
-                End Try
-
-                If succ Then
-                    If My.Computer.FileSystem.FileExists(fdBrowse.SelectedPath & "\hosts") Then
-                        Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(fdBrowse.SelectedPath & "\hosts").Length)
-                        LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
-                        rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
-                        'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
-                        Process.Start("explorer", "/select, " & fdBrowse.SelectedPath & "\hosts")
-                    End If
-                End If
-            End If
-        End If
-    End Sub
-
     Private Sub LbAbout_Click(sender As Object, e As EventArgs) Handles LbAbout.Click
         Process.Start("https://github.com/Laicure/HostsY")
     End Sub
 
+    Private Sub LbSave_MouseDown(sender As Object, e As MouseEventArgs) Handles LbSave.MouseDown
+        If e.Button = Windows.Forms.MouseButtons.Left Then
+            If LbSave.Cursor = Cursors.Hand Then
+                If fdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    Dim succ As Boolean = False
+                    Try
+                        rtbOuts.SaveFile(fdBrowse.SelectedPath & "\hosts", RichTextBoxStreamType.PlainText)
+                        succ = True
+                    Catch ex As Exception
+                        rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text
+                    End Try
+
+                    If succ Then
+                        If My.Computer.FileSystem.FileExists(fdBrowse.SelectedPath & "\hosts") Then
+                            Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(fdBrowse.SelectedPath & "\hosts").Length)
+                            LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
+                            rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
+                            'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
+                            Process.Start("explorer", "/select, " & fdBrowse.SelectedPath & "\hosts")
+                        End If
+                    End If
+                End If
+            End If
+        ElseIf e.Button = Windows.Forms.MouseButtons.Right Then
+            If My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts") Then
+                Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
+            Else
+                Process.Start("C:\WINDOWS\system32\drivers\etc")
+            End If
+        End If
+    End Sub
 End Class
 
