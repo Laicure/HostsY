@@ -81,6 +81,7 @@
         If SourceList.Count = 0 Then
             LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
             rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] No valid sources listed!" & vbCrLf & rtbLogs.Text, MethodInvoker))
+            LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Empty Parsed List", MethodInvoker))
             Exit Sub
         End If
 
