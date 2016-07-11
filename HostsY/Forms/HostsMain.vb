@@ -386,7 +386,11 @@
                     End If
                 End If
             End If
-        ElseIf e.Button = Windows.Forms.MouseButtons.Right Then
+        End If
+    End Sub
+
+    Private Sub LbStatus_MouseDown(sender As Object, e As MouseEventArgs) Handles LbStatus.MouseDown
+        If e.Button = Windows.Forms.MouseButtons.Left Then
             If My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts") Then
                 Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
             Else

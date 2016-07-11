@@ -257,6 +257,7 @@ Partial Class HostsMain
         Me.LbStatus.Name = "LbStatus"
         Me.LbStatus.Size = New System.Drawing.Size(191, 22)
         Me.LbStatus.TabIndex = 14
+        Me.LbStatus.Text = "Open system ""hosts"" folder"
         Me.LbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'LbAbout
