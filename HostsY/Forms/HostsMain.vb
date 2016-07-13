@@ -50,6 +50,7 @@
         txtTargetIP.ReadOnly = True
         LbSave.Cursor = Cursors.Default
         LbSave.Text = ""
+        tipper.SetToolTip(LbSave, Nothing)
 
         'reset content
         rtbLogs.Clear()
@@ -256,7 +257,7 @@
         Dim FinalList As New List(Of String)
         With FinalList
             .Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
-            .Add("# As of " & Format(Now, "MM/dd/yyyy hh:mm:ss.ff tt"))
+            .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
             .Add("# Generated using github.com/Laicure/HostsY")
             .Add("")
             .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & "]")
@@ -312,6 +313,7 @@
 
                 LbSave.Cursor = Cursors.Hand
                 LbSave.Text = "Click here to Save to a Location"
+                tipper.SetToolTip(LbSave, "Save to a specified location")
             End If
             rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & rtbLogs.Text
             rtbOuts.SelectionStart = 0

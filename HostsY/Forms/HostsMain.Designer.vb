@@ -22,6 +22,7 @@ Partial Class HostsMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.panLists = New System.Windows.Forms.Panel()
         Me.rtbBlacks = New System.Windows.Forms.RichTextBox()
         Me.LbBlacks = New System.Windows.Forms.Label()
@@ -42,6 +43,7 @@ Partial Class HostsMain
         Me.LbStatus = New System.Windows.Forms.Label()
         Me.LbAbout = New System.Windows.Forms.Label()
         Me.fdBrowse = New System.Windows.Forms.FolderBrowserDialog()
+        Me.tipper = New System.Windows.Forms.ToolTip(Me.components)
         Me.panLists.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -152,6 +154,7 @@ Partial Class HostsMain
         Me.txtTargetIP.TabStop = False
         Me.txtTargetIP.Text = "0.0.0.0"
         Me.txtTargetIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.tipper.SetToolTip(Me.txtTargetIP, "Set Target IP for domains and blacklist")
         '
         'butGenerate
         '
@@ -206,6 +209,7 @@ Partial Class HostsMain
         Me.chSort.TabIndex = 9
         Me.chSort.TabStop = False
         Me.chSort.Text = "Sort Domains"
+        Me.tipper.SetToolTip(Me.chSort, "Sort domains by Ascending order")
         Me.chSort.UseVisualStyleBackColor = True
         '
         'chTabs
@@ -218,6 +222,7 @@ Partial Class HostsMain
         Me.chTabs.TabIndex = 11
         Me.chTabs.TabStop = False
         Me.chTabs.Text = "Use Tab instead of Spaces"
+        Me.tipper.SetToolTip(Me.chTabs, "Use Tab/Space between Target IP-Domain")
         Me.chTabs.UseVisualStyleBackColor = True
         '
         'Label1
@@ -259,6 +264,7 @@ Partial Class HostsMain
         Me.LbStatus.TabIndex = 14
         Me.LbStatus.Text = "Open system ""hosts"" folder"
         Me.LbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.tipper.SetToolTip(Me.LbStatus, "Opens C:\WINDOWS\system32\drivers\etc folder")
         '
         'LbAbout
         '
@@ -274,10 +280,21 @@ Partial Class HostsMain
         Me.LbAbout.TabIndex = 15
         Me.LbAbout.Text = "Visit Github Repository"
         Me.LbAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.tipper.SetToolTip(Me.LbAbout, "Visit https://github.com/Laicure/HostsY")
         '
         'fdBrowse
         '
         Me.fdBrowse.Description = "Select a folder for Export"
+        '
+        'tipper
+        '
+        Me.tipper.AutoPopDelay = 5000
+        Me.tipper.InitialDelay = 250
+        Me.tipper.ReshowDelay = 100
+        Me.tipper.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+        Me.tipper.ToolTipTitle = "HostsY"
+        Me.tipper.UseAnimation = False
+        Me.tipper.UseFading = False
         '
         'HostsMain
         '
@@ -332,4 +349,5 @@ Partial Class HostsMain
     Friend WithEvents LbStatus As System.Windows.Forms.Label
     Friend WithEvents LbAbout As System.Windows.Forms.Label
     Friend WithEvents fdBrowse As System.Windows.Forms.FolderBrowserDialog
+    Friend WithEvents tipper As System.Windows.Forms.ToolTip
 End Class
