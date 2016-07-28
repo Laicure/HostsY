@@ -32,11 +32,6 @@
             Exit Sub
         End If
 
-        '### Confirm Generation
-        'If MessageBox.Show("Are you sure to Generate?", "Confirm Generate!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
-        '    Exit Sub
-        'End If
-
         'deactivate controls
         rtbSources.ReadOnly = True
         rtbWhites.ReadOnly = True
@@ -56,6 +51,9 @@
         rtbLogs.Clear()
         rtbOuts.Text = "Generating..."
         LbStatus.Text = "Generating..."
+        LbSource.Text = "Sources"
+        LbWhites.Text = "Whitelist"
+        LbBlacks.Text = "Blacklist"
 
         'set vars
         butGenerate.Text = "Cancel Generation"
@@ -74,7 +72,6 @@
                                       rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text
                                   End Sub, MethodInvoker))
         'Download and Validate Source List
-        LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
         Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
         LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources [" & SourceList.Count & "]", MethodInvoker))
         rtbSources.Invoke(DirectCast(Sub() rtbSources.Text = String.Join(vbCrLf, SourceList), MethodInvoker))
@@ -93,7 +90,6 @@
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Validate whitelist
-        LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist", MethodInvoker))
         Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
         LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist [" & WhiteList.Count & "]", MethodInvoker))
         rtbWhites.Invoke(DirectCast(Sub() rtbWhites.Text = String.Join(vbCrLf, WhiteList), MethodInvoker))
@@ -105,7 +101,6 @@
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Validate and match blacklist
-        LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist", MethodInvoker))
         Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
         LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist [" & BlackList.Count & "]", MethodInvoker))
         rtbBlacks.Invoke(DirectCast(Sub() rtbBlacks.Text = String.Join(vbCrLf, BlackList), MethodInvoker))
@@ -265,7 +260,7 @@
             .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
             .Add("# Generated using github.com/Laicure/HostsY")
             .Add("")
-            .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " - " & FormatNumber(totalDoms, 0) & "]")
+            .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
             .AddRange(SourceList.Select(Function(x) "# " & x))
             .Add("")
             .Add("# Loopbacks")
@@ -294,7 +289,6 @@
 
     Private Sub bgGenerate_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgGenerate.RunWorkerCompleted
         'reactivate controls
-        'panLists.Enabled = True
         rtbSources.ReadOnly = False
         rtbWhites.ReadOnly = False
         rtbBlacks.ReadOnly = False
