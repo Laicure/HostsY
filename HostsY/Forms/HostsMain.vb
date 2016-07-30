@@ -67,10 +67,11 @@
         '### Retrieve all Source Data
         startExec = Now
 
-        rtbLogs.Invoke(DirectCast(Sub()
-                                      rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!"
-                                      rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text
-                                  End Sub, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(
+                       Sub()
+                           rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!"
+                           rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text
+                       End Sub, MethodInvoker))
         'Download and Validate Source List
         Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
         LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources [" & SourceList.Count & "]", MethodInvoker))
@@ -172,15 +173,19 @@
                     Dim domCount As String = FormatNumber(SourceHash.LongCount, 0)
                     rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = Replace(rtbLogs.Text, "(+Retrieving Domain Count)", "Got " & domCount & " domains!"), MethodInvoker))
                     If Not SourceHash.Count = 0 Then
+                        If chSort.Checked Then
+                            SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
+                        End If
+                        UniHash.Add("# ~Source @" & i + 1)
                         UniHash.UnionWith(SourceHash)
-                        SourceList.Add("[" & domCount & "] " & arrTemp(i))
+                        SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
                     End If
                 End If
             End Using
         Next
         Erase arrTemp
 
-        '### if UniString empty
+        '### if UniHash empty
         If UniHash.LongCount = 0 Then
             LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Nothing to Generate", MethodInvoker))
             Exit Sub
@@ -217,14 +222,6 @@
             Exit Sub
         End If
 
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Sorting List" & vbCrLf & rtbLogs.Text, MethodInvoker))
-        'Sort if enabled
-        If chSort.Checked Then
-            UniHash = New HashSet(Of String)(UniHash.OrderBy(Function(x) x))
-        Else
-            UniHash = New HashSet(Of String)(UniHash)
-        End If
-
         If bgGenerate.CancellationPending Then
             e.Cancel = True
             Exit Sub
@@ -232,7 +229,7 @@
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Adding Target IP" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'finalize unified data (add target IP and comment/remove items from WhiteList)
-        Dim uniCount As Integer = UniHash.Count
+        Dim uniCount As Integer = UniHash.Where(Function(x) Not x.StartsWith("# ~")).Count
         Dim TargetIP As String = txtTargetIP.Text.Trim
         arrTemp = UniHash.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
         UniHash.Clear()
@@ -243,7 +240,7 @@
                 Exit Sub
             End If
 
-            UniHash.Add(TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i))
+            UniHash.Add(IIf(Not arrTemp(i).StartsWith("# ~"), TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i), arrTemp(i)).ToString)
         Next
         Erase arrTemp
 
