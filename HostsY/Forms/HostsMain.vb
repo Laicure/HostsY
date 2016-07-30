@@ -211,11 +211,6 @@
         BlackList.ExceptWith(UniHash)
         BlackList.TrimExcess()
 
-        If bgGenerate.CancellationPending Then
-            e.Cancel = True
-            Exit Sub
-        End If
-
         '### Empty List check
         If UniHash.LongCount = 0 Then
             LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Empty Parsed List", MethodInvoker))
