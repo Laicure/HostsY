@@ -199,8 +199,6 @@ Partial Class HostsMain
         '
         'chSort
         '
-        Me.chSort.Checked = True
-        Me.chSort.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chSort.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chSort.Location = New System.Drawing.Point(278, 1)
         Me.chSort.Margin = New System.Windows.Forms.Padding(1)

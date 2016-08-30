@@ -32,11 +32,6 @@
             Exit Sub
         End If
 
-        '### Confirm Generation
-        'If MessageBox.Show("Are you sure to Generate?", "Confirm Generate!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
-        '    Exit Sub
-        'End If
-
         'deactivate controls
         rtbSources.ReadOnly = True
         rtbWhites.ReadOnly = True
@@ -56,6 +51,9 @@
         rtbLogs.Clear()
         rtbOuts.Text = "Generating..."
         LbStatus.Text = "Generating..."
+        LbSource.Text = "Sources"
+        LbWhites.Text = "Whitelist"
+        LbBlacks.Text = "Blacklist"
 
         'set vars
         butGenerate.Text = "Cancel Generation"
@@ -69,12 +67,12 @@
         '### Retrieve all Source Data
         startExec = Now
 
-        rtbLogs.Invoke(DirectCast(Sub()
-                                      rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!"
-                                      rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text
-                                  End Sub, MethodInvoker))
+        rtbLogs.Invoke(DirectCast(
+                       Sub()
+                           rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!"
+                           rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text
+                       End Sub, MethodInvoker))
         'Download and Validate Source List
-        LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
         Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
         LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources [" & SourceList.Count & "]", MethodInvoker))
         rtbSources.Invoke(DirectCast(Sub() rtbSources.Text = String.Join(vbCrLf, SourceList), MethodInvoker))
@@ -93,7 +91,6 @@
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Validate whitelist
-        LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist", MethodInvoker))
         Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
         LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist [" & WhiteList.Count & "]", MethodInvoker))
         rtbWhites.Invoke(DirectCast(Sub() rtbWhites.Text = String.Join(vbCrLf, WhiteList), MethodInvoker))
@@ -105,7 +102,6 @@
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Validate and match blacklist
-        LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist", MethodInvoker))
         Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
         LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist [" & BlackList.Count & "]", MethodInvoker))
         rtbBlacks.Invoke(DirectCast(Sub() rtbBlacks.Text = String.Join(vbCrLf, BlackList), MethodInvoker))
@@ -115,10 +111,14 @@
             Exit Sub
         End If
 
+        'Major Hashset
+        Dim UniHash As New HashSet(Of String)
+
         'Source data Compile to one
         Dim UniString As String = Nothing
+        Dim totalDoms As Long = 0
         Dim arrTemp() As String = SourceList.ToArray
-        'SourceList.Clear()
+        SourceList.Clear()
         SourceList.TrimExcess()
         For i As Integer = 0 To arrTemp.Count - 1
             If bgGenerate.CancellationPending Then
@@ -128,60 +128,68 @@
 
             Dim arstring As String = arrTemp(i)
             rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Reading " & arstring & "..." & vbCrLf & rtbLogs.Text, MethodInvoker))
+            Dim suc As Boolean = False
             Using clie As New Net.WebClient
                 Try
                     Dim readd As New IO.StreamReader(clie.OpenRead(arrTemp(i)))
                     Dim SourcedD As String = readd.ReadToEnd
+                    UniString = Nothing
                     UniString += SourcedD & vbCrLf
+                    suc = True
                 Catch ex As Exception
                     rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text, MethodInvoker))
                 End Try
+
+                If suc Then
+                    '### Clean Source data
+                    rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & rtbLogs.Text, MethodInvoker))
+
+                    'Remove Comments
+                    Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")))
+                    'Remove IPs
+                    SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) IIf(System.Text.RegularExpressions.Regex.Match(x, "^((([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))\ ").Success, Microsoft.VisualBasic.Right(x, Len(x) - (x.IndexOf(" ") + 1)), x).ToString))
+                    'Remove Comment Suffix
+                    Dim arrTempX() As String = SourceHash.ToArray
+                    SourceHash.Clear()
+                    SourceHash.TrimExcess()
+                    For y As Integer = 0 To arrTempX.Count - 1
+                        If bgGenerate.CancellationPending Then
+                            e.Cancel = True
+                            Exit Sub
+                        End If
+
+                        If arrTempX(y).Contains(" #") Then
+                            SourceHash.Add(Microsoft.VisualBasic.Left(arrTempX(y), arrTempX(y).IndexOf(" #")).Trim)
+                        Else
+                            SourceHash.Add(arrTempX(y).Trim)
+                        End If
+                    Next
+                    Erase arrTempX
+                    'Remove Loopbacks
+                    SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+
+                    'show count
+                    totalDoms += SourceHash.LongCount
+                    Dim domCount As String = FormatNumber(SourceHash.LongCount, 0)
+                    rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = Replace(rtbLogs.Text, "(+Retrieving Domain Count)", "Got " & domCount & " domains!"), MethodInvoker))
+                    If Not SourceHash.Count = 0 Then
+                        If chSort.Checked Then
+                            SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
+                        End If
+                        UniHash.Add("# ~Source @" & i + 1)
+                        UniHash.UnionWith(SourceHash)
+                        SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
+                    End If
+                End If
             End Using
         Next
         Erase arrTemp
 
-        If bgGenerate.CancellationPending Then
-            e.Cancel = True
-            Exit Sub
-        End If
-
-        '### if UniString empty
-        If IsNothing(UniString) Then
+        '### if UniHash empty
+        If UniHash.LongCount = 0 Then
             LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Nothing to Generate", MethodInvoker))
             Exit Sub
         End If
-
-        '### Clean Source data
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Cleaning Data" & vbCrLf & rtbLogs.Text, MethodInvoker))
-        'Remove Comments
-        Dim UniHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")))
-
-        'Remove IPs
-        UniHash = New HashSet(Of String)(UniHash.Select(Function(x) IIf(System.Text.RegularExpressions.Regex.Match(x, "^((([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))\ ").Success, Microsoft.VisualBasic.Right(x, Len(x) - (x.IndexOf(" ") + 1)), x).ToString))
-
-        If bgGenerate.CancellationPending Then
-            e.Cancel = True
-            Exit Sub
-        End If
-
-        'Remove Comment Suffix
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Removing Suffixed Comments" & vbCrLf & rtbLogs.Text, MethodInvoker))
-        arrTemp = UniHash.ToArray
-        UniHash.Clear()
-        UniHash.TrimExcess()
-        For i As Integer = 0 To arrTemp.Count - 1
-            If bgGenerate.CancellationPending Then
-                e.Cancel = True
-                Exit Sub
-            End If
-
-            If arrTemp(i).Contains(" #") Then
-                UniHash.Add(Microsoft.VisualBasic.Left(arrTemp(i), arrTemp(i).IndexOf(" #")).Trim)
-            Else
-                UniHash.Add(arrTemp(i).Trim)
-            End If
-        Next
-        Erase arrTemp
 
         If bgGenerate.CancellationPending Then
             e.Cancel = True
@@ -189,9 +197,6 @@
         End If
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Merging Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
-        'Remove Loopbacks
-        UniHash = New HashSet(Of String)(UniHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
-        UniHash.TrimExcess()
 
         'remove blacklisted from whitelist
         WhiteList.ExceptWith(BlackList)
@@ -206,23 +211,10 @@
         BlackList.ExceptWith(UniHash)
         BlackList.TrimExcess()
 
-        If bgGenerate.CancellationPending Then
-            e.Cancel = True
-            Exit Sub
-        End If
-
         '### Empty List check
-        If String.IsNullOrWhiteSpace(String.Join(" ", UniHash)) Then
+        If UniHash.LongCount = 0 Then
             LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Empty Parsed List", MethodInvoker))
             Exit Sub
-        End If
-
-        rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Sorting List" & vbCrLf & rtbLogs.Text, MethodInvoker))
-        'Sort if enabled
-        If chSort.Checked Then
-            UniHash = New HashSet(Of String)(UniHash.OrderBy(Function(x) x))
-        Else
-            UniHash = New HashSet(Of String)(UniHash)
         End If
 
         If bgGenerate.CancellationPending Then
@@ -232,7 +224,7 @@
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Adding Target IP" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'finalize unified data (add target IP and comment/remove items from WhiteList)
-        Dim uniCount As Integer = UniHash.Count
+        Dim uniCount As Integer = UniHash.Where(Function(x) Not x.StartsWith("# ~")).Count
         Dim TargetIP As String = txtTargetIP.Text.Trim
         arrTemp = UniHash.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
         UniHash.Clear()
@@ -243,7 +235,7 @@
                 Exit Sub
             End If
 
-            UniHash.Add(TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i))
+            UniHash.Add(IIf(Not arrTemp(i).StartsWith("# ~"), TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i), arrTemp(i)).ToString)
         Next
         Erase arrTemp
 
@@ -260,7 +252,7 @@
             .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
             .Add("# Generated using github.com/Laicure/HostsY")
             .Add("")
-            .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & "]")
+            .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
             .AddRange(SourceList.Select(Function(x) "# " & x))
             .Add("")
             .Add("# Loopbacks")
@@ -289,7 +281,6 @@
 
     Private Sub bgGenerate_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgGenerate.RunWorkerCompleted
         'reactivate controls
-        'panLists.Enabled = True
         rtbSources.ReadOnly = False
         rtbWhites.ReadOnly = False
         rtbBlacks.ReadOnly = False
