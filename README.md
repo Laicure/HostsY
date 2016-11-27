@@ -1,6 +1,11 @@
 # HostsY
 Just a simplified and multi-threaded revamp of [HostsX](http://github.com/Laicure/HostsX) for Windows.
 
+######Weekly Updated host file:
+```
+https://bitbucket.org/Laicure/publicview/downloads/hosts
+```
+
 ######You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
 https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
