@@ -44,6 +44,7 @@ Partial Class HostsMain
         Me.LbAbout = New System.Windows.Forms.Label()
         Me.fdBrowse = New System.Windows.Forms.FolderBrowserDialog()
         Me.tipper = New System.Windows.Forms.ToolTip(Me.components)
+        Me.LbReset = New System.Windows.Forms.Label()
         Me.panLists.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -274,9 +275,9 @@ Partial Class HostsMain
         Me.LbAbout.Location = New System.Drawing.Point(278, 39)
         Me.LbAbout.Margin = New System.Windows.Forms.Padding(1)
         Me.LbAbout.Name = "LbAbout"
-        Me.LbAbout.Size = New System.Drawing.Size(180, 17)
+        Me.LbAbout.Size = New System.Drawing.Size(89, 17)
         Me.LbAbout.TabIndex = 15
-        Me.LbAbout.Text = "Visit Github Repository"
+        Me.LbAbout.Text = "Github"
         Me.LbAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.tipper.SetToolTip(Me.LbAbout, "Visit https://github.com/Laicure/HostsY")
         '
@@ -294,12 +295,29 @@ Partial Class HostsMain
         Me.tipper.UseAnimation = False
         Me.tipper.UseFading = False
         '
+        'LbReset
+        '
+        Me.LbReset.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.LbReset.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.LbReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.LbReset.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LbReset.ForeColor = System.Drawing.Color.DarkMagenta
+        Me.LbReset.Location = New System.Drawing.Point(369, 39)
+        Me.LbReset.Margin = New System.Windows.Forms.Padding(1)
+        Me.LbReset.Name = "LbReset"
+        Me.LbReset.Size = New System.Drawing.Size(89, 17)
+        Me.LbReset.TabIndex = 16
+        Me.LbReset.Text = "Reset All"
+        Me.LbReset.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        Me.tipper.SetToolTip(Me.LbReset, "Restarts the app")
+        '
         'HostsMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(784, 511)
+        Me.Controls.Add(Me.LbReset)
         Me.Controls.Add(Me.LbAbout)
         Me.Controls.Add(Me.LbStatus)
         Me.Controls.Add(Me.LbSave)
@@ -348,4 +366,5 @@ Partial Class HostsMain
     Friend WithEvents LbAbout As System.Windows.Forms.Label
     Friend WithEvents fdBrowse As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents tipper As System.Windows.Forms.ToolTip
+    Friend WithEvents LbReset As System.Windows.Forms.Label
 End Class

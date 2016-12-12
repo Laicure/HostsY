@@ -57,6 +57,7 @@
 
         'set vars
         butGenerate.Text = "Cancel Generation"
+        LbReset.Enabled = False
         SourceL = rtbSources.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
         WhiteL = rtbWhites.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
         BlackL = rtbBlacks.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
@@ -264,8 +265,10 @@
                 .AddRange(BlackList.Select(Function(x) TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & x))
                 .Add("")
             End If
-            .Add("# Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
+            .Add("#" & IIf(chSort.Checked, " Sorted ", " ").ToString & "Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
             .AddRange(UniHash)
+            .Add("")
+            .Add("# End")
         End With
 
         If bgGenerate.CancellationPending Then
@@ -304,12 +307,13 @@
 
                 LbSave.Cursor = Cursors.Hand
                 LbSave.Text = "Click here to Save to a Location"
-                tipper.SetToolTip(LbSave, "Save to a specified location")
+                tipper.SetToolTip(LbSave, "Right-click to save to C:\WINDOWS\system32\drivers\etc")
             End If
             rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & rtbLogs.Text
             rtbOuts.SelectionStart = 0
         End If
         rtbLogs.Text = "~ Took " & Microsoft.VisualBasic.Left(DateTime.Now.Subtract(startExec).ToString, 11) & vbCrLf & rtbLogs.Text
+        LbReset.Enabled = True
 
         Erase SourceL
         Erase WhiteL
@@ -379,6 +383,33 @@
                     End If
                 End If
             End If
+        ElseIf e.Button = Windows.Forms.MouseButtons.Right Then
+            If LbSave.Cursor = Cursors.Hand Then
+                If (MessageBox.Show(IIf(My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts"), "Active hosts file detected!" & vbCrLf & "Are you sure to replace your active hosts file?", "No active hosts file detected!" & vbCrLf & "Are you sure to add a hosts file to your system?").ToString & vbCrLf & vbCrLf & "DNSCache must be disabled whenever using a large hosts file (~35k+ Entries) or else, your system will be crippled to no internet at all (for about an hour+)!", "Confirm Replace!", MessageBoxButtons.YesNo, MessageBoxIcon.Question)) = Windows.Forms.DialogResult.No Then
+                    Exit Sub
+                End If
+
+                Dim succ As Boolean = False
+                Try
+                    rtbOuts.SaveFile("C:\WINDOWS\system32\drivers\etc\hosts", RichTextBoxStreamType.PlainText)
+                    succ = True
+                Catch ex As Exception
+                    rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
+                End Try
+
+                If succ Then
+                    If My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts") Then
+                        Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo("C:\WINDOWS\system32\drivers\etc\hosts").Length)
+                        LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
+                        rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
+
+                        'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
+                        If My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts") Then
+                            Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
+                        End If
+                    End If
+                End If
+            End If
         End If
     End Sub
 
@@ -390,5 +421,9 @@
                 Process.Start("C:\WINDOWS\system32\drivers\etc")
             End If
         End If
+    End Sub
+
+    Private Sub LbReset_Click(sender As Object, e As EventArgs) Handles LbReset.Click
+        Application.Restart()
     End Sub
 End Class
