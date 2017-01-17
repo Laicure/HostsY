@@ -39,6 +39,7 @@ https://hosts-file.net/hjk.txt
 https://hosts-file.net/mmt.txt
 https://hosts-file.net/pha.txt
 https://hosts-file.net/psh.txt
+https://hosts-file.net/pup.txt
 https://hosts-file.net/wrz.txt
 ---
 https://github.com/Free-Software-for-Android/AdAway/wiki/HostsSources
