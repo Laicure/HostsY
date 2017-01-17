@@ -27,8 +27,6 @@ https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintex
 ```
 ######Other Sources:
 ```
-https://hosts-file.net/download/hosts.txt
----
 https://hosts-file.net/ad_servers.txt
 https://hosts-file.net/emd.txt
 https://hosts-file.net/exp.txt
