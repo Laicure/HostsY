@@ -1,7 +1,7 @@
 # HostsY
 Just a simplified and multi-threaded revamp of [HostsX](http://github.com/Laicure/HostsX) for Windows.
 
-######Weekly Updated host file:
+######[Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) host file:
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
