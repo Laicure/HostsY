@@ -38,5 +38,7 @@ https://hosts-file.net/psh.txt
 https://hosts-file.net/pup.txt
 https://hosts-file.net/wrz.txt
 ---
+https://gitlab.com/gwillem/public-snippets/snippets/28813/raw
+---
 https://github.com/Free-Software-for-Android/AdAway/wiki/HostsSources
 ```
