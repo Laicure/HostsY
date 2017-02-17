@@ -6,9 +6,9 @@ Required:
 * -auto
   * Initializes Auto Generate State
   * Requires Data folder beside the app
-   * Must have the *sources.txt* that contains the host sources
-   * Optional: black.txt for domain blacklist
-   * Optional: white.txt for domain whitelist
+   * Must have the **sources.txt** that contains the _host sources_
+   * Optional: **black.txt** for domain _blacklist_
+   * Optional: **white.txt** for domain _whitelist_
 
 Optional:
 * -sort
