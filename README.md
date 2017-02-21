@@ -5,6 +5,7 @@ Just a simplified and multi-threaded revamp of [HostsX](http://github.com/Laicur
 Required:
 * -auto
   * Initializes Auto Generate State
+  * Directly replaces the hosts file in **C:\Windows\System32\drivers\etc**
   * Requires Data folder beside the app
    * Must have the **sources.txt** that contains the _host sources_
    * Optional: **black.txt** for domain _blacklist_
