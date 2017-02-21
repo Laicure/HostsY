@@ -628,7 +628,7 @@
                     If My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts") Then
                         Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo("C:\WINDOWS\system32\drivers\etc\hosts").Length)
                         LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
-                        rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
+                        rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & rtbLogs.Text
 
                         'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
                         If My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts") Then
