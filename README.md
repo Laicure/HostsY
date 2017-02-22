@@ -26,7 +26,7 @@ https://bitbucket.org/Laicure/publicview/downloads/hosts
 
 ######You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
-http://pgl.yoyo.org/as/serverlist.php?hostformat=hosts;showintro=0
+https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts;showintro=0
 https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 http://someonewhocares.org/hosts/zero/hosts
 http://winhelp2002.mvps.org/hosts.txt
