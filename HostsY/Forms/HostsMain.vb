@@ -116,10 +116,15 @@
                     SourceHash.Clear()
                     SourceHash.TrimExcess()
                     For y As Integer = 0 To arrTempX.Count - 1
+                        Dim urx As Uri = Nothing
                         If arrTempX(y).Contains(" #") Then
-                            SourceHash.Add(Microsoft.VisualBasic.Left(arrTempX(y), arrTempX(y).IndexOf(" #")).Trim)
+                            urx = New Uri("http://" & Microsoft.VisualBasic.Left(arrTempX(y), arrTempX(y).IndexOf(" #")).Trim)
                         Else
-                            SourceHash.Add(arrTempX(y).Trim)
+                            urx = New Uri("http://" & arrTempX(y).Trim)
+                        End If
+                        Dim SafeHost As String = urx.DnsSafeHost
+                        If Not String.IsNullOrWhiteSpace(SafeHost) Then
+                            SourceHash.Add(urx.DnsSafeHost)
                         End If
                     Next
                     Erase arrTempX
@@ -386,10 +391,15 @@
                             Exit Sub
                         End If
 
+                        Dim urx As Uri = Nothing
                         If arrTempX(y).Contains(" #") Then
-                            SourceHash.Add(Microsoft.VisualBasic.Left(arrTempX(y), arrTempX(y).IndexOf(" #")).Trim)
+                            urx = New Uri("http://" & Microsoft.VisualBasic.Left(arrTempX(y), arrTempX(y).IndexOf(" #")).Trim)
                         Else
-                            SourceHash.Add(arrTempX(y).Trim)
+                            urx = New Uri("http://" & arrTempX(y).Trim)
+                        End If
+                        Dim SafeHost As String = urx.DnsSafeHost
+                        If Not String.IsNullOrWhiteSpace(SafeHost) Then
+                            SourceHash.Add(urx.DnsSafeHost)
                         End If
                     Next
                     Erase arrTempX
