@@ -26,6 +26,7 @@ https://bitbucket.org/Laicure/publicview/downloads/hosts
 
 ######You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
+https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
 https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/SpotifyAds/hosts
 https://raw.githubusercontent.com/StevenBlack/hosts/master/data/StevenBlack/hosts
