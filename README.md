@@ -26,20 +26,20 @@ https://bitbucket.org/Laicure/publicview/downloads/hosts
 
 ######You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
-https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts;showintro=0
-https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
-http://someonewhocares.org/hosts/zero/hosts
-http://winhelp2002.mvps.org/hosts.txt
-http://www.malwaredomainlist.com/hostslist/hosts.txt
-https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
-https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
-https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Dead/hosts
-https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
-https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt
-https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
-https://raw.githubusercontent.com/StevenBlack/hosts/master/data/StevenBlack/hosts
-https://raw.githubusercontent.com/FadeMind/hosts.extras/master/SpotifyAds/hosts
 https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/SpotifyAds/hosts
+https://raw.githubusercontent.com/StevenBlack/hosts/master/data/StevenBlack/hosts
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
+https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Dead/hosts
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
+https://www.malwaredomainlist.com/hostslist/hosts.txt
+http://winhelp2002.mvps.org/hosts.txt
+http://someonewhocares.org/hosts/zero/hosts
+https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
+https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 ```
 ######Other Sources:
 ```
