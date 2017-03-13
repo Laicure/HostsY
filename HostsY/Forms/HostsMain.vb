@@ -54,8 +54,8 @@
 
         '########################## Start ##########################
         SourceL = My.Computer.FileSystem.ReadAllText(dataSource & "\sources.txt").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
-        WhiteL = My.Computer.FileSystem.ReadAllText(dataSource & "\white.txt").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
-        BlackL = My.Computer.FileSystem.ReadAllText(dataSource & "\black.txt").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
+        WhiteL = My.Computer.FileSystem.ReadAllText(dataSource & "\white.txt").Replace(" ", "").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
+        BlackL = My.Computer.FileSystem.ReadAllText(dataSource & "\black.txt").Replace(" ", "").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
 
         startExec = Now
         'Init Logging
@@ -73,11 +73,11 @@
 
         Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & Logg
         'Validate whitelist
-        Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+        Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
 
         Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & Logg
         'Validate and match blacklist
-        Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+        Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
 
         'Major Hashset
         Dim UniHash As New HashSet(Of String)
@@ -117,14 +117,25 @@
                     SourceHash.TrimExcess()
                     For y As Integer = 0 To arrTempX.Count - 1
                         Dim urx As Uri = Nothing
+                        Dim urxError As Boolean = False
                         If arrTempX(y).Contains(" #") Then
-                            urx = New Uri("http://" & Microsoft.VisualBasic.Left(arrTempX(y), arrTempX(y).IndexOf(" #")).Trim)
+                            Try
+                                urx = New Uri("http://" & Microsoft.VisualBasic.Left(arrTempX(y), arrTempX(y).IndexOf(" #")).Trim)
+                            Catch ex As Exception
+                                urxError = True
+                            End Try
                         Else
-                            urx = New Uri("http://" & arrTempX(y).Trim)
+                            Try
+                                urx = New Uri("http://" & arrTempX(y).Trim)
+                            Catch ex As Exception
+                                urxError = True
+                            End Try
                         End If
-                        Dim SafeHost As String = urx.DnsSafeHost
-                        If Not String.IsNullOrWhiteSpace(SafeHost) Then
-                            SourceHash.Add(urx.DnsSafeHost)
+                        If Not urxError Then
+                            Dim SafeHost As String = urx.DnsSafeHost
+                            If Not String.IsNullOrWhiteSpace(SafeHost) Then
+                                SourceHash.Add(SafeHost)
+                            End If
                         End If
                     Next
                     Erase arrTempX
@@ -291,8 +302,8 @@
         butGenerate.Text = "Cancel Generation"
         LbReset.Enabled = False
         SourceL = rtbSources.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
-        WhiteL = rtbWhites.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
-        BlackL = rtbBlacks.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
+        WhiteL = rtbWhites.Text.Replace(" ", "").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
+        BlackL = rtbBlacks.Text.Replace(" ", "").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
         bgGenerate.RunWorkerAsync()
     End Sub
 
@@ -324,7 +335,7 @@
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Validate whitelist
-        Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+        Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
         LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist [" & WhiteList.Count & "]", MethodInvoker))
         rtbWhites.Invoke(DirectCast(Sub() rtbWhites.Text = String.Join(vbCrLf, WhiteList), MethodInvoker))
 
@@ -335,7 +346,7 @@
 
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Validate and match blacklist
-        Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) StrConv(System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, ""), " {2,}", " ").Trim, VbStrConv.Lowercase)).Where(Function(x) Uri.TryCreate("http://" & x, UriKind.Absolute, Nothing)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+        Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
         LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist [" & BlackList.Count & "]", MethodInvoker))
         rtbBlacks.Invoke(DirectCast(Sub() rtbBlacks.Text = String.Join(vbCrLf, BlackList), MethodInvoker))
 
@@ -392,14 +403,25 @@
                         End If
 
                         Dim urx As Uri = Nothing
+                        Dim urxError As Boolean = False
                         If arrTempX(y).Contains(" #") Then
-                            urx = New Uri("http://" & Microsoft.VisualBasic.Left(arrTempX(y), arrTempX(y).IndexOf(" #")).Trim)
+                            Try
+                                urx = New Uri("http://" & Microsoft.VisualBasic.Left(arrTempX(y), arrTempX(y).IndexOf(" #")).Trim)
+                            Catch ex As Exception
+                                urxError = True
+                            End Try
                         Else
-                            urx = New Uri("http://" & arrTempX(y).Trim)
+                            Try
+                                urx = New Uri("http://" & arrTempX(y).Trim)
+                            Catch ex As Exception
+                                urxError = True
+                            End Try
                         End If
-                        Dim SafeHost As String = urx.DnsSafeHost
-                        If Not String.IsNullOrWhiteSpace(SafeHost) Then
-                            SourceHash.Add(urx.DnsSafeHost)
+                        If Not urxError Then
+                            Dim SafeHost As String = urx.DnsSafeHost
+                            If Not String.IsNullOrWhiteSpace(SafeHost) Then
+                                SourceHash.Add(SafeHost)
+                            End If
                         End If
                     Next
                     Erase arrTempX
