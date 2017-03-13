@@ -10,6 +10,13 @@ Required:
    * Must have the **sources.txt** that contains the _host sources_
    * Optional: **black.txt** for domain _blacklist_
    * Optional: **white.txt** for domain _whitelist_
+   ```
+HostsY.exe
+Data
+\black.txt
+\source.txt
+\white.txt
+   ```
 
 Optional:
 * -sort
