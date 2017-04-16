@@ -30,7 +30,10 @@ Optional:
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
-
+###### My custom blacklist
+```
+https://raw.githubusercontent.com/Laicure/HostsY/master/custHost.txt
+```
 ###### You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
 https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
