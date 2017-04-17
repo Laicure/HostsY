@@ -32,7 +32,7 @@ https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
 ###### My custom blacklist
 ```
-https://raw.githubusercontent.com/Laicure/HostsY/master/custHost.txt
+https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 ```
 ###### You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
