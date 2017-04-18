@@ -1,30 +1,40 @@
 # HostsY
 Just a simplified and multi-threaded revamp of [HostsX](http://github.com/Laicure/HostsX) for Windows.
 
-######Auto Parameters:
+###### Auto Parameters:
 Required:
-* -auto
-  * Initializes Auto Generate State
-  * Directly replaces the hosts file in **C:\Windows\System32\drivers\etc**
-  * Requires Data folder beside the app
-   * Must have the **sources.txt** that contains the _host sources_
-   * Optional: **black.txt** for domain _blacklist_
-   * Optional: **white.txt** for domain _whitelist_
+* \-auto
+	* Initializes Auto Generate State
+	* Directly replaces the hosts file in **C:\\Windows\\System32\\drivers\\etc**
+	* Requires Data folder beside the app
+		* Must have the **sources.txt** that contains the _host sources_
+		* Optional: **black.txt** for domain _blacklist_
+		* Optional: **white.txt** for domain _whitelist_
+```
+HostsY.exe
+Data
+\black.txt
+\source.txt
+\white.txt
+```
 
 Optional:
-* -sort
-  * Sorts the Domains (ascending)
-* -tab
-  * Uses tab instead of spaces between Target IP and Domain Name
-* -logs
- * Generate generation logs; auto-generates a logs.txt file
+* \-sort
+	* Sorts the Domains (ascending)
+* \-tab
+	* Uses tab instead of spaces between Target IP and Domain Name
+* \-logs
+	* Generate generation logs; auto-generates a logs.txt file
 
-######[Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) host file:
+###### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) host file:
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
-
-######You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
+###### My custom blacklist
+```
+https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
+```
+###### You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
 https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
 https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
@@ -42,7 +52,7 @@ http://someonewhocares.org/hosts/zero/hosts
 https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 ```
-######Other Sources:
+###### Other Sources:
 ```
 http://hosts-file.net/ad_servers.txt
 http://hosts-file.net/emd.txt
