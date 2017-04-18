@@ -45,6 +45,7 @@ Partial Class HostsMain
         Me.fdBrowse = New System.Windows.Forms.FolderBrowserDialog()
         Me.tipper = New System.Windows.Forms.ToolTip(Me.components)
         Me.LbReset = New System.Windows.Forms.Label()
+        Me.chIPv6 = New System.Windows.Forms.CheckBox()
         Me.panLists.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -204,7 +205,7 @@ Partial Class HostsMain
         Me.chSort.Location = New System.Drawing.Point(278, 1)
         Me.chSort.Margin = New System.Windows.Forms.Padding(1)
         Me.chSort.Name = "chSort"
-        Me.chSort.Size = New System.Drawing.Size(180, 17)
+        Me.chSort.Size = New System.Drawing.Size(92, 17)
         Me.chSort.TabIndex = 9
         Me.chSort.TabStop = False
         Me.chSort.Text = "Sort Domains"
@@ -217,11 +218,11 @@ Partial Class HostsMain
         Me.chTabs.Location = New System.Drawing.Point(278, 20)
         Me.chTabs.Margin = New System.Windows.Forms.Padding(1)
         Me.chTabs.Name = "chTabs"
-        Me.chTabs.Size = New System.Drawing.Size(180, 17)
+        Me.chTabs.Size = New System.Drawing.Size(97, 17)
         Me.chTabs.TabIndex = 11
         Me.chTabs.TabStop = False
-        Me.chTabs.Text = "Use Tab instead of Spaces"
-        Me.tipper.SetToolTip(Me.chTabs, "Use Tab/Space between Target IP-Domain")
+        Me.chTabs.Text = "Split with Tabs"
+        Me.tipper.SetToolTip(Me.chTabs, "Use Tab between Target IP and Domain")
         Me.chTabs.UseVisualStyleBackColor = True
         '
         'Label1
@@ -311,12 +312,28 @@ Partial Class HostsMain
         Me.LbReset.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         Me.tipper.SetToolTip(Me.LbReset, "Restarts the app")
         '
+        'chIPv6
+        '
+        Me.chIPv6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.chIPv6.ForeColor = System.Drawing.Color.Gray
+        Me.chIPv6.Location = New System.Drawing.Point(407, 20)
+        Me.chIPv6.Margin = New System.Windows.Forms.Padding(1)
+        Me.chIPv6.Name = "chIPv6"
+        Me.chIPv6.Size = New System.Drawing.Size(51, 17)
+        Me.chIPv6.TabIndex = 17
+        Me.chIPv6.TabStop = False
+        Me.chIPv6.Text = "+IPv6"
+        Me.tipper.SetToolTip(Me.chIPv6, "[Experimental]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Add IPv6 variant to the list" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "converts the assigned Target IP (IP" & _
+        "v4) for IPv6 use" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(!! will bloat the generated hosts file !!)")
+        Me.chIPv6.UseVisualStyleBackColor = True
+        '
         'HostsMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(784, 511)
+        Me.Controls.Add(Me.chIPv6)
         Me.Controls.Add(Me.LbReset)
         Me.Controls.Add(Me.LbAbout)
         Me.Controls.Add(Me.LbStatus)
@@ -367,4 +384,5 @@ Partial Class HostsMain
     Friend WithEvents fdBrowse As System.Windows.Forms.FolderBrowserDialog
     Friend WithEvents tipper As System.Windows.Forms.ToolTip
     Friend WithEvents LbReset As System.Windows.Forms.Label
+    Friend WithEvents chIPv6 As System.Windows.Forms.CheckBox
 End Class

@@ -4,6 +4,7 @@
     Dim BlackL() As String = Nothing
     Dim startExec As DateTime = Now
 
+#Region "Auto"
     Protected Overrides Sub SetVisibleCore(ByVal value As Boolean)
         If Not Me.IsHandleCreated Then
             Me.CreateHandle()
@@ -23,6 +24,7 @@
         Dim tabb As Boolean = argg.Contains("-tab")
         Dim sortt As Boolean = argg.Contains("-sort")
         Dim logger As Boolean = argg.Contains("-logs")
+        Dim IPv6ed As Boolean = argg.Contains("-IPv6")
 
         'Check Directory
         If Not My.Computer.FileSystem.DirectoryExists(dataSource) Then
@@ -201,6 +203,9 @@
         UniHash.TrimExcess()
         For i As Integer = 0 To arrTemp.Count - 1
             UniHash.Add(IIf(Not arrTemp(i).StartsWith("# ~"), TargetIP & IIf(tabb, vbTab, " ").ToString & arrTemp(i), arrTemp(i)).ToString)
+            If IPv6ed Then
+                UniHash.Add(IIf(Not arrTemp(i).StartsWith("# ~"), Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString & IIf(tabb, vbTab, " ").ToString & arrTemp(i), arrTemp(i)).ToString)
+            End If
         Next
         Erase arrTemp
 
@@ -222,6 +227,9 @@
             If BlackList.Count > 0 Then
                 .Add("# Blacklist [" & FormatNumber(BlackList.Count, 0) & "]")
                 .AddRange(BlackList.Select(Function(x) TargetIP & IIf(tabb, vbTab, " ").ToString & x))
+                If IPv6ed Then
+                    .AddRange(BlackList.Select(Function(x) Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString & IIf(tabb, vbTab, " ").ToString & x))
+                End If
                 .Add("")
             End If
             .Add("#" & IIf(sortt, " Sorted ", " ").ToString & "Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
@@ -249,6 +257,7 @@
 
         Environment.Exit(0)
     End Sub
+#End Region
 
     Private Sub HostsMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "HostsY v" & My.Application.Info.Version.ToString
@@ -288,6 +297,7 @@
         rtbBlacks.SelectionStart = 0
         chSort.Enabled = False
         chTabs.Enabled = False
+        chIPv6.Enabled = False
         txtTargetIP.ReadOnly = True
         LbSave.Cursor = Cursors.Default
         LbSave.Text = ""
@@ -502,6 +512,9 @@
             End If
 
             UniHash.Add(IIf(Not arrTemp(i).StartsWith("# ~"), TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i), arrTemp(i)).ToString)
+            If chIPv6.Checked Then
+                UniHash.Add(IIf(Not arrTemp(i).StartsWith("# ~"), Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString() & IIf(chTabs.Checked, vbTab, " ").ToString & arrTemp(i), arrTemp(i)).ToString)
+            End If
         Next
         Erase arrTemp
 
@@ -528,6 +541,9 @@
             If BlackList.Count > 0 Then
                 .Add("# Blacklist [" & FormatNumber(BlackList.Count, 0) & "]")
                 .AddRange(BlackList.Select(Function(x) TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & x))
+                If chIPv6.Checked Then
+                    .AddRange(BlackList.Select(Function(x) Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString() & IIf(chTabs.Checked, vbTab, " ").ToString & x))
+                End If
                 .Add("")
             End If
             .Add("#" & IIf(chSort.Checked, " Sorted ", " ").ToString & "Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
@@ -555,6 +571,7 @@
 
         chSort.Enabled = True
         chTabs.Enabled = True
+        chIPv6.Enabled = True
         txtTargetIP.ReadOnly = False
 
         butGenerate.Text = "Start Generation"
