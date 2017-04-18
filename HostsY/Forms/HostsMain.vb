@@ -236,6 +236,7 @@
             .AddRange(UniHash)
             .Add("")
             .Add("# End")
+            .Add("")
         End With
 
         'Save; needs admin privileges
@@ -550,6 +551,7 @@
             .AddRange(UniHash)
             .Add("")
             .Add("# End")
+            .Add("")
         End With
 
         If bgGenerate.CancellationPending Then

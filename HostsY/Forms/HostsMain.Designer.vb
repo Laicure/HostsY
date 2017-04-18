@@ -201,6 +201,8 @@ Partial Class HostsMain
         '
         'chSort
         '
+        Me.chSort.Checked = True
+        Me.chSort.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chSort.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chSort.Location = New System.Drawing.Point(278, 1)
         Me.chSort.Margin = New System.Windows.Forms.Padding(1)
@@ -214,6 +216,8 @@ Partial Class HostsMain
         '
         'chTabs
         '
+        Me.chTabs.Checked = True
+        Me.chTabs.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chTabs.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chTabs.Location = New System.Drawing.Point(278, 20)
         Me.chTabs.Margin = New System.Windows.Forms.Padding(1)
@@ -315,7 +319,7 @@ Partial Class HostsMain
         'chIPv6
         '
         Me.chIPv6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.chIPv6.ForeColor = System.Drawing.Color.Gray
+        Me.chIPv6.ForeColor = System.Drawing.Color.DarkGray
         Me.chIPv6.Location = New System.Drawing.Point(407, 20)
         Me.chIPv6.Margin = New System.Windows.Forms.Padding(1)
         Me.chIPv6.Name = "chIPv6"
