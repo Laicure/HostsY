@@ -32,7 +32,7 @@ Optional:
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
-###### My custom blacklist
+###### My custom blacklist (domains I stumble upon that not in the lists below)
 ```
 https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 ```
