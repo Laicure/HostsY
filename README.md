@@ -26,7 +26,7 @@ Optional:
 * \-logs
 	* Generate generation logs; auto-generates a logs.txt file
 * \-IPv6
-	* Generate with IPv6 variant
+	* [experimental] Generate with IPv6 variant (doubles the file size)
 
 ###### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) host file:
 ```
