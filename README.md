@@ -25,6 +25,8 @@ Optional:
 	* Uses tab instead of spaces between Target IP and Domain Name
 * \-logs
 	* Generate generation logs; auto-generates a logs.txt file
+* \-IPv6
+	* Generate with IPv6 variant
 
 ###### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) host file:
 ```
