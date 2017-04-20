@@ -48,14 +48,18 @@ https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Dead/hosts
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
-https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 http://www.malwaredomainlist.com/hostslist/hosts.txt
 http://winhelp2002.mvps.org/hosts.txt
 http://someonewhocares.org/hosts/zero/hosts
 https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
+https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 ```
-###### Other Sources:
+###### (Weekly Updated) Generated hosts file from the StevenBlack/hosts' sources:
+```
+https://bitbucket.org/Laicure/publicview/downloads/hosts2
+```
+###### Other Legit Sources:
 ```
 http://hosts-file.net/ad_servers.txt
 http://hosts-file.net/emd.txt
