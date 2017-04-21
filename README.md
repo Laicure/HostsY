@@ -20,7 +20,7 @@ Data
 
 Optional:
 * \-sort
-	* Sorts the Domains (ascending)
+	* Sorts the Domains (ascending; source-wise)
 * \-tab
 	* Uses tab instead of spaces between Target IP and Domain Name
 * \-logs
@@ -29,6 +29,8 @@ Optional:
 	* [experimental] Generate with IPv6 variant (doubles the file size)
 * \-min
 	* removes most of the generated comments
+* \-zip
+	* Generates a zipped hosts file inside the Data folder
 
 ###### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) host file:
 ```
