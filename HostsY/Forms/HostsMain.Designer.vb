@@ -220,7 +220,7 @@ Partial Class HostsMain
         Me.chTabs.Location = New System.Drawing.Point(278, 20)
         Me.chTabs.Margin = New System.Windows.Forms.Padding(1)
         Me.chTabs.Name = "chTabs"
-        Me.chTabs.Size = New System.Drawing.Size(97, 17)
+        Me.chTabs.Size = New System.Drawing.Size(100, 17)
         Me.chTabs.TabIndex = 11
         Me.chTabs.TabStop = False
         Me.chTabs.Text = "Split with Tabs"
