@@ -25,7 +25,8 @@
         Dim sortt As Boolean = argg.Contains("-sort")
         Dim logger As Boolean = argg.Contains("-logs")
         Dim IPv6ed As Boolean = argg.Contains("-IPv6")
-        Dim Minn As Boolean = argg.Contains("-min")
+        Dim minn As Boolean = argg.Contains("-min")
+        Dim zipp As Boolean = argg.Contains("-zip")
 
         'Check Directory
         If Not My.Computer.FileSystem.DirectoryExists(dataSource) Then
@@ -35,8 +36,8 @@
         End If
 
         'Check sources
-        If Not My.Computer.FileSystem.FileExists(dataSource & "\sources.txt") Then
-            My.Computer.FileSystem.WriteAllText(dataSource & "\sources.txt", "", False)
+        If Not My.Computer.FileSystem.FileExists(dataSource & "\source.txt") Then
+            My.Computer.FileSystem.WriteAllText(dataSource & "\source.txt", "", False)
             Environment.Exit(2)
             Exit Sub
         End If
@@ -56,7 +57,7 @@
         'End If
 
         '########################## Start ##########################
-        SourceL = My.Computer.FileSystem.ReadAllText(dataSource & "\sources.txt").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
+        SourceL = My.Computer.FileSystem.ReadAllText(dataSource & "\source.txt").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
         WhiteL = My.Computer.FileSystem.ReadAllText(dataSource & "\white.txt").Replace(" ", "").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
         BlackL = My.Computer.FileSystem.ReadAllText(dataSource & "\black.txt").Replace(" ", "").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
 
@@ -156,7 +157,7 @@
                         If sortt Then
                             SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
                         End If
-                        If Not Minn Then
+                        If Not minn Then
                             UniHash.Add("# ~Source @" & i + 1)
                             SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
                         End If
@@ -215,7 +216,7 @@
         Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Finalizing Output" & vbCrLf & Logg
         'Append Entry Count and etc~
         Dim FinalList As New List(Of String)
-        If Minn Then
+        If minn Then
             With FinalList
                 .Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
                 .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
@@ -271,6 +272,24 @@
         Catch ex As Exception
             Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
         End Try
+
+        '-zip?
+        If zipp Then
+            Dim selPathhosts As String = dataSource & "\hosts_" & Format(Date.UtcNow, "yyyyMMddHHmmssffff") & ".zip"
+            Try
+                Dim tempoPath As String = "C:\Users\" & Environment.UserName & "\AppData\Local\Temp\hostz"
+                If Not My.Computer.FileSystem.DirectoryExists(tempoPath) Then
+                    My.Computer.FileSystem.CreateDirectory(tempoPath)
+                End If
+                My.Computer.FileSystem.WriteAllText(tempoPath & "\hosts", String.Join(vbCrLf, FinalList), False)
+                IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
+
+                Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
+                Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & dataSource & " (" & sizee & ")" & vbCrLf & Logg
+            Catch ex As Exception
+                Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
+            End Try
+        End If
 
         Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & Logg
 
