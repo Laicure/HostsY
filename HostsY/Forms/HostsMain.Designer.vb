@@ -216,8 +216,6 @@ Partial Class HostsMain
         '
         'chTabs
         '
-        Me.chTabs.Checked = True
-        Me.chTabs.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chTabs.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.chTabs.Location = New System.Drawing.Point(278, 20)
         Me.chTabs.Margin = New System.Windows.Forms.Padding(1)
