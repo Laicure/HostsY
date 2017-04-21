@@ -25,6 +25,7 @@
         Dim sortt As Boolean = argg.Contains("-sort")
         Dim logger As Boolean = argg.Contains("-logs")
         Dim IPv6ed As Boolean = argg.Contains("-IPv6")
+        Dim Minn As Boolean = argg.Contains("-min")
 
         'Check Directory
         If Not My.Computer.FileSystem.DirectoryExists(dataSource) Then
@@ -155,9 +156,11 @@
                         If sortt Then
                             SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
                         End If
-                        UniHash.Add("# ~Source @" & i + 1)
+                        If Not Minn Then
+                            UniHash.Add("# ~Source @" & i + 1)
+                            SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
+                        End If
                         UniHash.UnionWith(SourceHash)
-                        SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
                     End If
                 End If
             End Using
@@ -212,32 +215,52 @@
         Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Finalizing Output" & vbCrLf & Logg
         'Append Entry Count and etc~
         Dim FinalList As New List(Of String)
-        With FinalList
-            .Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
-            .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
-            .Add("# Generated using github.com/Laicure/HostsY")
-            .Add("")
-            .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
-            .AddRange(SourceList.Select(Function(x) "# " & x))
-            .Add("")
-            .Add("# Loopbacks")
-            .Add("127.0.0.1" & IIf(tabb, vbTab, " ").ToString & "localhost")
-            .Add("::1" & IIf(tabb, vbTab, " ").ToString & "localhost")
-            .Add("")
-            If BlackList.Count > 0 Then
-                .Add("# Blacklist [" & FormatNumber(BlackList.Count, 0) & "]")
-                .AddRange(BlackList.Select(Function(x) TargetIP & IIf(tabb, vbTab, " ").ToString & x))
-                If IPv6ed Then
-                    .AddRange(BlackList.Select(Function(x) Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString & IIf(tabb, vbTab, " ").ToString & x))
-                End If
+        If Minn Then
+            With FinalList
+                .Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
+                .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
                 .Add("")
-            End If
-            .Add("#" & IIf(sortt, " Sorted ", " ").ToString & "Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
-            .AddRange(UniHash)
-            .Add("")
-            .Add("# End")
-            .Add("")
-        End With
+                .Add("127.0.0.1" & IIf(tabb, vbTab, " ").ToString & "localhost")
+                .Add("::1" & IIf(tabb, vbTab, " ").ToString & "localhost")
+                .Add("")
+                If BlackList.Count > 0 Then
+                    .AddRange(BlackList.Select(Function(x) TargetIP & IIf(tabb, vbTab, " ").ToString & x))
+                    If IPv6ed Then
+                        .AddRange(BlackList.Select(Function(x) Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString & IIf(tabb, vbTab, " ").ToString & x))
+                    End If
+                    .Add("")
+                End If
+                .AddRange(UniHash)
+                .Add("")
+            End With
+        Else
+            With FinalList
+                .Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
+                .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+                .Add("# Generated using github.com/Laicure/HostsY")
+                .Add("")
+                .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
+                .AddRange(SourceList.Select(Function(x) "# " & x))
+                .Add("")
+                .Add("# Loopbacks")
+                .Add("127.0.0.1" & IIf(tabb, vbTab, " ").ToString & "localhost")
+                .Add("::1" & IIf(tabb, vbTab, " ").ToString & "localhost")
+                .Add("")
+                If BlackList.Count > 0 Then
+                    .Add("# Blacklist [" & FormatNumber(BlackList.Count, 0) & "]")
+                    .AddRange(BlackList.Select(Function(x) TargetIP & IIf(tabb, vbTab, " ").ToString & x))
+                    If IPv6ed Then
+                        .AddRange(BlackList.Select(Function(x) Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString & IIf(tabb, vbTab, " ").ToString & x))
+                    End If
+                    .Add("")
+                End If
+                .Add("#" & IIf(sortt, " Sorted ", " ").ToString & "Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
+                .AddRange(UniHash)
+                .Add("")
+                .Add("# End")
+                .Add("")
+            End With
+        End If
 
         'Save; needs admin privileges
         Try
@@ -299,10 +322,10 @@
         chSort.Enabled = False
         chTabs.Enabled = False
         chIPv6.Enabled = False
+        chMin.Enabled = False
         txtTargetIP.ReadOnly = True
         LbSave.Cursor = Cursors.Default
         LbSave.Text = ""
-        tipper.SetToolTip(LbSave, Nothing)
 
         'reset content
         rtbLogs.Clear()
@@ -453,9 +476,11 @@
                         If chSort.Checked Then
                             SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
                         End If
-                        UniHash.Add("# ~Source @" & i + 1)
+                        If Not chMin.Checked Then
+                            UniHash.Add("# ~Source @" & i + 1)
+                            SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
+                        End If
                         UniHash.UnionWith(SourceHash)
-                        SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
                     End If
                 End If
             End Using
@@ -527,32 +552,52 @@
         rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
         'Append Entry Count and etc~
         Dim FinalList As New List(Of String)
-        With FinalList
-            .Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
-            .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
-            .Add("# Generated using github.com/Laicure/HostsY")
-            .Add("")
-            .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
-            .AddRange(SourceList.Select(Function(x) "# " & x))
-            .Add("")
-            .Add("# Loopbacks")
-            .Add("127.0.0.1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
-            .Add("::1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
-            .Add("")
-            If BlackList.Count > 0 Then
-                .Add("# Blacklist [" & FormatNumber(BlackList.Count, 0) & "]")
-                .AddRange(BlackList.Select(Function(x) TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & x))
-                If chIPv6.Checked Then
-                    .AddRange(BlackList.Select(Function(x) Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString() & IIf(chTabs.Checked, vbTab, " ").ToString & x))
-                End If
+        If chMin.Checked Then
+            With FinalList
+                .Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
+                .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
                 .Add("")
-            End If
-            .Add("#" & IIf(chSort.Checked, " Sorted ", " ").ToString & "Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
-            .AddRange(UniHash)
-            .Add("")
-            .Add("# End")
-            .Add("")
-        End With
+                .Add("127.0.0.1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
+                .Add("::1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
+                .Add("")
+                If BlackList.Count > 0 Then
+                    .AddRange(BlackList.Select(Function(x) TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & x))
+                    If chIPv6.Checked Then
+                        .AddRange(BlackList.Select(Function(x) Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString() & IIf(chTabs.Checked, vbTab, " ").ToString & x))
+                    End If
+                    .Add("")
+                End If
+                .AddRange(UniHash)
+                .Add("")
+            End With
+        Else
+            With FinalList
+                .Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
+                .Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+                .Add("# Generated using github.com/Laicure/HostsY")
+                .Add("")
+                .Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
+                .AddRange(SourceList.Select(Function(x) "# " & x))
+                .Add("")
+                .Add("# Loopbacks")
+                .Add("127.0.0.1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
+                .Add("::1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
+                .Add("")
+                If BlackList.Count > 0 Then
+                    .Add("# Blacklist [" & FormatNumber(BlackList.Count, 0) & "]")
+                    .AddRange(BlackList.Select(Function(x) TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & x))
+                    If chIPv6.Checked Then
+                        .AddRange(BlackList.Select(Function(x) Net.IPAddress.Parse(TargetIP).MapToIPv6.ToString() & IIf(chTabs.Checked, vbTab, " ").ToString & x))
+                    End If
+                    .Add("")
+                End If
+                .Add("#" & IIf(chSort.Checked, " Sorted ", " ").ToString & "Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
+                .AddRange(UniHash)
+                .Add("")
+                .Add("# End")
+                .Add("")
+            End With
+        End If
 
         If bgGenerate.CancellationPending Then
             e.Cancel = True
@@ -574,6 +619,7 @@
         chSort.Enabled = True
         chTabs.Enabled = True
         chIPv6.Enabled = True
+        chMin.Enabled = True
         txtTargetIP.ReadOnly = False
 
         butGenerate.Text = "Start Generation"
@@ -591,7 +637,6 @@
 
                 LbSave.Cursor = Cursors.Hand
                 LbSave.Text = "Click here to Save to a Location"
-                tipper.SetToolTip(LbSave, "Right-click to save to C:\WINDOWS\system32\drivers\etc")
             End If
             rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & rtbLogs.Text
             rtbOuts.SelectionStart = 0
@@ -648,48 +693,78 @@
         If e.Button = Windows.Forms.MouseButtons.Left Then
             If LbSave.Cursor = Cursors.Hand Then
                 If fdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    Dim selPathhosts As String = fdBrowse.SelectedPath & "\hosts"
                     Dim succ As Boolean = False
                     Try
-                        rtbOuts.SaveFile(fdBrowse.SelectedPath & "\hosts", RichTextBoxStreamType.PlainText)
+                        rtbOuts.SaveFile(selPathhosts, RichTextBoxStreamType.PlainText)
                         succ = True
                     Catch ex As Exception
                         rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
                     End Try
 
                     If succ Then
-                        If My.Computer.FileSystem.FileExists(fdBrowse.SelectedPath & "\hosts") Then
-                            Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(fdBrowse.SelectedPath & "\hosts").Length)
+                        If My.Computer.FileSystem.FileExists(selPathhosts) Then
+                            Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
                             LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
                             rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
                             'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
-                            Process.Start("explorer", "/select, " & fdBrowse.SelectedPath & "\hosts")
+                            Process.Start("explorer", "/select, " & selPathhosts)
                         End If
                     End If
                 End If
             End If
         ElseIf e.Button = Windows.Forms.MouseButtons.Right Then
             If LbSave.Cursor = Cursors.Hand Then
-                If (MessageBox.Show(IIf(My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts"), "Active hosts file detected!" & vbCrLf & "Are you sure to replace your active hosts file?", "No active hosts file detected!" & vbCrLf & "Are you sure to add a hosts file to your system?").ToString & vbCrLf & vbCrLf & "DNSCache must be disabled whenever using a large hosts file (~35k+ Entries) or else, your system will be crippled to no internet at all (for about an hour+)!", "Confirm Replace!", MessageBoxButtons.YesNo, MessageBoxIcon.Question)) = Windows.Forms.DialogResult.No Then
+                Dim syshostsPath As String = "C:\WINDOWS\system32\drivers\etc\hosts"
+                If MessageBox.Show(IIf(My.Computer.FileSystem.FileExists(syshostsPath), "Active hosts file detected!" & vbCrLf & "Are you sure to replace your active hosts file?", "No active hosts file detected!" & vbCrLf & "Are you sure to add a hosts file to your system?").ToString & vbCrLf & vbCrLf & "DNSCache must be disabled whenever using a large hosts file (~35k+ Entries) or else, your system will be crippled to no internet at all (for about an hour+)!", "Confirm Replace!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
                     Exit Sub
                 End If
 
                 Dim succ As Boolean = False
                 Try
-                    rtbOuts.SaveFile("C:\WINDOWS\system32\drivers\etc\hosts", RichTextBoxStreamType.PlainText)
+                    rtbOuts.SaveFile(syshostsPath, RichTextBoxStreamType.PlainText)
                     succ = True
                 Catch ex As Exception
                     rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
                 End Try
 
                 If succ Then
-                    If My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts") Then
-                        Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo("C:\WINDOWS\system32\drivers\etc\hosts").Length)
+                    If My.Computer.FileSystem.FileExists(syshostsPath) Then
+                        Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(syshostsPath).Length)
                         LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
                         rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & rtbLogs.Text
 
                         'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
-                        If My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts") Then
+                        If My.Computer.FileSystem.FileExists(syshostsPath) Then
                             Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
+                        End If
+                    End If
+                End If
+            End If
+        ElseIf e.Button = Windows.Forms.MouseButtons.Middle Then
+            If LbSave.Cursor = Cursors.Hand Then
+                If fdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    Dim selPathhosts As String = fdBrowse.SelectedPath & "\hosts_" & Format(Date.UtcNow, "yyyyMMddHHmmssffff") & ".zip"
+                    Dim succ As Boolean = False
+                    Try
+                        Dim tempoPath As String = "C:\Users\" & Environment.UserName & "\AppData\Local\Temp\hostz"
+                        If Not My.Computer.FileSystem.DirectoryExists(tempoPath) Then
+                            My.Computer.FileSystem.CreateDirectory(tempoPath)
+                        End If
+                        rtbOuts.SaveFile(tempoPath & "\hosts", RichTextBoxStreamType.PlainText)
+                        IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
+                        succ = True
+                    Catch ex As Exception
+                        rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
+                    End Try
+
+                    If succ Then
+                        If My.Computer.FileSystem.FileExists(selPathhosts) Then
+                            Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
+                            LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
+                            rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
+                            'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
+                            Process.Start("explorer", "/select, " & selPathhosts)
                         End If
                     End If
                 End If

@@ -46,6 +46,7 @@ Partial Class HostsMain
         Me.tipper = New System.Windows.Forms.ToolTip(Me.components)
         Me.LbReset = New System.Windows.Forms.Label()
         Me.chIPv6 = New System.Windows.Forms.CheckBox()
+        Me.chMin = New System.Windows.Forms.CheckBox()
         Me.panLists.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -207,10 +208,10 @@ Partial Class HostsMain
         Me.chSort.Location = New System.Drawing.Point(278, 1)
         Me.chSort.Margin = New System.Windows.Forms.Padding(1)
         Me.chSort.Name = "chSort"
-        Me.chSort.Size = New System.Drawing.Size(92, 17)
+        Me.chSort.Size = New System.Drawing.Size(69, 17)
         Me.chSort.TabIndex = 9
         Me.chSort.TabStop = False
-        Me.chSort.Text = "Sort Domains"
+        Me.chSort.Text = "Sort (asc)"
         Me.tipper.SetToolTip(Me.chSort, "Sort domains by Ascending order")
         Me.chSort.UseVisualStyleBackColor = True
         '
@@ -220,10 +221,10 @@ Partial Class HostsMain
         Me.chTabs.Location = New System.Drawing.Point(278, 20)
         Me.chTabs.Margin = New System.Windows.Forms.Padding(1)
         Me.chTabs.Name = "chTabs"
-        Me.chTabs.Size = New System.Drawing.Size(97, 17)
+        Me.chTabs.Size = New System.Drawing.Size(45, 17)
         Me.chTabs.TabIndex = 11
         Me.chTabs.TabStop = False
-        Me.chTabs.Text = "Split with Tabs"
+        Me.chTabs.Text = "Tabs"
         Me.tipper.SetToolTip(Me.chTabs, "Use Tab between Target IP and Domain")
         Me.chTabs.UseVisualStyleBackColor = True
         '
@@ -248,7 +249,11 @@ Partial Class HostsMain
         Me.LbSave.Name = "LbSave"
         Me.LbSave.Size = New System.Drawing.Size(318, 13)
         Me.LbSave.TabIndex = 13
+        Me.LbSave.Text = "Waiting for Input..."
         Me.LbSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.tipper.SetToolTip(Me.LbSave, "Left-Click: Save to a specified folder" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Right-Click: Overwrite system hosts file " & _
+        "(might need admin privileges)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Middle-Click: Generate zip file to a specified fo" & _
+        "lder")
         '
         'bgGenerate
         '
@@ -317,7 +322,7 @@ Partial Class HostsMain
         'chIPv6
         '
         Me.chIPv6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.chIPv6.ForeColor = System.Drawing.Color.DarkGray
+        Me.chIPv6.ForeColor = System.Drawing.Color.Red
         Me.chIPv6.Location = New System.Drawing.Point(407, 20)
         Me.chIPv6.Margin = New System.Windows.Forms.Padding(1)
         Me.chIPv6.Name = "chIPv6"
@@ -329,12 +334,28 @@ Partial Class HostsMain
         "v4) for IPv6 use" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(!! will bloat the generated hosts file !!)")
         Me.chIPv6.UseVisualStyleBackColor = True
         '
+        'chMin
+        '
+        Me.chMin.Checked = True
+        Me.chMin.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.chMin.Location = New System.Drawing.Point(394, 1)
+        Me.chMin.Margin = New System.Windows.Forms.Padding(1)
+        Me.chMin.Name = "chMin"
+        Me.chMin.Size = New System.Drawing.Size(64, 17)
+        Me.chMin.TabIndex = 18
+        Me.chMin.TabStop = False
+        Me.chMin.Text = "Minimal"
+        Me.tipper.SetToolTip(Me.chMin, "Only the Entry Count and Generation Time comments are included at the top")
+        Me.chMin.UseVisualStyleBackColor = True
+        '
         'HostsMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(784, 511)
+        Me.Controls.Add(Me.chMin)
         Me.Controls.Add(Me.chIPv6)
         Me.Controls.Add(Me.LbReset)
         Me.Controls.Add(Me.LbAbout)
@@ -387,4 +408,5 @@ Partial Class HostsMain
     Friend WithEvents tipper As System.Windows.Forms.ToolTip
     Friend WithEvents LbReset As System.Windows.Forms.Label
     Friend WithEvents chIPv6 As System.Windows.Forms.CheckBox
+    Friend WithEvents chMin As System.Windows.Forms.CheckBox
 End Class
