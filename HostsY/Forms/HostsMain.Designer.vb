@@ -249,7 +249,7 @@ Partial Class HostsMain
         Me.LbSave.Name = "LbSave"
         Me.LbSave.Size = New System.Drawing.Size(318, 13)
         Me.LbSave.TabIndex = 13
-        Me.LbSave.Text = "Waiting for Input..."
+        Me.LbSave.Text = "..."
         Me.LbSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.tipper.SetToolTip(Me.LbSave, "Left-Click: Save to a specified folder" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Right-Click: Overwrite system hosts file " & _
         "(might need admin privileges)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Middle-Click: Generate zip file to a specified fo" & _

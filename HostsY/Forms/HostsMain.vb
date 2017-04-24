@@ -344,6 +344,7 @@
         chMin.Enabled = False
         txtTargetIP.ReadOnly = True
         LbSave.Cursor = Cursors.Default
+        LbSave.Text = "..."
 
         'reset content
         rtbLogs.Clear()
