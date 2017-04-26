@@ -32,13 +32,9 @@ Optional:
 * \-zip
 	* Generates a zipped hosts file inside the Data folder
 
-###### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) host file:
+###### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) custom host file (87k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
-```
-###### My custom blacklist (domains I stumble upon that are not in the main sources below):
-```
-https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 ```
 ###### You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
@@ -59,11 +55,12 @@ https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 ```
-###### (Weekly Updated) Generated hosts file from the StevenBlack/hosts' sources:
+###### (Weekly Updated) Generated hosts file from StevenBlack/hosts' sources with no whitelist (35k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts2
 ```
-###### Other Legit Sources:
+
+###### hpHosts' _Individual Classifications_:
 ```
 http://hosts-file.net/ad_servers.txt
 http://hosts-file.net/emd.txt
@@ -77,6 +74,9 @@ http://hosts-file.net/pha.txt
 http://hosts-file.net/psh.txt
 http://hosts-file.net/pup.txt
 http://hosts-file.net/wrz.txt
----
-https://github.com/Free-Software-for-Android/AdAway/wiki/HostsSources
 ```
+###### (Weekly Updated) Generated hosts file from [hpHosts' _Individual Classifications_](https://hosts-file.net/?s=Download) sources with no whitelist (646k+ entries):
+```
+https://bitbucket.org/Laicure/publicview/downloads/hosts3
+```
+###### Other sources can be found from AdAway's [wiki](https://github.com/AdAway/AdAway/wiki/HostsSources)
