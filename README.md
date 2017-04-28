@@ -32,11 +32,11 @@ Optional:
 * \-zip
 	* Generates a zipped hosts file inside the Data folder
 
-###### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) custom host file (87k+ entries):
+##### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) custom host file with whitelist  (87k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
-###### You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
+##### You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources with no whitelist:
 ```
 https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
 https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
@@ -55,7 +55,7 @@ https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 ```
-###### (Weekly Updated) Generated hosts file from StevenBlack/hosts' sources with no whitelist (35k+ entries):
+##### (Weekly Updated) Generated hosts file from StevenBlack/hosts' sources with no whitelist (35k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts2
 ```
@@ -75,7 +75,7 @@ http://hosts-file.net/psh.txt
 http://hosts-file.net/pup.txt
 http://hosts-file.net/wrz.txt
 ```
-###### (Weekly Updated) Generated hosts file from [hpHosts' _Individual Classifications_](https://hosts-file.net/?s=Download) sources with no whitelist (646k+ entries):
+##### (Weekly Updated) Generated hosts file from [hpHosts' _Individual Classifications_](https://hosts-file.net/?s=Download) sources with no whitelist (646k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts3
 ```
