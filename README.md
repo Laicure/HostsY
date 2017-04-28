@@ -32,6 +32,8 @@ Optional:
 * \-zip
 	* Generates a zipped hosts file inside the Data folder
 
+~~------------------------------~~
+
 ##### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) custom host file with whitelist  (87k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
