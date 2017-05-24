@@ -1,7 +1,7 @@
 # HostsY
 Just a simplified and multi-threaded revamp of [HostsX](http://github.com/Laicure/HostsX) for Windows.
 
-###### Auto Parameters:
+###### Auto Parameters (requires admin privileges):
 Required:
 * \-auto
 	* Initializes Auto Generate State
@@ -34,7 +34,7 @@ Optional:
 
 ~~------------------------------~~
 
-##### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) custom host file with whitelist  (87k+ entries):
+##### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) custom host file with whitelist  (88k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
@@ -57,7 +57,7 @@ https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 ```
-##### (Weekly Updated) Generated hosts file from StevenBlack/hosts' sources with no whitelist (35k+ entries):
+##### (Weekly Updated) Generated hosts file from StevenBlack/hosts' sources with no whitelist (36k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts2
 ```
@@ -77,7 +77,7 @@ http://hosts-file.net/psh.txt
 http://hosts-file.net/pup.txt
 http://hosts-file.net/wrz.txt
 ```
-##### (Weekly Updated) Generated hosts file from [hpHosts' _Individual Classifications_](https://hosts-file.net/?s=Download) sources with no whitelist (646k+ entries):
+##### (Weekly Updated) Generated hosts file from [hpHosts' _Individual Classifications_](https://hosts-file.net/?s=Download) sources with no whitelist (664k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts3
 ```
