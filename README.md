@@ -34,6 +34,10 @@ Optional:
 
 ~~------------------------------~~
 
+Added [my custom list](https://github.com/Laicure/HostsY/blob/master/custHost) here; for concerns, please don't hesitate to create a [new issue](https://github.com/Laicure/HostsY/issues) :D
+
+~~------------------------------~~
+
 ##### [Weekly Updated](https://forum.xda-developers.com/showpost.php?p=68978460&postcount=2) custom host file with whitelist  (88k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
