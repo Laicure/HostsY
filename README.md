@@ -34,7 +34,7 @@ Optional:
 
 ~~------------------------------~~
 
-Added [my custom list](https://github.com/Laicure/HostsY/blob/master/custHost) here; for concerns, please don't hesitate to create a [new issue](https://github.com/Laicure/HostsY/issues) :D
+Added [my custom list](https://github.com/Laicure/HostsY/blob/master/custHost) here (pop-ups, ads, malware sites that I stumble upon using the list [below](https://github.com/Laicure/HostsY#weekly-updated-custom-host-file-with-whitelist--88k-entries)); for concerns, please don't hesitate to create a [new issue](https://github.com/Laicure/HostsY/issues) :D
 
 ~~------------------------------~~
 
