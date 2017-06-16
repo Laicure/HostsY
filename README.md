@@ -42,7 +42,7 @@ Added [my custom list](https://github.com/Laicure/HostsY/blob/master/custHost) h
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
-##### You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources with no whitelist:
+##### You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
 https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
 https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
@@ -66,7 +66,7 @@ https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 https://bitbucket.org/Laicure/publicview/downloads/hosts2
 ```
 
-###### hpHosts' _Individual Classifications_:
+###### hpHosts' _Individual Classifications_ sources:
 ```
 http://hosts-file.net/ad_servers.txt
 http://hosts-file.net/emd.txt
@@ -84,5 +84,9 @@ http://hosts-file.net/wrz.txt
 ##### (Weekly Updated) Generated hosts file from [hpHosts' _Individual Classifications_](https://hosts-file.net/?s=Download) sources with no whitelist (664k+ entries):
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts3
+```
+##### (Weekly Updated) Generated hosts file from the sources above with no whitelist (705k+ entries):
+```
+https://bitbucket.org/Laicure/publicview/downloads/hosts4
 ```
 ###### Other sources can be found from AdAway's [wiki](https://github.com/AdAway/AdAway/wiki/HostsSources)
