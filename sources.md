@@ -1,0 +1,34 @@
+##### You can use [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
+```
+https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
+https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/SpotifyAds/hosts
+https://raw.githubusercontent.com/StevenBlack/hosts/master/data/StevenBlack/hosts
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
+https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.2o7Net/hosts
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Dead/hosts
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
+https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
+http://www.malwaredomainlist.com/hostslist/hosts.txt
+http://winhelp2002.mvps.org/hosts.txt
+http://someonewhocares.org/hosts/zero/hosts
+https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
+https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
+https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
+```
+###### [hpHosts](https://hosts-file.net/?s=Download)' _Individual Classifications_ sources:
+```
+http://hosts-file.net/ad_servers.txt
+http://hosts-file.net/emd.txt
+http://hosts-file.net/exp.txt
+http://hosts-file.net/fsa.txt
+http://hosts-file.net/grm.txt
+http://hosts-file.net/hfs.txt
+http://hosts-file.net/hjk.txt
+http://hosts-file.net/mmt.txt
+http://hosts-file.net/pha.txt
+http://hosts-file.net/psh.txt
+http://hosts-file.net/pup.txt
+http://hosts-file.net/wrz.txt
+```
