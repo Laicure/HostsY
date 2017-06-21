@@ -50,9 +50,5 @@ https://bitbucket.org/Laicure/publicview/downloads/hosts2
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts3
 ```
-##### Weekly Updated Generated hosts file from [StevenBlack/hosts' main sources](https://github.com/StevenBlack/hosts/tree/master/data) and [hpHosts](https://hosts-file.net/?s=Download) _with no whitelist_:
-```
-https://bitbucket.org/Laicure/publicview/downloads/hosts4
-```
 
 ###### Other sources can be found from AdAway's [wiki](https://github.com/AdAway/AdAway/wiki/HostsSources)
