@@ -38,7 +38,7 @@ Added [my custom list](https://github.com/Laicure/HostsY/blob/master/custHost) h
 
 ~~------------------------------~~
 
-##### Weekly Updated Generated custom host file _with whitelist_:
+##### Weekly Updated Generated [custom](https://github.com/Laicure/HostsY/blob/master/sources.md#custom-hosts-files-sources-and-whitelist) host file _with whitelist_:
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
