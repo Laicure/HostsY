@@ -1,4 +1,4 @@
-##### Custom hosts file sources and whitelist:
+##### Custom hosts file's sources and whitelist:
 ```
 https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
 https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
