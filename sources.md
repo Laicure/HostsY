@@ -21,7 +21,6 @@ http://hosts-file.net/hjk.txt
 http://hosts-file.net/mmt.txt
 http://hosts-file.net/pup.txt
 https://raw.githubusercontent.com/yous/YousList/master/hosts.txt
-https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 
 bit.ly
 adf.ly
