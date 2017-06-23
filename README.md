@@ -31,12 +31,7 @@ Optional:
 	* removes most of the generated comments
 * \-zip
 	* Generates a zipped hosts file inside the Data folder
-
-~~------------------------------~~
-
-Added [my custom list](https://github.com/Laicure/HostsY/blob/master/custHost) here (pop-ups, ads, malware sites that I stumble upon that are not listed on the current [hosts file](https://github.com/Laicure/HostsY#weekly-updated-generated-custom-host-file-with-whitelist) I use (including their redirects); for concerns, please don't hesitate to create a [new issue](https://github.com/Laicure/HostsY/issues) :D
-
-~~------------------------------~~
+	
 
 ##### Weekly Updated Generated [custom](https://github.com/Laicure/HostsY/blob/master/sources.md#custom-hosts-files-sources-and-whitelist) host file _with whitelist_:
 ```
