@@ -44,7 +44,6 @@ http://winhelp2002.mvps.org/hosts.txt
 http://someonewhocares.org/hosts/zero/hosts
 https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
-https://raw.githubusercontent.com/Laicure/HostsY/master/custHost
 ```
 ###### [hpHosts](https://hosts-file.net/?s=Download)' _Individual Classifications_ sources:
 ```
