@@ -35,7 +35,7 @@ Optional:
 ### _DNS Client_ service (on Windows) must be [disabled](http://support.simpledns.com/kb/a61/disabling-the-windows-dns-client-service.aspx) if using one of the hosts file below!
 
 
-##### Weekly Updated Generated [custom](https://github.com/Laicure/HostsY/blob/master/sources.md#custom-hosts-files-sources-and-whitelist) host file _with whitelist_:
+##### Weekly Updated Generated [custom](https://github.com/Laicure/HostsY/blob/master/sources.md#custom-hosts-files-sources-and-whitelist) host file _with whitelist_; mostly for my personal usage:
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
