@@ -32,6 +32,8 @@ Optional:
 * \-zip
 	* Generates a zipped hosts file inside the Data folder
 	
+### _DNS Client_ service (on Windows) must be disabled if using one of the hosts file below!
+
 
 ##### Weekly Updated Generated [custom](https://github.com/Laicure/HostsY/blob/master/sources.md#custom-hosts-files-sources-and-whitelist) host file _with whitelist_:
 ```
