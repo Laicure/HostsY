@@ -16,9 +16,14 @@ http://someonewhocares.org/hosts/zero/hosts
 https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 http://hosts-file.net/ad_servers.txt
+http://hosts-file.net/emd.txt
+http://hosts-file.net/exp.txt
+http://hosts-file.net/fsa.txt
 http://hosts-file.net/grm.txt
+http://hosts-file.net/hfs.txt
 http://hosts-file.net/hjk.txt
 http://hosts-file.net/mmt.txt
+http://hosts-file.net/psh.txt
 http://hosts-file.net/pup.txt
 https://raw.githubusercontent.com/yous/YousList/master/hosts.txt
 
