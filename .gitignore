@@ -236,6 +236,5 @@ _Pvt_Extensions
 .fake/
 
 # Custom
-custHost
-sources.md
-README.md
+/sources.md
+/README.md
