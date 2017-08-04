@@ -25,8 +25,6 @@ Optional:
 	* Uses tab instead of spaces between Target IP and Domain Name
 * \-logs
 	* Generate generation logs; auto-generates a logs.txt file
-* \-IPv6
-	* [experimental] Generate with IPv6 variant (doubles the file size)
 * \-min
 	* removes most of the generated comments
 * \-zip
