@@ -31,6 +31,7 @@ bit.ly
 adf.ly
 www.linkbucks.com
 po.st
+adfoc.us
 ```
 ##### Raw [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
