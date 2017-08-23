@@ -3,6 +3,7 @@
 	Dim WhiteL() As String = Nothing
 	Dim BlackL() As String = Nothing
 	Dim startExec As DateTime = Now
+	Dim errCount As Long = 0
 
 #Region "Auto"
 
@@ -106,6 +107,7 @@
 					suc = True
 				Catch ex As Exception
 					Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & Logg
+					errCount += 1
 				End Try
 
 				If suc Then
@@ -144,6 +146,7 @@
 							End If
 						Else
 							Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Parse Error: " & arrStr & vbCrLf & Logg
+							errCount += 1
 						End If
 					Next
 					Erase arrTempX
@@ -292,6 +295,9 @@
 			End Try
 		End If
 
+		If errCount > 0 Then
+			Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Count: " & FormatNumber(errCount, 0) & vbCrLf & Logg
+		End If
 		Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & Logg
 
 		If logger Then
@@ -440,6 +446,7 @@
 					suc = True
 				Catch ex As Exception
 					rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text, MethodInvoker))
+					errCount += 1
 				End Try
 
 				If suc Then
@@ -483,6 +490,7 @@
 							End If
 						Else
 							rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Parse Error: " & arrStr & vbCrLf & rtbLogs.Text, MethodInvoker))
+							errCount += 1
 						End If
 					Next
 					Erase arrTempX
@@ -625,6 +633,9 @@
 			Exit Sub
 		End If
 
+		If errCount > 0 Then
+			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Count: " & FormatNumber(errCount, 0) & vbCrLf & rtbLogs.Text, MethodInvoker))
+		End If
 		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Generating Preview" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
 		'Preview
