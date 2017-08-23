@@ -722,9 +722,9 @@
 	End Sub
 
 	Private Sub LbSave_MouseDown(sender As Object, e As MouseEventArgs) Handles LbSave.MouseDown
-		If e.Button = Windows.Forms.MouseButtons.Left Then
+		If e.Button = System.Windows.Forms.MouseButtons.Left Then
 			If LbSave.Cursor = Cursors.Hand Then
-				If fdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
+				If fdBrowse.ShowDialog = System.Windows.Forms.DialogResult.OK Then
 					Dim selPathhosts As String = fdBrowse.SelectedPath & "\hosts"
 					Dim succ As Boolean = False
 					Try
@@ -745,10 +745,10 @@
 					End If
 				End If
 			End If
-		ElseIf e.Button = Windows.Forms.MouseButtons.Right Then
+		ElseIf e.Button = System.Windows.Forms.MouseButtons.Right Then
 			If LbSave.Cursor = Cursors.Hand Then
 				Dim syshostsPath As String = "C:\WINDOWS\system32\drivers\etc\hosts"
-				If MessageBox.Show(IIf(My.Computer.FileSystem.FileExists(syshostsPath), "Active hosts file detected!" & vbCrLf & "Are you sure to replace your active hosts file?", "No active hosts file detected!" & vbCrLf & "Are you sure to add a hosts file to your system?").ToString & vbCrLf & vbCrLf & "DNSCache must be disabled whenever using a large hosts file (~35k+ Entries) or else, your system will be crippled to no internet at all (for about an hour+)!", "Confirm Replace!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
+				If MessageBox.Show(IIf(My.Computer.FileSystem.FileExists(syshostsPath), "Active hosts file detected!" & vbCrLf & "Are you sure to replace your active hosts file?", "No active hosts file detected!" & vbCrLf & "Are you sure to add a hosts file to your system?").ToString & vbCrLf & vbCrLf & "DNSCache must be disabled whenever using a large hosts file (~35k+ Entries) or else, your system will be crippled to no internet at all (for about an hour+)!", "Confirm Replace!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = System.Windows.Forms.DialogResult.No Then
 					Exit Sub
 				End If
 
@@ -773,9 +773,9 @@
 					End If
 				End If
 			End If
-		ElseIf e.Button = Windows.Forms.MouseButtons.Middle Then
+		ElseIf e.Button = System.Windows.Forms.MouseButtons.Middle Then
 			If LbSave.Cursor = Cursors.Hand Then
-				If fdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
+				If fdBrowse.ShowDialog = System.Windows.Forms.DialogResult.OK Then
 					Dim selPathhosts As String = fdBrowse.SelectedPath & "\hosts_" & Format(Date.UtcNow, "yyyyMMddHHmmssffff") & ".zip"
 					Dim succ As Boolean = False
 					Try
@@ -805,7 +805,7 @@
 	End Sub
 
 	Private Sub LbStatus_MouseDown(sender As Object, e As MouseEventArgs) Handles LbStatus.MouseDown
-		If e.Button = Windows.Forms.MouseButtons.Left Then
+		If e.Button = System.Windows.Forms.MouseButtons.Left Then
 			If My.Computer.FileSystem.FileExists("C:\WINDOWS\system32\drivers\etc\hosts") Then
 				Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
 			Else
