@@ -79,7 +79,7 @@
 
 		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & Logg
 		'Validate whitelist
-		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
 
 		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & Logg
 		'Validate and match blacklist
@@ -184,10 +184,18 @@
 		'remove blacklisted from whitelist
 		WhiteList.ExceptWith(BlackList)
 		WhiteList.TrimExcess()
-		Dim WhiteCount As Integer = WhiteList.Where(Function(x) UniHash.Any(Function(y) y = x)).Count
 
 		'remove whitelisted from unified list
 		UniHash.ExceptWith(WhiteList)
+		'whitelist regex
+		If String.Join(" ", WhiteList).Contains("*") Then
+			Dim asteWhite As HashSet(Of String) = New HashSet(Of String)(WhiteList.Where(Function(x) x.Contains("*")).Select(Function(x) "(" & x.Replace(".", "\.").Replace("*", ".*") & ")"))
+			Dim whiteRegex As String = String.Join("|", asteWhite)
+			Dim uniWhite As HashSet(Of String) = New HashSet(Of String)(UniHash.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, whiteRegex).Success))
+			UniHash.Clear()
+			UniHash.TrimExcess()
+			UniHash = New HashSet(Of String)(uniWhite.Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
+		End If
 		UniHash.TrimExcess()
 
 		'remove already unified listed from blacklist
@@ -222,7 +230,7 @@
 		Dim FinalList As New List(Of String)
 		If minn Then
 			With FinalList
-				.Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
+				.Add("# Entries: " & FormatNumber(uniCount, 0))
 				.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
 				.Add("")
 				.Add("127.0.0.1" & IIf(tabb, vbTab, " ").ToString & "localhost")
@@ -240,7 +248,7 @@
 			End With
 		Else
 			With FinalList
-				.Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
+				.Add("# Entries: " & FormatNumber(uniCount, 0))
 				.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
 				.Add("# Generated using github.com/Laicure/HostsY")
 				.Add("")
@@ -259,7 +267,7 @@
 					'End If
 					.Add("")
 				End If
-				.Add("#" & IIf(sortt, " Sorted ", " ").ToString & "Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
+				.Add("#" & IIf(sortt, " Sorted ", " ").ToString & "Domains")
 				.AddRange(UniHash)
 				.Add("")
 				.Add("# End")
@@ -399,7 +407,7 @@
 
 		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'Validate whitelist
-		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
 		LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist [" & WhiteList.Count & "]", MethodInvoker))
 		rtbWhites.Invoke(DirectCast(Sub() rtbWhites.Text = String.Join(vbCrLf, WhiteList), MethodInvoker))
 
@@ -532,10 +540,18 @@
 		'remove blacklisted from whitelist
 		WhiteList.ExceptWith(BlackList)
 		WhiteList.TrimExcess()
-		Dim WhiteCount As Integer = WhiteList.Where(Function(x) UniHash.Any(Function(y) y = x)).Count
 
 		'remove whitelisted from unified list
-		UniHash.ExceptWith(WhiteList)
+		UniHash.ExceptWith(WhiteList.Where(Function(x) Not x.Contains("*")))
+		'whitelist regex
+		If String.Join(" ", WhiteList).Contains("*") Then
+			Dim asteWhite As HashSet(Of String) = New HashSet(Of String)(WhiteList.Where(Function(x) x.Contains("*")).Select(Function(x) "(" & x.Replace(".", "\.").Replace("*", ".*") & ")"))
+			Dim whiteRegex As String = String.Join("|", asteWhite)
+			Dim uniWhite As HashSet(Of String) = New HashSet(Of String)(UniHash.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, whiteRegex).Success))
+			UniHash.Clear()
+			UniHash.TrimExcess()
+			UniHash = New HashSet(Of String)(uniWhite.Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
+		End If
 		UniHash.TrimExcess()
 
 		'remove already unified listed from blacklist
@@ -583,7 +599,7 @@
 		Dim FinalList As New List(Of String)
 		If chMin.Checked Then
 			With FinalList
-				.Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
+				.Add("# Entries: " & FormatNumber(uniCount, 0))
 				.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
 				.Add("")
 				.Add("127.0.0.1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
@@ -601,7 +617,7 @@
 			End With
 		Else
 			With FinalList
-				.Add("# Entries: " & FormatNumber(uniCount, 0) & IIf(WhiteCount > 0, ", W: " & FormatNumber(WhiteCount, 0), "").ToString & IIf(BlackList.Count > 0, ", B: " & FormatNumber(BlackList.Count, 0), "").ToString)
+				.Add("# Entries: " & FormatNumber(uniCount, 0))
 				.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
 				.Add("# Generated using github.com/Laicure/HostsY")
 				.Add("")
@@ -620,7 +636,7 @@
 					'End If
 					.Add("")
 				End If
-				.Add("#" & IIf(chSort.Checked, " Sorted ", " ").ToString & "Domains [" & IIf(WhiteCount > 0, FormatNumber(uniCount + WhiteCount, 0) & "-" & FormatNumber(WhiteCount, 0) & "=" & FormatNumber(uniCount, 0) & "]", FormatNumber(uniCount, 0) & "]").ToString)
+				.Add("#" & IIf(chSort.Checked, " Sorted ", " ").ToString & "Domains")
 				.AddRange(UniHash)
 				.Add("")
 				.Add("# End")
