@@ -71,5 +71,5 @@ https://bitbucket.org/Laicure/publicview/downloads/hosts3
 - minor string changes
 - added errcount to logs
 - application framework from .NET 4.5 to 4.5.2 + fixes
-- added * wildcard to whitelist (using .* regex in code (escaped string dots)) + removal of Black and White lists count
+- added * wildcard to whitelist (using .* regex in code (escaped string dots)) + removal of Black-White lists count
 ```
