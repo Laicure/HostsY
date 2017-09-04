@@ -17,8 +17,6 @@ https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 https://hosts-file.net/ad_servers.txt
 https://hosts-file.net/emd.txt
-https://hosts-file.net/exp.txt
-https://hosts-file.net/fsa.txt
 https://hosts-file.net/grm.txt
 https://hosts-file.net/hfs.txt
 https://hosts-file.net/hjk.txt
