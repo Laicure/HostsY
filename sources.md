@@ -22,7 +22,6 @@ https://hosts-file.net/hfs.txt
 https://hosts-file.net/hjk.txt
 https://hosts-file.net/mmt.txt
 https://hosts-file.net/psh.txt
-https://hosts-file.net/pup.txt
 https://raw.githubusercontent.com/yous/YousList/master/hosts.txt
 
 bit.ly
