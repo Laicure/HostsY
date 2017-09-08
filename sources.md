@@ -17,14 +17,11 @@ https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 https://hosts-file.net/ad_servers.txt
 https://hosts-file.net/emd.txt
-https://hosts-file.net/exp.txt
-https://hosts-file.net/fsa.txt
 https://hosts-file.net/grm.txt
 https://hosts-file.net/hfs.txt
 https://hosts-file.net/hjk.txt
 https://hosts-file.net/mmt.txt
 https://hosts-file.net/psh.txt
-https://hosts-file.net/pup.txt
 https://raw.githubusercontent.com/yous/YousList/master/hosts.txt
 
 bit.ly
@@ -32,6 +29,7 @@ adf.ly
 www.linkbucks.com
 po.st
 adfoc.us
+*.apple.com
 ```
 ##### Raw [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
