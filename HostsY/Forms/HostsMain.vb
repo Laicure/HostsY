@@ -602,7 +602,7 @@
 				End With
 			Else
 				With FinalList
-					.Add("[Adblock Plus 2.0]")
+					.Add("[Adblock Plus 2.9]")
 					.Add("! Entries: " & FormatNumber(uniCount, 0))
 					.Add("! As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
 					.Add("! Generated using github.com/Laicure/HostsY")
