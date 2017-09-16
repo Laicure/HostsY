@@ -39,6 +39,10 @@ Optional:
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts
 ```
+###### Adblock syntaxed variant (uses sources above):
+```
+https://bitbucket.org/Laicure/publicview/downloads/Adblock_hosts
+```
 ##### Frequent/Weekly Updated Generated hosts file from [StevenBlack/hosts' main sources](https://github.com/StevenBlack/hosts/tree/master/data) _with no whitelist_:
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts2
