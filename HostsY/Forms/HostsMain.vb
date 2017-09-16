@@ -371,6 +371,7 @@
 		LbBlacks.Text = "Blacklist"
 
 		'set vars
+		errCount = 0
 		butGenerate.Text = "Cancel Generation"
 		LbReset.Enabled = False
 		SourceL = rtbSources.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
