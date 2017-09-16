@@ -362,6 +362,7 @@
 		LbBlacks.Text = "Blacklist"
 
 		'set vars
+		errCount = 0
 		Adblocked = chAdblock.Checked
 		butGenerate.Text = "Cancel Generation"
 		LbReset.Enabled = False
