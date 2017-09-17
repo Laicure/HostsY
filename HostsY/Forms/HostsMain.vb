@@ -5,6 +5,7 @@
 	Dim startExec As DateTime = Now
 	Dim errCount As Long = 0
 	Dim Adblocked As Boolean = False
+	Dim OmitWWW As Boolean = False
 
 #Region "Auto"
 
@@ -79,11 +80,11 @@
 
 		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & Logg
 		'Validate whitelist
-		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 
 		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & Logg
 		'Validate and match blacklist
-		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 
 		'Major Hashset
 		Dim UniHash As New HashSet(Of String)
@@ -151,7 +152,7 @@
 					Next
 					Erase arrTempX
 					'Remove Loopbacks
-					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 
 					'show count
 					totalDoms += SourceHash.LongCount
@@ -191,7 +192,7 @@
 		If String.Join(" ", WhiteList).Contains("*") Then
 			Dim asteWhite As HashSet(Of String) = New HashSet(Of String)(WhiteList.Where(Function(x) x.Contains("*")).Select(Function(x) "(" & System.Text.RegularExpressions.Regex.Replace(x, "(?!\*)([^a-zA-Z0-9])", "\" & "$&").Replace("*", ".*") & ")"))
 			Dim whiteRegex As String = String.Join("|", asteWhite)
-			Dim uniWhite As HashSet(Of String) = New HashSet(Of String)(UniHash.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, whiteRegex).Success))
+			Dim uniWhite As HashSet(Of String) = New HashSet(Of String)(UniHash.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, whiteRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 			UniHash.Clear()
 			UniHash.TrimExcess()
 			UniHash = New HashSet(Of String)(uniWhite.Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
@@ -364,6 +365,7 @@
 		'set vars
 		errCount = 0
 		Adblocked = chAdblock.Checked
+		OmitWWW = CBool(IIf(Adblocked And chTabs.Checked, True, False))
 		butGenerate.Text = "Cancel Generation"
 		LbReset.Enabled = False
 		SourceL = rtbSources.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
@@ -400,7 +402,7 @@
 
 		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'Validate whitelist
-		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 		LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist [" & WhiteList.Count & "]", MethodInvoker))
 		rtbWhites.Invoke(DirectCast(Sub() rtbWhites.Text = String.Join(vbCrLf, WhiteList), MethodInvoker))
 
@@ -411,7 +413,7 @@
 
 		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'Validate and match blacklist
-		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 		LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist [" & BlackList.Count & "]", MethodInvoker))
 		rtbBlacks.Invoke(DirectCast(Sub() rtbBlacks.Text = String.Join(vbCrLf, BlackList), MethodInvoker))
 
@@ -457,7 +459,7 @@
 					'Remove Comments
 					Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")).Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
 					'Remove IPs
-					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) IIf(System.Text.RegularExpressions.Regex.Match(x, "^((([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))\ ").Success, Microsoft.VisualBasic.Right(x, Len(x) - (x.IndexOf(" ") + 1)), x).ToString))
+					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) IIf(System.Text.RegularExpressions.Regex.Match(x, "^((([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))\ ").Success, Microsoft.VisualBasic.Right(x, Len(x) - (x.IndexOf(" ") + 1)), x).ToString).Select(Function(x) IIf(OmitWWW, System.Text.RegularExpressions.Regex.Replace(x, "(^www\.)", ""), x).ToString))
 					'Remove Comment Suffix
 					Dim arrTempX() As String = SourceHash.ToArray
 					SourceHash.Clear()
@@ -496,7 +498,7 @@
 					Next
 					Erase arrTempX
 					'Remove Loopbacks
-					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$").Success))
+					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 
 					'show count
 					totalDoms += SourceHash.LongCount
@@ -538,9 +540,9 @@
 		UniHash.ExceptWith(WhiteList.Where(Function(x) Not x.Contains("*")))
 		'whitelist regex
 		If String.Join(" ", WhiteList).Contains("*") Then
-			Dim asteWhite As HashSet(Of String) = New HashSet(Of String)(WhiteList.Where(Function(x) x.Contains("*")).Select(Function(x) "(" & System.Text.RegularExpressions.Regex.Replace(x, "(?!\*)([^a-zA-Z0-9])", "\" & "$&").Replace("*", ".*") & ")"))
+			Dim asteWhite As HashSet(Of String) = New HashSet(Of String)(WhiteList.Select(Function(x) IIf(OmitWWW, System.Text.RegularExpressions.Regex.Replace(x, "(^www\.)", ""), x).ToString).Where(Function(x) x.Contains("*")).Select(Function(x) "(" & System.Text.RegularExpressions.Regex.Replace(x, "(?!\*)([^a-zA-Z0-9])", "\" & "$&").Replace("*", ".*") & ")"))
 			Dim whiteRegex As String = String.Join("|", asteWhite)
-			Dim uniWhite As HashSet(Of String) = New HashSet(Of String)(UniHash.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, whiteRegex).Success))
+			Dim uniWhite As HashSet(Of String) = New HashSet(Of String)(UniHash.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, whiteRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 			UniHash.Clear()
 			UniHash.TrimExcess()
 			UniHash = New HashSet(Of String)(uniWhite.Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
@@ -763,7 +765,7 @@
 		If e.Button = System.Windows.Forms.MouseButtons.Left Then
 			If LbSave.Cursor = Cursors.Hand Then
 				If fdBrowse.ShowDialog = System.Windows.Forms.DialogResult.OK Then
-					Dim selPathhosts As String = fdBrowse.SelectedPath & IIf(Adblocked, "\Adblock_hosts", "\hosts").ToString
+					Dim selPathhosts As String = fdBrowse.SelectedPath & IIf(Adblocked, "\Adblock_hosts.txt", "\hosts").ToString
 					Dim succ As Boolean = False
 					Try
 						rtbOuts.SaveFile(selPathhosts, RichTextBoxStreamType.PlainText)
@@ -821,7 +823,7 @@
 						If Not My.Computer.FileSystem.DirectoryExists(tempoPath) Then
 							My.Computer.FileSystem.CreateDirectory(tempoPath)
 						End If
-						rtbOuts.SaveFile(tempoPath & IIf(Adblocked, "\Adblock_hosts", "\hosts").ToString, RichTextBoxStreamType.PlainText)
+						rtbOuts.SaveFile(tempoPath & IIf(Adblocked, "\Adblock_hosts.txt", "\hosts").ToString, RichTextBoxStreamType.PlainText)
 						IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
 						succ = True
 					Catch ex As Exception
@@ -854,6 +856,17 @@
 
 	Private Sub LbReset_Click(sender As Object, e As EventArgs) Handles LbReset.Click
 		Application.Restart()
+	End Sub
+
+	Private Sub chAdblock_CheckedChanged(sender As Object, e As EventArgs) Handles chAdblock.CheckedChanged
+		If chAdblock.Checked Then
+			chTabs.Text = "Omit www."
+			tipper.SetToolTip(chTabs, "Removes www. in the domains for broader blocking")
+		Else
+			chTabs.Text = "Tabs"
+			chTabs.Checked = False
+			tipper.SetToolTip(chTabs, "Use Tab between Target IP and Domain")
+		End If
 	End Sub
 
 End Class

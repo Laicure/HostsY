@@ -208,7 +208,7 @@ Partial Class HostsMain
 		Me.chSort.Location = New System.Drawing.Point(278, 1)
 		Me.chSort.Margin = New System.Windows.Forms.Padding(1)
 		Me.chSort.Name = "chSort"
-		Me.chSort.Size = New System.Drawing.Size(75, 17)
+		Me.chSort.Size = New System.Drawing.Size(108, 17)
 		Me.chSort.TabIndex = 9
 		Me.chSort.TabStop = False
 		Me.chSort.Text = "Sort (asc)"
@@ -221,7 +221,7 @@ Partial Class HostsMain
 		Me.chTabs.Location = New System.Drawing.Point(278, 20)
 		Me.chTabs.Margin = New System.Windows.Forms.Padding(1)
 		Me.chTabs.Name = "chTabs"
-		Me.chTabs.Size = New System.Drawing.Size(75, 17)
+		Me.chTabs.Size = New System.Drawing.Size(108, 17)
 		Me.chTabs.TabIndex = 11
 		Me.chTabs.TabStop = False
 		Me.chTabs.Text = "Tabs"
