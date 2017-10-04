@@ -165,6 +165,8 @@
 						If Not minn Then
 							UniHash.Add("# ~Source @" & i + 1)
 							SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
+						Else
+							SourceList.Add("[" & domCount & "] " & arrTemp(i))
 						End If
 						UniHash.UnionWith(SourceHash)
 					End If
@@ -230,6 +232,9 @@
 			With FinalList
 				.Add("# Entries: " & FormatNumber(uniCount, 0))
 				.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+				.Add("")
+				.Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
+				.AddRange(SourceList.Select(Function(x) "# " & x))
 				.Add("")
 				.Add("127.0.0.1" & IIf(tabb, vbTab, " ").ToString & "localhost")
 				.Add("::1" & IIf(tabb, vbTab, " ").ToString & "localhost")
@@ -511,6 +516,8 @@
 						If Not chMin.Checked Then
 							UniHash.Add("# ~Source @" & i + 1)
 							SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
+						Else
+							SourceList.Add("[" & domCount & "] " & arrTemp(i))
 						End If
 						UniHash.UnionWith(SourceHash)
 					End If
@@ -596,6 +603,9 @@
 					.Add("! Entries: " & FormatNumber(uniCount, 0))
 					.Add("! As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
 					.Add("!")
+					.Add("! Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
+					.AddRange(SourceList.Select(Function(x) "! " & x))
+					.Add("!")
 					If BlackList.Count > 0 Then
 						.AddRange(BlackList.Select(Function(x) IIf(Adblocked, "||" & x & "^", TargetIP & IIf(chTabs.Checked, vbTab, " ").ToString & x).ToString))
 						.Add("!")
@@ -630,6 +640,9 @@
 				With FinalList
 					.Add("# Entries: " & FormatNumber(uniCount, 0))
 					.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+					.Add("")
+					.Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
+					.AddRange(SourceList.Select(Function(x) "# " & x))
 					.Add("")
 					.Add("127.0.0.1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
 					.Add("::1" & IIf(chTabs.Checked, vbTab, " ").ToString & "localhost")
