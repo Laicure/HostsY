@@ -45,7 +45,7 @@ Partial Class HostsMain
 		Me.fdBrowse = New System.Windows.Forms.FolderBrowserDialog()
 		Me.tipper = New System.Windows.Forms.ToolTip(Me.components)
 		Me.LbReset = New System.Windows.Forms.Label()
-		Me.chIPv6 = New System.Windows.Forms.CheckBox()
+		Me.chAdblock = New System.Windows.Forms.CheckBox()
 		Me.chMin = New System.Windows.Forms.CheckBox()
 		Me.panLists.SuspendLayout()
 		Me.SuspendLayout()
@@ -208,7 +208,7 @@ Partial Class HostsMain
 		Me.chSort.Location = New System.Drawing.Point(278, 1)
 		Me.chSort.Margin = New System.Windows.Forms.Padding(1)
 		Me.chSort.Name = "chSort"
-		Me.chSort.Size = New System.Drawing.Size(72, 17)
+		Me.chSort.Size = New System.Drawing.Size(108, 17)
 		Me.chSort.TabIndex = 9
 		Me.chSort.TabStop = False
 		Me.chSort.Text = "Sort (asc)"
@@ -221,7 +221,7 @@ Partial Class HostsMain
 		Me.chTabs.Location = New System.Drawing.Point(278, 20)
 		Me.chTabs.Margin = New System.Windows.Forms.Padding(1)
 		Me.chTabs.Name = "chTabs"
-		Me.chTabs.Size = New System.Drawing.Size(48, 17)
+		Me.chTabs.Size = New System.Drawing.Size(108, 17)
 		Me.chTabs.TabIndex = 11
 		Me.chTabs.TabStop = False
 		Me.chTabs.Text = "Tabs"
@@ -317,31 +317,30 @@ Partial Class HostsMain
 		Me.LbReset.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		Me.tipper.SetToolTip(Me.LbReset, "Restarts the app")
 		'
-		'chIPv6
+		'chAdblock
 		'
-		Me.chIPv6.Enabled = False
-		Me.chIPv6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chIPv6.ForeColor = System.Drawing.Color.Red
-		Me.chIPv6.Location = New System.Drawing.Point(407, 20)
-		Me.chIPv6.Margin = New System.Windows.Forms.Padding(1)
-		Me.chIPv6.Name = "chIPv6"
-		Me.chIPv6.Size = New System.Drawing.Size(51, 17)
-		Me.chIPv6.TabIndex = 17
-		Me.chIPv6.TabStop = False
-		Me.chIPv6.Text = "+IPv6"
-		Me.tipper.SetToolTip(Me.chIPv6, "[Experimental]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Add IPv6 variant to the list" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "converts the assigned Target IP (IP" & _
-		"v4) for IPv6 use" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "(!! will bloat the generated hosts file !!)")
-		Me.chIPv6.UseVisualStyleBackColor = True
+		Me.chAdblock.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.chAdblock.ForeColor = System.Drawing.Color.Red
+		Me.chAdblock.Location = New System.Drawing.Point(388, 20)
+		Me.chAdblock.Margin = New System.Windows.Forms.Padding(1)
+		Me.chAdblock.Name = "chAdblock"
+		Me.chAdblock.Size = New System.Drawing.Size(70, 17)
+		Me.chAdblock.TabIndex = 17
+		Me.chAdblock.TabStop = False
+		Me.chAdblock.Text = "Adblock"
+		Me.tipper.SetToolTip(Me.chAdblock, "[Experimental]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Create an Adblock syntaxed hosts file instead of the standard one" & _
+		"")
+		Me.chAdblock.UseVisualStyleBackColor = True
 		'
 		'chMin
 		'
 		Me.chMin.Checked = True
 		Me.chMin.CheckState = System.Windows.Forms.CheckState.Checked
 		Me.chMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chMin.Location = New System.Drawing.Point(394, 1)
+		Me.chMin.Location = New System.Drawing.Point(388, 1)
 		Me.chMin.Margin = New System.Windows.Forms.Padding(1)
 		Me.chMin.Name = "chMin"
-		Me.chMin.Size = New System.Drawing.Size(64, 17)
+		Me.chMin.Size = New System.Drawing.Size(70, 17)
 		Me.chMin.TabIndex = 18
 		Me.chMin.TabStop = False
 		Me.chMin.Text = "Minimal"
@@ -355,7 +354,7 @@ Partial Class HostsMain
 		Me.BackColor = System.Drawing.Color.White
 		Me.ClientSize = New System.Drawing.Size(784, 511)
 		Me.Controls.Add(Me.chMin)
-		Me.Controls.Add(Me.chIPv6)
+		Me.Controls.Add(Me.chAdblock)
 		Me.Controls.Add(Me.LbReset)
 		Me.Controls.Add(Me.LbAbout)
 		Me.Controls.Add(Me.LbStatus)
@@ -384,28 +383,28 @@ Partial Class HostsMain
 		Me.PerformLayout()
 
 	End Sub
-    Friend WithEvents panLists As System.Windows.Forms.Panel
-    Friend WithEvents rtbBlacks As System.Windows.Forms.RichTextBox
-    Friend WithEvents LbBlacks As System.Windows.Forms.Label
-    Friend WithEvents rtbWhites As System.Windows.Forms.RichTextBox
-    Friend WithEvents LbWhites As System.Windows.Forms.Label
-    Friend WithEvents rtbSources As System.Windows.Forms.RichTextBox
-    Friend WithEvents LbSource As System.Windows.Forms.Label
-    Friend WithEvents Label4 As System.Windows.Forms.Label
-    Friend WithEvents txtTargetIP As System.Windows.Forms.TextBox
-    Friend WithEvents butGenerate As System.Windows.Forms.Button
-    Friend WithEvents rtbOuts As System.Windows.Forms.RichTextBox
-    Friend WithEvents rtbLogs As System.Windows.Forms.RichTextBox
-    Friend WithEvents chSort As System.Windows.Forms.CheckBox
-    Friend WithEvents chTabs As System.Windows.Forms.CheckBox
-    Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents LbSave As System.Windows.Forms.Label
-    Friend WithEvents bgGenerate As System.ComponentModel.BackgroundWorker
-    Friend WithEvents LbStatus As System.Windows.Forms.Label
-    Friend WithEvents LbAbout As System.Windows.Forms.Label
-    Friend WithEvents fdBrowse As System.Windows.Forms.FolderBrowserDialog
-    Friend WithEvents tipper As System.Windows.Forms.ToolTip
-    Friend WithEvents LbReset As System.Windows.Forms.Label
-    Friend WithEvents chIPv6 As System.Windows.Forms.CheckBox
+	Friend WithEvents panLists As System.Windows.Forms.Panel
+	Friend WithEvents rtbBlacks As System.Windows.Forms.RichTextBox
+	Friend WithEvents LbBlacks As System.Windows.Forms.Label
+	Friend WithEvents rtbWhites As System.Windows.Forms.RichTextBox
+	Friend WithEvents LbWhites As System.Windows.Forms.Label
+	Friend WithEvents rtbSources As System.Windows.Forms.RichTextBox
+	Friend WithEvents LbSource As System.Windows.Forms.Label
+	Friend WithEvents Label4 As System.Windows.Forms.Label
+	Friend WithEvents txtTargetIP As System.Windows.Forms.TextBox
+	Friend WithEvents butGenerate As System.Windows.Forms.Button
+	Friend WithEvents rtbOuts As System.Windows.Forms.RichTextBox
+	Friend WithEvents rtbLogs As System.Windows.Forms.RichTextBox
+	Friend WithEvents chSort As System.Windows.Forms.CheckBox
+	Friend WithEvents chTabs As System.Windows.Forms.CheckBox
+	Friend WithEvents Label1 As System.Windows.Forms.Label
+	Friend WithEvents LbSave As System.Windows.Forms.Label
+	Friend WithEvents bgGenerate As System.ComponentModel.BackgroundWorker
+	Friend WithEvents LbStatus As System.Windows.Forms.Label
+	Friend WithEvents LbAbout As System.Windows.Forms.Label
+	Friend WithEvents fdBrowse As System.Windows.Forms.FolderBrowserDialog
+	Friend WithEvents tipper As System.Windows.Forms.ToolTip
+	Friend WithEvents LbReset As System.Windows.Forms.Label
+	Friend WithEvents chAdblock As System.Windows.Forms.CheckBox
     Friend WithEvents chMin As System.Windows.Forms.CheckBox
 End Class
