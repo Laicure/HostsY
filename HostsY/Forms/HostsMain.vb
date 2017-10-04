@@ -369,6 +369,7 @@
 
 		'set vars
 		errCount = 0
+
 		Adblocked = chAdblock.Checked
 		OmitWWW = CBool(IIf(Adblocked And chTabs.Checked, True, False))
 		butGenerate.Text = "Cancel Generation"
