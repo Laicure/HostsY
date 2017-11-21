@@ -66,23 +66,23 @@
 
 		startExec = Now
 		'Init Logging
-		Dim Logg As String = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!"
-		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & Logg
+		Dim Logg As String = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
+		Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & Logg
 
 		'Validate Sources
 		Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
 		'Exit if Source is empty
 		If SourceList.Count = 0 Then
-			Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] No valid sources listed!" & vbCrLf & Logg
+			Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & Logg
 			Environment.Exit(3)
 			Exit Sub
 		End If
 
-		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & Logg
+		Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Whitelist" & vbCrLf & Logg
 		'Validate whitelist
 		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 
-		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & Logg
+		Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & Logg
 		'Validate and match blacklist
 		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 
@@ -97,7 +97,7 @@
 		SourceList.TrimExcess()
 		For i As Integer = 0 To arrTemp.Count - 1
 			Dim arstring As String = arrTemp(i)
-			Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Reading " & arstring & "..." & vbCrLf & Logg
+			Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & Logg
 			Dim suc As Boolean = False
 			Using clie As New Net.WebClient
 				Try
@@ -107,13 +107,13 @@
 					UniString += SourcedD & vbCrLf
 					suc = True
 				Catch ex As Exception
-					Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & Logg
+					Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & Logg
 					errCount += 1
 				End Try
 
 				If suc Then
 					'### Clean Source data
-					Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & Logg
+					Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & Logg
 
 					'Remove Comments
 					Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")).Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
@@ -146,7 +146,7 @@
 								SourceHash.Add(SafeHost)
 							End If
 						Else
-							Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Parse Error: " & arrStr & vbCrLf & Logg
+							Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & Logg
 							errCount += 1
 						End If
 					Next
@@ -182,7 +182,7 @@
 			Exit Sub
 		End If
 
-		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Merging Lists" & vbCrLf & Logg
+		Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & Logg
 
 		'remove blacklisted from whitelist
 		WhiteList.ExceptWith(BlackList)
@@ -212,7 +212,7 @@
 			Exit Sub
 		End If
 
-		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Adding Target IP" & vbCrLf & Logg
+		Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Adding Target IP" & vbCrLf & Logg
 
 		'finalize unified data (add target IP and comment/remove items from WhiteList)
 		Dim uniCount As Integer = UniHash.Where(Function(x) Not x.StartsWith("# ~")).Count
@@ -225,13 +225,13 @@
 		Next
 		Erase arrTemp
 
-		Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Finalizing Output" & vbCrLf & Logg
+		Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & Logg
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
 		If minn Then
 			With FinalList
 				.Add("# Entries: " & FormatNumber(uniCount, 0))
-				.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+				.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
 				.Add("")
 				.Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
 				.AddRange(SourceList.Select(Function(x) "# " & x))
@@ -249,7 +249,7 @@
 		Else
 			With FinalList
 				.Add("# Entries: " & FormatNumber(uniCount, 0))
-				.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+				.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
 				.Add("# Generated using github.com/Laicure/HostsY")
 				.Add("")
 				.Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
@@ -277,14 +277,14 @@
 			My.Computer.FileSystem.WriteAllText("C:\Windows\System32\drivers\etc\hosts", String.Join(vbCrLf, FinalList), False)
 			'final Logs
 			Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo("C:\Windows\System32\drivers\etc\hosts").Length)
-			Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & "C:\Windows\System32\drivers\etc\hosts" & " (" & sizee & ")" & vbCrLf & Logg
+			Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & "C:\Windows\System32\drivers\etc\hosts" & " (" & sizee & ")" & vbCrLf & Logg
 		Catch ex As Exception
-			Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
+			Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
 		End Try
 
 		'-zip?
 		If zipp Then
-			Dim selPathhosts As String = dataSource & "\hosts_" & Format(Date.UtcNow, "yyyyMMddHHmmssffff") & ".zip"
+			Dim selPathhosts As String = dataSource & "\hosts_" & DateTime.UtcNow.ToString("yyyyMMddHHmmssffff", Globalization.CultureInfo.InvariantCulture) & ".zip"
 			Try
 				Dim tempoPath As String = "C:\Users\" & Environment.UserName & "\AppData\Local\Temp\hostz"
 				If Not My.Computer.FileSystem.DirectoryExists(tempoPath) Then
@@ -294,16 +294,16 @@
 				IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
 
 				Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
-				Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & dataSource & " (" & sizee & ")" & vbCrLf & Logg
+				Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & dataSource & " (" & sizee & ")" & vbCrLf & Logg
 			Catch ex As Exception
-				Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
+				Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
 			End Try
 		End If
 
 		If errCount > 0 Then
-			Logg = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Count: " & FormatNumber(errCount, 0) & vbCrLf & Logg
+			Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & FormatNumber(errCount, 0) & vbCrLf & Logg
 		End If
-		Logg = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & Logg
+		Logg = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & Logg
 
 		If logger Then
 			'save logs
@@ -386,8 +386,8 @@
 
 		rtbLogs.Invoke(DirectCast(
 					   Sub()
-						   rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Started!"
-						   rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Sources" & vbCrLf & rtbLogs.Text
+						   rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
+						   rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & rtbLogs.Text
 					   End Sub, MethodInvoker))
 		'Download and Validate Source List
 		Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
@@ -396,7 +396,7 @@
 
 		If SourceList.Count = 0 Then
 			LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
-			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] No valid sources listed!" & vbCrLf & rtbLogs.Text, MethodInvoker))
+			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & rtbLogs.Text, MethodInvoker))
 			LbStatus.Invoke(DirectCast(Sub() LbStatus.Text = "Empty Parsed List", MethodInvoker))
 			Exit Sub
 		End If
@@ -406,7 +406,7 @@
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'Validate whitelist
 		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 		LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist [" & WhiteList.Count & "]", MethodInvoker))
@@ -417,7 +417,7 @@
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'Validate and match blacklist
 		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, "\b^localhost$|\b^local$|\b^localhost\.localdomain$|\b^broadcasthost$", System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 		LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist [" & BlackList.Count & "]", MethodInvoker))
@@ -444,7 +444,7 @@
 			End If
 
 			Dim arstring As String = arrTemp(i)
-			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Reading " & arstring & "..." & vbCrLf & rtbLogs.Text, MethodInvoker))
+			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & rtbLogs.Text, MethodInvoker))
 			Dim suc As Boolean = False
 			Using clie As New Net.WebClient
 				Try
@@ -454,13 +454,13 @@
 					UniString += SourcedD & vbCrLf
 					suc = True
 				Catch ex As Exception
-					rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text, MethodInvoker))
+					rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text, MethodInvoker))
 					errCount += 1
 				End Try
 
 				If suc Then
 					'### Clean Source data
-					rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & rtbLogs.Text, MethodInvoker))
+					rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
 					'Remove Comments
 					Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) System.Text.RegularExpressions.Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")).Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
@@ -498,7 +498,7 @@
 								SourceHash.Add(SafeHost)
 							End If
 						Else
-							rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Parse Error: " & arrStr & vbCrLf & rtbLogs.Text, MethodInvoker))
+							rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & rtbLogs.Text, MethodInvoker))
 							errCount += 1
 						End If
 					Next
@@ -538,7 +538,7 @@
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Merging Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
 		'remove blacklisted from whitelist
 		WhiteList.ExceptWith(BlackList)
@@ -572,7 +572,7 @@
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] " & IIf(Adblocked, "Parsing Domains", "Adding Target IP").ToString & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] " & IIf(Adblocked, "Parsing Domains", "Adding Target IP").ToString & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'finalize unified data (add target IP and comment/remove items from WhiteList)
 		Dim uniCount As Integer = UniHash.Where(Function(x) Not x.StartsWith("# ~")).Count
 		Dim TargetIP As String = txtTargetIP.Text.Trim
@@ -594,7 +594,7 @@
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
 		If Adblocked Then
@@ -602,7 +602,7 @@
 				With FinalList
 					.Add("[Adblock Plus 2.0]")
 					.Add("! Entries: " & FormatNumber(uniCount, 0))
-					.Add("! As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+					.Add("! As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
 					.Add("!")
 					.Add("! Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
 					.AddRange(SourceList.Select(Function(x) "! " & x))
@@ -618,7 +618,7 @@
 				With FinalList
 					.Add("[Adblock Plus 2.9]")
 					.Add("! Entries: " & FormatNumber(uniCount, 0))
-					.Add("! As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+					.Add("! As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
 					.Add("! Generated using github.com/Laicure/HostsY")
 					.Add("!")
 					.Add("! Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
@@ -640,7 +640,7 @@
 			If chMin.Checked Then
 				With FinalList
 					.Add("# Entries: " & FormatNumber(uniCount, 0))
-					.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+					.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
 					.Add("")
 					.Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
 					.AddRange(SourceList.Select(Function(x) "# " & x))
@@ -658,7 +658,7 @@
 			Else
 				With FinalList
 					.Add("# Entries: " & FormatNumber(uniCount, 0))
-					.Add("# As of " & Format(Date.UtcNow, "MM/dd/yyyy hh:mm:ss.ff tt UTC"))
+					.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
 					.Add("# Generated using github.com/Laicure/HostsY")
 					.Add("")
 					.Add("# Sources [" & FormatNumber(SourceList.Count, 0) & " @ " & FormatNumber(totalDoms, 0) & "]")
@@ -688,9 +688,9 @@
 		End If
 
 		If errCount > 0 Then
-			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Error Count: " & FormatNumber(errCount, 0) & vbCrLf & rtbLogs.Text, MethodInvoker))
+			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & FormatNumber(errCount, 0) & vbCrLf & rtbLogs.Text, MethodInvoker))
 		End If
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt") & "] Generating Preview" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Generating Preview" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
 		'Preview
 		rtbOuts.Invoke(DirectCast(Sub() rtbOuts.Text = String.Join(vbCrLf, FinalList), MethodInvoker))
@@ -711,7 +711,7 @@
 		butGenerate.Text = "Start Generation"
 		If e.Cancelled Then
 			LbStatus.Text = "Cancelled! :D"
-			rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Cancelled!" & vbCrLf & rtbLogs.Text
+			rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Cancelled!" & vbCrLf & rtbLogs.Text
 			rtbOuts.Text = "Cancelled! :P"
 		Else
 			If LbStatus.Text = "Nothing to Generate" Then
@@ -724,7 +724,7 @@
 				LbSave.Cursor = Cursors.Hand
 				LbSave.Text = "Click here to Save to a Location"
 			End If
-			rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Generation Ended!" & vbCrLf & rtbLogs.Text
+			rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & rtbLogs.Text
 			rtbOuts.SelectionStart = 0
 		End If
 		rtbLogs.Text = "~ Took " & Microsoft.VisualBasic.Left(DateTime.Now.Subtract(startExec).ToString, 11) & vbCrLf & rtbLogs.Text
@@ -785,14 +785,14 @@
 						rtbOuts.SaveFile(selPathhosts, RichTextBoxStreamType.PlainText)
 						succ = True
 					Catch ex As Exception
-						rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
+						rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
 					End Try
 
 					If succ Then
 						If My.Computer.FileSystem.FileExists(selPathhosts) Then
 							Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
 							LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
-							rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
+							rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
 							'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 							Process.Start("explorer", "/select, " & selPathhosts)
 						End If
@@ -811,14 +811,14 @@
 					rtbOuts.SaveFile(syshostsPath, RichTextBoxStreamType.PlainText)
 					succ = True
 				Catch ex As Exception
-					rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
+					rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
 				End Try
 
 				If succ Then
 					If My.Computer.FileSystem.FileExists(syshostsPath) Then
 						Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(syshostsPath).Length)
 						LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
-						rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & rtbLogs.Text
+						rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & rtbLogs.Text
 
 						'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 						If My.Computer.FileSystem.FileExists(syshostsPath) Then
@@ -830,7 +830,7 @@
 		ElseIf e.Button = System.Windows.Forms.MouseButtons.Middle Then
 			If LbSave.Cursor = Cursors.Hand Then
 				If fdBrowse.ShowDialog = System.Windows.Forms.DialogResult.OK Then
-					Dim selPathhosts As String = fdBrowse.SelectedPath & IIf(Adblocked, "\Adblock_hosts_", "\hosts_").ToString & Format(Date.UtcNow, "yyyyMMddHHmmssffff") & ".zip"
+					Dim selPathhosts As String = fdBrowse.SelectedPath & IIf(Adblocked, "\Adblock_hosts_", "\hosts_").ToString & DateTime.UtcNow.ToString("yyyyMMddHHmmssffff", Globalization.CultureInfo.InvariantCulture) & ".zip"
 					Dim succ As Boolean = False
 					Try
 						Dim tempoPath As String = "C:\Users\" & Environment.UserName & "\AppData\Local\Temp\hostz"
@@ -841,14 +841,14 @@
 						IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
 						succ = True
 					Catch ex As Exception
-						rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
+						rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & rtbLogs.Text
 					End Try
 
 					If succ Then
 						If My.Computer.FileSystem.FileExists(selPathhosts) Then
 							Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
 							LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
-							rtbLogs.Text = "[" & Format(Now, "hh:mm:ss.ff tt MM/dd/yyyy") & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
+							rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & rtbLogs.Text
 							'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 							Process.Start("explorer", "/select, " & selPathhosts)
 						End If
