@@ -47,7 +47,7 @@ https://bitbucket.org/Laicure/publicview/downloads/hosts2
 ```
 https://bitbucket.org/Laicure/publicview/downloads/hosts3
 ```
-##### Sample Adblock syntaxed variant using [StevenBlack/hosts' main sources](https://github.com/StevenBlack/hosts/tree/master/data):
+##### Sample Adblock syntaxed variant using [StevenBlack/hosts' main sources](https://github.com/StevenBlack/hosts/tree/master/data) _(not to be used as hosts file)_:
 ```
 https://bitbucket.org/Laicure/publicview/downloads/Adblock_hosts.txt
 ```
