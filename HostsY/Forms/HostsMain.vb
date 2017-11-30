@@ -192,7 +192,7 @@
 		UniHash.ExceptWith(WhiteList)
 		'whitelist regex
 		If String.Join(" ", WhiteList).Contains("*") Then
-			Dim asteWhite As HashSet(Of String) = New HashSet(Of String)(WhiteList.Where(Function(x) x.Contains("*")).Select(Function(x) "(" & System.Text.RegularExpressions.Regex.Replace(x, "(?!\*)([^a-zA-Z0-9])", "\" & "$&").Replace("*", ".*") & ")"))
+			Dim asteWhite As HashSet(Of String) = New HashSet(Of String)(WhiteList.Where(Function(x) x.Contains("*")).Select(Function(x) "(^" & System.Text.RegularExpressions.Regex.Replace(x, "(?!\*)([^a-zA-Z0-9])", "\" & "$&").Replace("*", ".+?") & "$)"))
 			Dim whiteRegex As String = String.Join("|", asteWhite)
 			Dim uniWhite As HashSet(Of String) = New HashSet(Of String)(UniHash.Where(Function(x) Not System.Text.RegularExpressions.Regex.Match(x, whiteRegex, System.Text.RegularExpressions.RegexOptions.IgnoreCase).Success))
 			UniHash.Clear()
