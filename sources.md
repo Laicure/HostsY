@@ -1,6 +1,6 @@
 ##### Custom hosts file's sources and whitelist:
 ```
--- https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
+https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
 https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/SpotifyAds/hosts
 https://raw.githubusercontent.com/StevenBlack/hosts/master/data/StevenBlack/hosts
@@ -16,12 +16,10 @@ http://someonewhocares.org/hosts/zero/hosts
 https://raw.githubusercontent.com/tyzbit/hosts/master/data/tyzbit/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 https://hosts-file.net/ad_servers.txt
-https://hosts-file.net/emd.txt
 https://hosts-file.net/grm.txt
 https://hosts-file.net/hfs.txt
 https://hosts-file.net/hjk.txt
 https://hosts-file.net/mmt.txt
-https://hosts-file.net/psh.txt
 
 bit.ly
 adf.ly
