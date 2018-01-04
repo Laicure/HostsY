@@ -32,7 +32,7 @@ Optional:
 * \-zip
 	* Generates a zipped hosts file inside the Data folder
 	
-### _DNS Client_ service (on Windows) must be [disabled](http://support.simpledns.com/kb/a61/disabling-the-windows-dns-client-service.aspx) if using one of the hosts file below!
+### _DNS Client_ service (on Windows) must be [disabled](https://technet.microsoft.com/en-us/library/cc754743(v=ws.11).aspx) if using one of the hosts file below!
 
 
 ##### Frequent/Weekly Updated Generated [custom](https://github.com/Laicure/HostsY/blob/master/sources.md#custom-hosts-files-sources-and-whitelist) host file _with whitelist_; mostly for my personal usage:
