@@ -251,8 +251,8 @@ Partial Class HostsMain
 		Me.LbSave.TabIndex = 13
 		Me.LbSave.Text = "..."
 		Me.LbSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		Me.tipper.SetToolTip(Me.LbSave, "Left-Click: Save to a specified folder" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Right-Click: Overwrite system hosts file " & _
-		"(might need admin privileges)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Middle-Click: Generate zip file to a specified fo" & _
+		Me.tipper.SetToolTip(Me.LbSave, "Left-Click: Save to a specified folder" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Right-Click: Overwrite system hosts file " &
+		"(might need admin privileges)" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Middle-Click: Generate zip file to a specified fo" &
 		"lder")
 		'
 		'bgGenerate
@@ -315,7 +315,7 @@ Partial Class HostsMain
 		Me.LbReset.TabIndex = 16
 		Me.LbReset.Text = "Reset All"
 		Me.LbReset.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-		Me.tipper.SetToolTip(Me.LbReset, "Restarts the app")
+		Me.tipper.SetToolTip(Me.LbReset, "Resets the app")
 		'
 		'chAdblock
 		'
@@ -328,7 +328,7 @@ Partial Class HostsMain
 		Me.chAdblock.TabIndex = 17
 		Me.chAdblock.TabStop = False
 		Me.chAdblock.Text = "Adblock"
-		Me.tipper.SetToolTip(Me.chAdblock, "[Experimental]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Create an Adblock syntaxed hosts file instead of the standard one" & _
+		Me.tipper.SetToolTip(Me.chAdblock, "[Experimental]" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Create an Adblock syntaxed hosts file instead of the standard one" &
 		"")
 		Me.chAdblock.UseVisualStyleBackColor = True
 		'

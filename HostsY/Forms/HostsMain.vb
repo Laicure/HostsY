@@ -869,7 +869,44 @@
 	End Sub
 
 	Private Sub LbReset_Click(sender As Object, e As EventArgs) Handles LbReset.Click
-		Application.Restart()
+		LbSource.Text = "Sources"
+		rtbSources.Text = ""
+
+		LbWhites.Text = "Whitelist"
+		rtbWhites.Text = ""
+
+		LbBlacks.Text = "Blacklist"
+		rtbBlacks.Text = ""
+
+		chSort.Checked = True
+		chMin.Checked = True
+
+		chAdblock.Checked = False
+
+		chTabs.Checked = False
+
+		txtTargetIP.Text = "0.0.0.0"
+
+		LbStatus.Text = "Open system ""hosts"" folder"
+
+		LbSave.Text = ""
+
+		rtbOuts.Text = ""
+
+		butGenerate.Text = "Start Generation"
+
+		rtbSources.Focus()
+
+		'vars
+		SourceL = Nothing
+		WhiteL = Nothing
+		BlackL = Nothing
+		startExec = Now
+		errCount = 0
+		Adblocked = False
+		OmitWWW = False
+
+		rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] App reset!"
 	End Sub
 
 	Private Sub chAdblock_CheckedChanged(sender As Object, e As EventArgs) Handles chAdblock.CheckedChanged
