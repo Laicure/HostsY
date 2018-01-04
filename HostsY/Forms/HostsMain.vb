@@ -889,7 +889,7 @@
 
 		LbStatus.Text = "Open system ""hosts"" folder"
 
-		LbSave.Text = ""
+		LbSave.Text = "..."
 
 		rtbOuts.Text = ""
 
