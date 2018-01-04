@@ -12,8 +12,8 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("Just a simplified and multi-threaded revamp of HostsX for Windows.")>
 <Assembly: AssemblyCompany("CodeMock")>
 <Assembly: AssemblyProduct("HostsY")>
-<Assembly: AssemblyCopyright("Copyright © 2016")>
-<Assembly: AssemblyTrademark("Laicure Leviare Icarus")>
+<Assembly: AssemblyCopyright("Copyright © 2018")>
+<Assembly: AssemblyTrademark("Laicure Leviare")>
 
 <Assembly: ComVisible(False)>
 
