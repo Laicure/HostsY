@@ -326,7 +326,7 @@
 		Buff.DoubleBuff(rtbWhites)
 	End Sub
 
-	Private Sub butGenerate_Click(sender As Object, e As EventArgs) Handles butGenerate.Click
+	Private Sub ButGenerate_Click(sender As Object, e As EventArgs) Handles butGenerate.Click
 		If String.IsNullOrWhiteSpace(rtbSources.Text) Then
 			Exit Sub
 		End If
@@ -380,7 +380,7 @@
 		bgGenerate.RunWorkerAsync()
 	End Sub
 
-	Private Sub bgGenerate_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgGenerate.DoWork
+	Private Sub BgGenerate_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles bgGenerate.DoWork
 		'### Retrieve all Source Data
 		startExec = Now
 
@@ -696,7 +696,7 @@
 		rtbOuts.Invoke(DirectCast(Sub() rtbOuts.Text = String.Join(vbCrLf, FinalList), MethodInvoker))
 	End Sub
 
-	Private Sub bgGenerate_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgGenerate.RunWorkerCompleted
+	Private Sub BgGenerate_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgGenerate.RunWorkerCompleted
 		'reactivate controls
 		rtbSources.ReadOnly = False
 		rtbWhites.ReadOnly = False
@@ -735,7 +735,7 @@
 		Erase BlackL
 	End Sub
 
-	Private Sub txtTargetIP_Leave(sender As Object, e As EventArgs) Handles txtTargetIP.Leave
+	Private Sub TxtTargetIP_Leave(sender As Object, e As EventArgs) Handles txtTargetIP.Leave
 		If System.Text.RegularExpressions.Regex.Match(txtTargetIP.Text.Trim, "^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$").Success Then
 			txtTargetIP.Text = txtTargetIP.Text.Trim
 		Else
@@ -743,21 +743,21 @@
 		End If
 	End Sub
 
-	Private Sub rtbSources_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbSources.KeyDown
+	Private Sub RtbSources_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbSources.KeyDown
 		If Not rtbSources.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
 			e.SuppressKeyPress = True
 			rtbSources.Paste(DataFormats.GetFormat(DataFormats.Text))
 		End If
 	End Sub
 
-	Private Sub rtbWhites_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbWhites.KeyDown
+	Private Sub RtbWhites_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbWhites.KeyDown
 		If Not rtbWhites.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
 			e.SuppressKeyPress = True
 			rtbWhites.Paste(DataFormats.GetFormat(DataFormats.Text))
 		End If
 	End Sub
 
-	Private Sub rtbBlacks_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbBlacks.KeyDown
+	Private Sub RtbBlacks_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbBlacks.KeyDown
 		If Not rtbBlacks.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
 			e.SuppressKeyPress = True
 			rtbBlacks.Paste(DataFormats.GetFormat(DataFormats.Text))
@@ -909,7 +909,7 @@
 		rtbLogs.Text = "[" & DateTime.Now.ToString("hh:mm:ss.ff tt MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] App reset!"
 	End Sub
 
-	Private Sub chAdblock_CheckedChanged(sender As Object, e As EventArgs) Handles chAdblock.CheckedChanged
+	Private Sub ChAdblock_CheckedChanged(sender As Object, e As EventArgs) Handles chAdblock.CheckedChanged
 		If chAdblock.Checked Then
 			chTabs.Text = "Omit www."
 			tipper.SetToolTip(chTabs, "Removes www. in the domains for broader blocking")
