@@ -389,7 +389,7 @@ Partial Class HostsMain
 		Me.chPreview.TabStop = False
 		Me.chPreview.Text = "Preview"
 		Me.chPreview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-		Me.tipper.SetToolTip(Me.chPreview, "Show actual generated hosts file below")
+		Me.tipper.SetToolTip(Me.chPreview, "Show the actual generated hosts file below after generating")
 		Me.chPreview.UseVisualStyleBackColor = True
 		'
 		'MainPan

@@ -920,7 +920,7 @@
 
 	Private Sub ChAdblock_CheckedChanged(sender As Object, e As EventArgs) Handles chAdblock.CheckedChanged
 		If chAdblock.Checked Then
-			chTabs.Text = "Omit www."
+			chTabs.Text = "-www."
 			tipper.SetToolTip(chTabs, "Removes www. in the domains for broader blocking")
 		Else
 			chTabs.Text = "Tabs"
@@ -936,4 +936,5 @@
 			rtbOuts.Size = New Drawing.Size(422, 20)
 		End If
 	End Sub
+
 End Class
