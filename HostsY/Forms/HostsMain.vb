@@ -929,4 +929,11 @@
 		End If
 	End Sub
 
+	Private Sub chPreview_CheckedChanged(sender As Object, e As EventArgs) Handles chPreview.CheckedChanged
+		If chPreview.Checked Then
+			rtbOuts.Size = New Drawing.Size(422, 207)
+		Else
+			rtbOuts.Size = New Drawing.Size(422, 20)
+		End If
+	End Sub
 End Class

@@ -1,27 +1,27 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class HostsMain
-    Inherits System.Windows.Forms.Form
+	Inherits System.Windows.Forms.Form
 
-    'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
-    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-        Try
-            If disposing AndAlso components IsNot Nothing Then
-                components.Dispose()
-            End If
-        Finally
-            MyBase.Dispose(disposing)
-        End Try
-    End Sub
+	'Form overrides dispose to clean up the component list.
+	<System.Diagnostics.DebuggerNonUserCode()>
+	Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+		Try
+			If disposing AndAlso components IsNot Nothing Then
+				components.Dispose()
+			End If
+		Finally
+			MyBase.Dispose(disposing)
+		End Try
+	End Sub
 
-    'Required by the Windows Form Designer
-    Private components As System.ComponentModel.IContainer
+	'Required by the Windows Form Designer
+	Private components As System.ComponentModel.IContainer
 
-    'NOTE: The following procedure is required by the Windows Form Designer
-    'It can be modified using the Windows Form Designer.  
-    'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
-    Private Sub InitializeComponent()
+	'NOTE: The following procedure is required by the Windows Form Designer
+	'It can be modified using the Windows Form Designer.  
+	'Do not modify it using the code editor.
+	<System.Diagnostics.DebuggerStepThrough()>
+	Private Sub InitializeComponent()
 		Me.components = New System.ComponentModel.Container()
 		Me.panLists = New System.Windows.Forms.Panel()
 		Me.rtbBlacks = New System.Windows.Forms.RichTextBox()
@@ -48,7 +48,9 @@ Partial Class HostsMain
 		Me.chAdblock = New System.Windows.Forms.CheckBox()
 		Me.chMin = New System.Windows.Forms.CheckBox()
 		Me.chPreview = New System.Windows.Forms.CheckBox()
+		Me.MainPan = New System.Windows.Forms.Panel()
 		Me.panLists.SuspendLayout()
+		Me.MainPan.SuspendLayout()
 		Me.SuspendLayout()
 		'
 		'panLists
@@ -74,6 +76,7 @@ Partial Class HostsMain
 		Me.rtbBlacks.BackColor = System.Drawing.Color.White
 		Me.rtbBlacks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.rtbBlacks.DetectUrls = False
+		Me.rtbBlacks.ForeColor = System.Drawing.Color.Black
 		Me.rtbBlacks.Location = New System.Drawing.Point(1, 304)
 		Me.rtbBlacks.Margin = New System.Windows.Forms.Padding(1)
 		Me.rtbBlacks.Name = "rtbBlacks"
@@ -101,6 +104,7 @@ Partial Class HostsMain
 		Me.rtbWhites.BackColor = System.Drawing.Color.White
 		Me.rtbWhites.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.rtbWhites.DetectUrls = False
+		Me.rtbWhites.ForeColor = System.Drawing.Color.Black
 		Me.rtbWhites.Location = New System.Drawing.Point(1, 160)
 		Me.rtbWhites.Margin = New System.Windows.Forms.Padding(1)
 		Me.rtbWhites.Name = "rtbWhites"
@@ -128,6 +132,7 @@ Partial Class HostsMain
 		Me.rtbSources.BackColor = System.Drawing.Color.White
 		Me.rtbSources.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.rtbSources.DetectUrls = False
+		Me.rtbSources.ForeColor = System.Drawing.Color.Black
 		Me.rtbSources.Location = New System.Drawing.Point(1, 16)
 		Me.rtbSources.Margin = New System.Windows.Forms.Padding(1)
 		Me.rtbSources.Name = "rtbSources"
@@ -152,10 +157,10 @@ Partial Class HostsMain
 		'
 		Me.Label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.Label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.Label4.Location = New System.Drawing.Point(357, 2)
+		Me.Label4.Location = New System.Drawing.Point(153, 0)
 		Me.Label4.Margin = New System.Windows.Forms.Padding(1)
 		Me.Label4.Name = "Label4"
-		Me.Label4.Size = New System.Drawing.Size(100, 31)
+		Me.Label4.Size = New System.Drawing.Size(100, 28)
 		Me.Label4.TabIndex = 3
 		Me.Label4.Text = "Target IP" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Default: 0.0.0.0"
 		Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -165,7 +170,7 @@ Partial Class HostsMain
 		Me.txtTargetIP.BackColor = System.Drawing.Color.White
 		Me.txtTargetIP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.txtTargetIP.ForeColor = System.Drawing.Color.Black
-		Me.txtTargetIP.Location = New System.Drawing.Point(357, 34)
+		Me.txtTargetIP.Location = New System.Drawing.Point(153, 29)
 		Me.txtTargetIP.Margin = New System.Windows.Forms.Padding(1)
 		Me.txtTargetIP.Name = "txtTargetIP"
 		Me.txtTargetIP.Size = New System.Drawing.Size(100, 22)
@@ -179,10 +184,10 @@ Partial Class HostsMain
 		'
 		Me.butGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.butGenerate.ForeColor = System.Drawing.Color.DarkGreen
-		Me.butGenerate.Location = New System.Drawing.Point(459, 1)
+		Me.butGenerate.Location = New System.Drawing.Point(254, 0)
 		Me.butGenerate.Margin = New System.Windows.Forms.Padding(1)
 		Me.butGenerate.Name = "butGenerate"
-		Me.butGenerate.Size = New System.Drawing.Size(163, 31)
+		Me.butGenerate.Size = New System.Drawing.Size(166, 28)
 		Me.butGenerate.TabIndex = 3
 		Me.butGenerate.Text = "Start Generation"
 		Me.butGenerate.UseVisualStyleBackColor = True
@@ -193,25 +198,30 @@ Partial Class HostsMain
 		Me.rtbOuts.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.rtbOuts.DetectUrls = False
 		Me.rtbOuts.Dock = System.Windows.Forms.DockStyle.Bottom
-		Me.rtbOuts.Location = New System.Drawing.Point(201, 227)
+		Me.rtbOuts.ForeColor = System.Drawing.Color.Black
+		Me.rtbOuts.Location = New System.Drawing.Point(201, 415)
 		Me.rtbOuts.Margin = New System.Windows.Forms.Padding(1)
 		Me.rtbOuts.Name = "rtbOuts"
 		Me.rtbOuts.ReadOnly = True
-		Me.rtbOuts.Size = New System.Drawing.Size(422, 208)
+		Me.rtbOuts.Size = New System.Drawing.Size(422, 20)
 		Me.rtbOuts.TabIndex = 5
 		Me.rtbOuts.Text = ""
 		Me.rtbOuts.WordWrap = False
 		'
 		'rtbLogs
 		'
+		Me.rtbLogs.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+			Or System.Windows.Forms.AnchorStyles.Left) _
+			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
 		Me.rtbLogs.BackColor = System.Drawing.Color.White
 		Me.rtbLogs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.rtbLogs.DetectUrls = False
-		Me.rtbLogs.Location = New System.Drawing.Point(201, 58)
+		Me.rtbLogs.ForeColor = System.Drawing.Color.Black
+		Me.rtbLogs.Location = New System.Drawing.Point(1, 53)
 		Me.rtbLogs.Margin = New System.Windows.Forms.Padding(1)
 		Me.rtbLogs.Name = "rtbLogs"
 		Me.rtbLogs.ReadOnly = True
-		Me.rtbLogs.Size = New System.Drawing.Size(421, 150)
+		Me.rtbLogs.Size = New System.Drawing.Size(419, 344)
 		Me.rtbLogs.TabIndex = 4
 		Me.rtbLogs.Text = ""
 		Me.rtbLogs.WordWrap = False
@@ -221,7 +231,7 @@ Partial Class HostsMain
 		Me.chSort.Checked = True
 		Me.chSort.CheckState = System.Windows.Forms.CheckState.Checked
 		Me.chSort.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chSort.Location = New System.Drawing.Point(203, 1)
+		Me.chSort.Location = New System.Drawing.Point(1, 18)
 		Me.chSort.Margin = New System.Windows.Forms.Padding(1)
 		Me.chSort.Name = "chSort"
 		Me.chSort.Size = New System.Drawing.Size(75, 17)
@@ -234,7 +244,7 @@ Partial Class HostsMain
 		'chTabs
 		'
 		Me.chTabs.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chTabs.Location = New System.Drawing.Point(203, 20)
+		Me.chTabs.Location = New System.Drawing.Point(1, 34)
 		Me.chTabs.Margin = New System.Windows.Forms.Padding(1)
 		Me.chTabs.Name = "chTabs"
 		Me.chTabs.Size = New System.Drawing.Size(75, 17)
@@ -246,9 +256,10 @@ Partial Class HostsMain
 		'
 		'Label1
 		'
+		Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
 		Me.Label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.Label1.Location = New System.Drawing.Point(203, 210)
-		Me.Label1.Margin = New System.Windows.Forms.Padding(1)
+		Me.Label1.Location = New System.Drawing.Point(0, 399)
+		Me.Label1.Margin = New System.Windows.Forms.Padding(0)
 		Me.Label1.Name = "Label1"
 		Me.Label1.Size = New System.Drawing.Size(95, 13)
 		Me.Label1.TabIndex = 12
@@ -257,13 +268,15 @@ Partial Class HostsMain
 		'
 		'LbSave
 		'
+		Me.LbSave.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
 		Me.LbSave.AutoEllipsis = True
 		Me.LbSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbSave.ForeColor = System.Drawing.Color.DarkGreen
-		Me.LbSave.Location = New System.Drawing.Point(367, 210)
+		Me.LbSave.Location = New System.Drawing.Point(163, 399)
 		Me.LbSave.Margin = New System.Windows.Forms.Padding(1)
 		Me.LbSave.Name = "LbSave"
-		Me.LbSave.Size = New System.Drawing.Size(255, 13)
+		Me.LbSave.Size = New System.Drawing.Size(257, 13)
 		Me.LbSave.TabIndex = 13
 		Me.LbSave.Text = "..."
 		Me.LbSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -280,10 +293,10 @@ Partial Class HostsMain
 		Me.LbStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.LbStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbStatus.ForeColor = System.Drawing.Color.Blue
-		Me.LbStatus.Location = New System.Drawing.Point(459, 34)
+		Me.LbStatus.Location = New System.Drawing.Point(254, 29)
 		Me.LbStatus.Margin = New System.Windows.Forms.Padding(1)
 		Me.LbStatus.Name = "LbStatus"
-		Me.LbStatus.Size = New System.Drawing.Size(163, 22)
+		Me.LbStatus.Size = New System.Drawing.Size(166, 22)
 		Me.LbStatus.TabIndex = 14
 		Me.LbStatus.Text = "Open system ""hosts"" folder"
 		Me.LbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -295,7 +308,7 @@ Partial Class HostsMain
 		Me.LbAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbAbout.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.LbAbout.ForeColor = System.Drawing.Color.DeepPink
-		Me.LbAbout.Location = New System.Drawing.Point(203, 39)
+		Me.LbAbout.Location = New System.Drawing.Point(1, 0)
 		Me.LbAbout.Margin = New System.Windows.Forms.Padding(1)
 		Me.LbAbout.Name = "LbAbout"
 		Me.LbAbout.Size = New System.Drawing.Size(75, 17)
@@ -324,7 +337,7 @@ Partial Class HostsMain
 		Me.LbReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbReset.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.LbReset.ForeColor = System.Drawing.Color.DarkMagenta
-		Me.LbReset.Location = New System.Drawing.Point(280, 39)
+		Me.LbReset.Location = New System.Drawing.Point(77, 0)
 		Me.LbReset.Margin = New System.Windows.Forms.Padding(1)
 		Me.LbReset.Name = "LbReset"
 		Me.LbReset.Size = New System.Drawing.Size(75, 17)
@@ -337,7 +350,7 @@ Partial Class HostsMain
 		'
 		Me.chAdblock.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.chAdblock.ForeColor = System.Drawing.Color.Red
-		Me.chAdblock.Location = New System.Drawing.Point(280, 20)
+		Me.chAdblock.Location = New System.Drawing.Point(77, 34)
 		Me.chAdblock.Margin = New System.Windows.Forms.Padding(1)
 		Me.chAdblock.Name = "chAdblock"
 		Me.chAdblock.Size = New System.Drawing.Size(75, 17)
@@ -353,7 +366,7 @@ Partial Class HostsMain
 		Me.chMin.Checked = True
 		Me.chMin.CheckState = System.Windows.Forms.CheckState.Checked
 		Me.chMin.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chMin.Location = New System.Drawing.Point(280, 1)
+		Me.chMin.Location = New System.Drawing.Point(77, 18)
 		Me.chMin.Margin = New System.Windows.Forms.Padding(1)
 		Me.chMin.Name = "chMin"
 		Me.chMin.Size = New System.Drawing.Size(75, 17)
@@ -366,8 +379,9 @@ Partial Class HostsMain
 		'
 		'chPreview
 		'
+		Me.chPreview.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
 		Me.chPreview.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chPreview.Location = New System.Drawing.Point(300, 208)
+		Me.chPreview.Location = New System.Drawing.Point(96, 397)
 		Me.chPreview.Margin = New System.Windows.Forms.Padding(1)
 		Me.chPreview.Name = "chPreview"
 		Me.chPreview.Size = New System.Drawing.Size(65, 17)
@@ -378,27 +392,37 @@ Partial Class HostsMain
 		Me.tipper.SetToolTip(Me.chPreview, "Show actual generated hosts file below")
 		Me.chPreview.UseVisualStyleBackColor = True
 		'
+		'MainPan
+		'
+		Me.MainPan.Controls.Add(Me.chPreview)
+		Me.MainPan.Controls.Add(Me.Label1)
+		Me.MainPan.Controls.Add(Me.LbSave)
+		Me.MainPan.Controls.Add(Me.chSort)
+		Me.MainPan.Controls.Add(Me.Label4)
+		Me.MainPan.Controls.Add(Me.chMin)
+		Me.MainPan.Controls.Add(Me.txtTargetIP)
+		Me.MainPan.Controls.Add(Me.chAdblock)
+		Me.MainPan.Controls.Add(Me.butGenerate)
+		Me.MainPan.Controls.Add(Me.LbReset)
+		Me.MainPan.Controls.Add(Me.rtbLogs)
+		Me.MainPan.Controls.Add(Me.LbAbout)
+		Me.MainPan.Controls.Add(Me.chTabs)
+		Me.MainPan.Controls.Add(Me.LbStatus)
+		Me.MainPan.Dock = System.Windows.Forms.DockStyle.Fill
+		Me.MainPan.Location = New System.Drawing.Point(201, 1)
+		Me.MainPan.Margin = New System.Windows.Forms.Padding(0)
+		Me.MainPan.Name = "MainPan"
+		Me.MainPan.Size = New System.Drawing.Size(422, 414)
+		Me.MainPan.TabIndex = 20
+		'
 		'HostsMain
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
 		Me.ClientSize = New System.Drawing.Size(624, 436)
-		Me.Controls.Add(Me.chPreview)
-		Me.Controls.Add(Me.chMin)
-		Me.Controls.Add(Me.chAdblock)
-		Me.Controls.Add(Me.LbReset)
-		Me.Controls.Add(Me.LbAbout)
-		Me.Controls.Add(Me.LbStatus)
-		Me.Controls.Add(Me.LbSave)
-		Me.Controls.Add(Me.Label1)
-		Me.Controls.Add(Me.chTabs)
-		Me.Controls.Add(Me.chSort)
-		Me.Controls.Add(Me.rtbLogs)
+		Me.Controls.Add(Me.MainPan)
 		Me.Controls.Add(Me.rtbOuts)
-		Me.Controls.Add(Me.butGenerate)
-		Me.Controls.Add(Me.txtTargetIP)
-		Me.Controls.Add(Me.Label4)
 		Me.Controls.Add(Me.panLists)
 		Me.DoubleBuffered = True
 		Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -412,8 +436,9 @@ Partial Class HostsMain
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
 		Me.Text = "HostsY v<Version>"
 		Me.panLists.ResumeLayout(False)
+		Me.MainPan.ResumeLayout(False)
+		Me.MainPan.PerformLayout()
 		Me.ResumeLayout(False)
-		Me.PerformLayout()
 
 	End Sub
 	Friend WithEvents panLists As System.Windows.Forms.Panel
@@ -439,6 +464,7 @@ Partial Class HostsMain
 	Friend WithEvents tipper As System.Windows.Forms.ToolTip
 	Friend WithEvents LbReset As System.Windows.Forms.Label
 	Friend WithEvents chAdblock As System.Windows.Forms.CheckBox
-    Friend WithEvents chMin As System.Windows.Forms.CheckBox
+	Friend WithEvents chMin As System.Windows.Forms.CheckBox
 	Friend WithEvents chPreview As CheckBox
+	Friend WithEvents MainPan As Panel
 End Class
