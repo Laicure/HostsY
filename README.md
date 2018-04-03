@@ -12,12 +12,14 @@ Required:
 		* Must have the **source.txt** that contains the _host sources_
 		* Optional: **black.txt** for domain _blacklist_
 		* Optional: **white.txt** for domain _whitelist_
+		* Optional: **loopbacks.txt** for domain _loopbacks_
 ```
 HostsY.exe
 Data
 \black.txt
 \source.txt
 \white.txt
+\loopbacks.txt
 ```
 
 Optional:
