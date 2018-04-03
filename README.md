@@ -3,7 +3,7 @@ Just a simplified and multi-threaded revamp of [HostsX](http://github.com/Laicur
 
 ###### Minimum Requirement: [.NET v4.5.2](https://www.microsoft.com/en-us/download/details.aspx?id=42642)
 
-###### Auto Parameters (requires admin privileges):
+#### Auto Parameters (requires admin privileges):
 Required:
 * \-auto
 	* Initializes Auto Generate State
@@ -20,6 +20,23 @@ Data
 \source.txt
 \white.txt
 \loopback.txt
+```
+
+###### Possible loopbacks:
+```
+0.0.0.0
+broadcasthost
+ip6-allhosts
+ip6-allnodes
+ip6-allrouters
+ip6-localhost
+ip6-localnet
+ip6-loopback
+ip6-mcastprefix
+local
+localhost
+localhost.localdomain
+
 ```
 
 Optional:
