@@ -21,7 +21,6 @@ Data
 \white.txt
 \loopback.txt
 ```
-
 ###### Possible loopbacks:
 ```
 0.0.0.0
@@ -38,7 +37,6 @@ localhost
 localhost.localdomain
 
 ```
-
 Optional:
 * \-sort
 	* Sorts the Domains (ascending; source-wise)
