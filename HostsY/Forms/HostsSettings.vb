@@ -15,7 +15,11 @@
 		SetMin = chMin.Checked
 		SetSort = chSort.Checked
 		SetTabs = chTabs.Checked
-		SetLoopBlacks = txLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
+		If Not String.IsNullOrWhiteSpace(txLoopbacks.Text) Then
+			SetLoopBlacks = txLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
+		Else
+			SetLoopBlacks = {"localhost"}
+		End If
 	End Sub
 
 	Private Sub LbAbout_Click(sender As Object, e As EventArgs) Handles LbAbout.Click

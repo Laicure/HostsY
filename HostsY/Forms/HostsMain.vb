@@ -35,15 +35,11 @@
 		'Check Directory
 		If Not My.Computer.FileSystem.DirectoryExists(dataSource) Then
 			My.Computer.FileSystem.CreateDirectory(dataSource)
-			'Environment.Exit(3)
-			'Exit Sub
 		End If
 
 		'Check sources
 		If Not My.Computer.FileSystem.FileExists(dataSource & "\source.txt") Then
 			My.Computer.FileSystem.WriteAllText(dataSource & "\source.txt", "", False)
-			'Environment.Exit(2)
-			'Exit Sub
 		End If
 
 		'Check whitelist
