@@ -673,21 +673,33 @@
 	Private Sub RtbSources_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbSources.KeyDown
 		If Not rtbSources.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
 			e.SuppressKeyPress = True
+			Dim rtbtx As String = rtbSources.Text
 			rtbSources.Paste(DataFormats.GetFormat(DataFormats.Text))
+			If String.IsNullOrWhiteSpace(rtbtx) Then
+				rtbSources.SelectionStart = 0
+			End If
 		End If
 	End Sub
 
 	Private Sub RtbWhites_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbWhites.KeyDown
 		If Not rtbWhites.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
 			e.SuppressKeyPress = True
+			Dim rtbtx As String = rtbWhites.Text
 			rtbWhites.Paste(DataFormats.GetFormat(DataFormats.Text))
+			If String.IsNullOrWhiteSpace(rtbtx) Then
+				rtbWhites.SelectionStart = 0
+			End If
 		End If
 	End Sub
 
 	Private Sub RtbBlacks_KeyDown(sender As Object, e As KeyEventArgs) Handles rtbBlacks.KeyDown
 		If Not rtbBlacks.ReadOnly And (e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.V) Then
 			e.SuppressKeyPress = True
+			Dim rtbtx As String = rtbBlacks.Text
 			rtbBlacks.Paste(DataFormats.GetFormat(DataFormats.Text))
+			If String.IsNullOrWhiteSpace(rtbtx) Then
+				rtbBlacks.SelectionStart = 0
+			End If
 		End If
 	End Sub
 

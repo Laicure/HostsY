@@ -145,6 +145,7 @@ Partial Class HostsMain
 		'
 		'butGenerate
 		'
+		Me.butGenerate.Cursor = System.Windows.Forms.Cursors.Hand
 		Me.butGenerate.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.butGenerate.ForeColor = System.Drawing.Color.DarkGreen
 		Me.butGenerate.Location = New System.Drawing.Point(1, 0)
@@ -227,6 +228,7 @@ Partial Class HostsMain
 		'chPreview
 		'
 		Me.chPreview.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+		Me.chPreview.Cursor = System.Windows.Forms.Cursors.Hand
 		Me.chPreview.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.chPreview.Location = New System.Drawing.Point(96, 397)
 		Me.chPreview.Margin = New System.Windows.Forms.Padding(1)
@@ -241,6 +243,7 @@ Partial Class HostsMain
 		'LbSettings
 		'
 		Me.LbSettings.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+		Me.LbSettings.Cursor = System.Windows.Forms.Cursors.Hand
 		Me.LbSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbSettings.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.LbSettings.ForeColor = System.Drawing.Color.Crimson

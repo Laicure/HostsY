@@ -7,7 +7,7 @@
 		chMin.Checked = SetMin
 		chSort.Checked = SetSort
 		chTabs.Checked = SetTabs
-		txLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
+		rtbLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
 	End Sub
 
 	Private Sub HostsSettings_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -15,10 +15,10 @@
 		SetMin = chMin.Checked
 		SetSort = chSort.Checked
 		SetTabs = chTabs.Checked
-		If Not String.IsNullOrWhiteSpace(txLoopbacks.Text) Then
-			SetLoopBlacks = txLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
+		If Not String.IsNullOrWhiteSpace(rtbLoopbacks.Text) Then
+			SetLoopBlacks = rtbLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
 		Else
-			SetLoopBlacks = {"localhost"}
+			SetLoopBlacks = {"0.0.0.0", "broadcasthost", "ip6-allhosts", "ip6-allnodes", "ip6-allrouters", "ip6-localhost", "ip6-localnet", "ip6-loopback", "ip6-mcastprefix", "local", "localhost", "localhost.localdomain"}
 		End If
 	End Sub
 
