@@ -29,7 +29,6 @@
 		Dim tabb As Boolean = argg.Contains("-tab")
 		Dim sortt As Boolean = argg.Contains("-sort")
 		Dim logger As Boolean = argg.Contains("-logs")
-		Dim minn As Boolean = argg.Contains("-min")
 		Dim zipp As Boolean = argg.Contains("-zip")
 
 		'Check Directory
@@ -161,12 +160,7 @@
 						If sortt Then
 							SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
 						End If
-						If Not minn Then
-							UniHash.Add("# ~Source @" & i + 1)
-							SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
-						Else
-							SourceList.Add("[" & domCount & "] " & arrTemp(i))
-						End If
+						SourceList.Add("[" & domCount & "] " & arrTemp(i))
 						UniHash.UnionWith(SourceHash)
 					End If
 				End If
@@ -214,62 +208,58 @@
 		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Adding Target IP" & vbCrLf & Logg
 
 		'finalize unified data (add target IP and comment/remove items from WhiteList)
-		Dim uniCount As Integer = UniHash.Where(Function(x) Not x.StartsWith("#")).Count
+		Dim uniCount As Integer = UniHash.Count
 		Dim TargetIP As String = "0.0.0.0"
 		arrTemp = UniHash.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
 		UniHash.Clear()
 		UniHash.TrimExcess()
-		For i As Integer = 0 To arrTemp.Count - 1
-			UniHash.Add(IIf(Not arrTemp(i).StartsWith("#"), TargetIP & IIf(tabb, vbTab, " ").ToString & arrTemp(i), arrTemp(i)).ToString)
-		Next
+		Dim arrTempCount As Integer = arrTemp.Count - 1
+		If SetDomainPerLine > 1 Then
+			Dim artemp As String = ""
+			For i As Integer = 0 To arrTempCount
+				artemp = artemp & " " & arrTemp(i)
+				If (i + 1) Mod SetDomainPerLine = 0 Then
+					UniHash.Add(TargetIP & IIf(tabb, vbTab, " ").ToString & artemp.Trim)
+					artemp = ""
+				ElseIf i = arrTempCount Then
+					UniHash.Add(TargetIP & IIf(tabb, vbTab, " ").ToString & artemp.Trim)
+					artemp = ""
+				End If
+			Next
+		Else
+			For i As Integer = 0 To arrTempCount
+				UniHash.Add(TargetIP & IIf(tabb, vbTab, " ").ToString & arrTemp(i))
+			Next
+		End If
 		Erase arrTemp
 
 		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & Logg
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
-		If minn Then
-			With FinalList
-				.Add("# Entries: " & uniCount.ToString("#,0"))
-				.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
+
+		With FinalList
+			.Add("# Entries: " & uniCount.ToString("#,0"))
+			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
+			.Add("# Generated using github.com/Laicure/HostsY")
+			.Add("")
+			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
+			.AddRange(SourceList.Select(Function(x) "# " & x))
+			.Add("")
+			.Add("# Loopbacks")
+			.Add("127.0.0.1" & IIf(tabb, vbTab, " ").ToString & "localhost")
+			.Add("::1" & IIf(tabb, vbTab, " ").ToString & "localhost")
+			.Add("")
+			If BlackList.Count > 0 Then
+				.Add("# Blacklist [" & BlackList.Count.ToString("#,0") & "]")
+				.AddRange(BlackList.Select(Function(x) TargetIP & IIf(tabb, vbTab, " ").ToString & x))
 				.Add("")
-				.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
-				.AddRange(SourceList.Select(Function(x) "# " & x))
-				.Add("")
-				.Add("127.0.0.1" & IIf(tabb, vbTab, " ").ToString & "localhost")
-				.Add("::1" & IIf(tabb, vbTab, " ").ToString & "localhost")
-				.Add("")
-				If BlackList.Count > 0 Then
-					.AddRange(BlackList.Select(Function(x) TargetIP & IIf(tabb, vbTab, " ").ToString & x))
-					.Add("")
-				End If
-				.AddRange(UniHash)
-				.Add("")
-			End With
-		Else
-			With FinalList
-				.Add("# Entries: " & uniCount.ToString("#,0"))
-				.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
-				.Add("# Generated using github.com/Laicure/HostsY")
-				.Add("")
-				.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
-				.AddRange(SourceList.Select(Function(x) "# " & x))
-				.Add("")
-				.Add("# Loopbacks")
-				.Add("127.0.0.1" & IIf(tabb, vbTab, " ").ToString & "localhost")
-				.Add("::1" & IIf(tabb, vbTab, " ").ToString & "localhost")
-				.Add("")
-				If BlackList.Count > 0 Then
-					.Add("# Blacklist [" & BlackList.Count.ToString("#,0") & "]")
-					.AddRange(BlackList.Select(Function(x) TargetIP & IIf(tabb, vbTab, " ").ToString & x))
-					.Add("")
-				End If
-				.Add("#" & IIf(sortt, " Sorted ", " ").ToString & "Domains")
-				.AddRange(UniHash)
-				.Add("")
-				.Add("# End")
-				.Add("")
-			End With
-		End If
+			End If
+			.Add("#" & IIf(sortt, " Sorted ", " ").ToString & "Domains")
+			.AddRange(UniHash)
+			.Add("")
+			.Add("# End")
+			.Add("")
+		End With
 
 		'Save; needs admin privileges
 		Try
@@ -503,12 +493,7 @@
 						If SetSort Then
 							SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
 						End If
-						If Not SetMin Then
-							UniHash.Add("# ~Source @" & i + 1)
-							SourceList.Add("[" & domCount & "] @" & i + 1 & ", " & arrTemp(i))
-						Else
-							SourceList.Add("[" & domCount & "] " & arrTemp(i))
-						End If
+						SourceList.Add("[" & domCount & "] " & arrTemp(i))
 						UniHash.UnionWith(SourceHash)
 					End If
 				End If
@@ -553,19 +538,38 @@
 
 		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] " & "Adding Target IP" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'finalize unified data (add target IP and comment/remove items from WhiteList)
-		Dim uniCount As Integer = UniHash.Where(Function(x) Not x.StartsWith("#")).Count
+		Dim uniCount As Integer = UniHash.Count
 		Dim TargetIP As String = SetTargetIP
 		arrTemp = UniHash.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
 		UniHash.Clear()
 		UniHash.TrimExcess()
-		For i As Integer = 0 To arrTemp.Count - 1
-			If bgGenerate.CancellationPending Then
-				e.Cancel = True
-				Exit Sub
-			End If
+		Dim arrTempCount As Integer = arrTemp.Count - 1
+		If SetDomainPerLine > 1 Then
+			Dim artemp As String = ""
+			For i As Integer = 0 To arrTempCount
+				If bgGenerate.CancellationPending Then
+					e.Cancel = True
+					Exit Sub
+				End If
+				artemp = artemp & " " & arrTemp(i)
+				If (i + 1) Mod SetDomainPerLine = 0 Then
+					UniHash.Add(TargetIP & IIf(SetTabs, vbTab, " ").ToString & artemp.Trim)
+					artemp = ""
+				ElseIf i = arrTempCount Then
+					UniHash.Add(TargetIP & IIf(SetTabs, vbTab, " ").ToString & artemp.Trim)
+					artemp = ""
+				End If
+			Next
+		Else
+			For i As Integer = 0 To arrTempCount
+				If bgGenerate.CancellationPending Then
+					e.Cancel = True
+					Exit Sub
+				End If
 
-			UniHash.Add(IIf(Not arrTemp(i).StartsWith("#"), TargetIP & IIf(SetTabs, vbTab, " ").ToString & arrTemp(i), arrTemp(i)).ToString)
-		Next
+				UniHash.Add(TargetIP & IIf(SetTabs, vbTab, " ").ToString & arrTemp(i))
+			Next
+		End If
 		Erase arrTemp
 
 		If bgGenerate.CancellationPending Then
@@ -577,49 +581,29 @@
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
 
-		If SetMin Then
-			With FinalList
-				.Add("# Entries: " & uniCount.ToString("#,0"))
-				.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
+		With FinalList
+			.Add("# Entries: " & uniCount.ToString("#,0"))
+			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
+			.Add("# Generated using github.com/Laicure/HostsY")
+			.Add("")
+			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
+			.AddRange(SourceList.Select(Function(x) "# " & x))
+			.Add("")
+			.Add("# Loopbacks")
+			.Add("127.0.0.1" & IIf(SetTabs, vbTab, " ").ToString & "localhost")
+			.Add("::1" & IIf(SetTabs, vbTab, " ").ToString & "localhost")
+			.Add("")
+			If BlackList.Count > 0 Then
+				.Add("# Blacklist [" & BlackList.Count.ToString("#,0") & "]")
+				.AddRange(BlackList.Select(Function(x) TargetIP & IIf(SetTabs, vbTab, " ").ToString & x))
 				.Add("")
-				.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
-				.AddRange(SourceList.Select(Function(x) "# " & x))
-				.Add("")
-				.Add("127.0.0.1" & IIf(SetTabs, vbTab, " ").ToString & "localhost")
-				.Add("::1" & IIf(SetTabs, vbTab, " ").ToString & "localhost")
-				.Add("")
-				If BlackList.Count > 0 Then
-					.AddRange(BlackList.Select(Function(x) TargetIP & IIf(SetTabs, vbTab, " ").ToString & x))
-					.Add("")
-				End If
-				.AddRange(UniHash)
-				.Add("")
-			End With
-		Else
-			With FinalList
-				.Add("# Entries: " & uniCount.ToString("#,0"))
-				.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
-				.Add("# Generated using github.com/Laicure/HostsY")
-				.Add("")
-				.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
-				.AddRange(SourceList.Select(Function(x) "# " & x))
-				.Add("")
-				.Add("# Loopbacks")
-				.Add("127.0.0.1" & IIf(SetTabs, vbTab, " ").ToString & "localhost")
-				.Add("::1" & IIf(SetTabs, vbTab, " ").ToString & "localhost")
-				.Add("")
-				If BlackList.Count > 0 Then
-					.Add("# Blacklist [" & BlackList.Count.ToString("#,0") & "]")
-					.AddRange(BlackList.Select(Function(x) TargetIP & IIf(SetTabs, vbTab, " ").ToString & x))
-					.Add("")
-				End If
-				.Add("#" & IIf(SetSort, " Sorted ", " ").ToString & "Domains")
-				.AddRange(UniHash)
-				.Add("")
-				.Add("# End")
-				.Add("")
-			End With
-		End If
+			End If
+			.Add("#" & IIf(SetSort, " Sorted ", " ").ToString & "Domains")
+			.AddRange(UniHash)
+			.Add("")
+			.Add("# End")
+			.Add("")
+		End With
 
 		If bgGenerate.CancellationPending Then
 			e.Cancel = True

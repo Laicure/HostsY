@@ -3,9 +3,9 @@
 #Region "Settings"
 
 	Friend SetTargetIP As String = "0.0.0.0"
-	Friend SetMin As Boolean = True
 	Friend SetSort As Boolean = True
 	Friend SetTabs As Boolean = False
+	Friend SetDomainPerLine As Integer = 1
 	Friend SetLoopBlacks() As String = {"0.0.0.0", "broadcasthost", "ip6-allhosts", "ip6-allnodes", "ip6-allrouters", "ip6-localhost", "ip6-localnet", "ip6-loopback", "ip6-mcastprefix", "local", "localhost", "localhost.localdomain"}
 
 #End Region

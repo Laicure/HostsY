@@ -4,17 +4,17 @@
 		Me.Icon = My.Resources.art
 
 		txtTargetIP.Text = SetTargetIP
-		chMin.Checked = SetMin
 		chSort.Checked = SetSort
 		chTabs.Checked = SetTabs
+		numDomainPerLine.Value = SetDomainPerLine
 		rtbLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
 	End Sub
 
 	Private Sub HostsSettings_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 		SetTargetIP = txtTargetIP.Text.Trim
-		SetMin = chMin.Checked
 		SetSort = chSort.Checked
 		SetTabs = chTabs.Checked
+		SetDomainPerLine = CInt(numDomainPerLine.Value)
 		If Not String.IsNullOrWhiteSpace(rtbLoopbacks.Text) Then
 			SetLoopBlacks = rtbLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
 		Else
