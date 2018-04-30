@@ -243,7 +243,7 @@ Public Class HostsMain
 
 		With FinalList
 			.Add("# Entries: " & uniCount.ToString("#,0"))
-			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture))
+			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using github.com/Laicure/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
@@ -587,7 +587,7 @@ Public Class HostsMain
 
 		With FinalList
 			.Add("# Entries: " & uniCount.ToString("#,0"))
-			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture))
+			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using github.com/Laicure/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
