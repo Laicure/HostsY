@@ -68,22 +68,22 @@ Public Class HostsMain
 		startExec = DateTime.UtcNow
 		'Init Logging
 		Dim Logg As String = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
-		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & Logg
+		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & Logg
 
 		'Validate Sources
 		Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
 		'Exit if Source is empty
 		If SourceList.Count = 0 Then
-			Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & Logg
+			Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & Logg
 			Environment.Exit(3)
 			Exit Sub
 		End If
 
-		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Validating Whitelist" & vbCrLf & Logg
+		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Whitelist" & vbCrLf & Logg
 		'Validate whitelist
 		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 
-		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & Logg
+		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & Logg
 		'Validate and match blacklist
 		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 
@@ -98,7 +98,7 @@ Public Class HostsMain
 		SourceList.TrimExcess()
 		For i As Integer = 0 To arrTemp.Count - 1
 			Dim arstring As String = arrTemp(i)
-			Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & Logg
+			Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & Logg
 			Dim suc As Boolean = False
 			Using clie As New Net.WebClient
 				Try
@@ -108,13 +108,13 @@ Public Class HostsMain
 					UniString += SourcedD & vbCrLf
 					suc = True
 				Catch ex As Exception
-					Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & Logg
+					Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & Logg
 					errCount += 1
 				End Try
 
 				If suc Then
 					'### Clean Source data
-					Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & Logg
+					Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & Logg
 
 					'Remove Comments
 					Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")).Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
@@ -147,7 +147,7 @@ Public Class HostsMain
 								SourceHash.Add(SafeHost)
 							End If
 						Else
-							Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & Logg
+							Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & Logg
 							errCount += 1
 						End If
 					Next
@@ -178,7 +178,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & Logg
+		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & Logg
 
 		'remove blacklisted from whitelist
 		WhiteList.ExceptWith(BlackList)
@@ -208,7 +208,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Adding Target IP" & vbCrLf & Logg
+		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Adding Target IP" & vbCrLf & Logg
 
 		'finalize unified data (add target IP and comment/remove items from WhiteList)
 		Dim uniCount As Integer = UniHash.Count
@@ -237,13 +237,13 @@ Public Class HostsMain
 		End If
 		Erase arrTemp
 
-		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & Logg
+		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & Logg
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
 
 		With FinalList
 			.Add("# Entries: " & uniCount.ToString("#,0"))
-			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
+			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using github.com/Laicure/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
@@ -294,7 +294,7 @@ Public Class HostsMain
 		End If
 
 		If errCount > 0 Then
-			Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & Logg
+			Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & Logg
 		End If
 		Logg = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & Logg
 
@@ -371,7 +371,7 @@ Public Class HostsMain
 		rtbLogs.Invoke(DirectCast(
 					   Sub()
 						   rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
-						   rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & rtbLogs.Text
+						   rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & rtbLogs.Text
 					   End Sub, MethodInvoker))
 		'Download and Validate Source List
 		Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
@@ -380,7 +380,7 @@ Public Class HostsMain
 
 		If SourceList.Count = 0 Then
 			LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
-			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & rtbLogs.Text, MethodInvoker))
+			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & rtbLogs.Text, MethodInvoker))
 			Exit Sub
 		End If
 
@@ -389,7 +389,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Whitelist" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'Validate whitelist
 		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 		LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist [" & WhiteList.Count & "]", MethodInvoker))
@@ -400,7 +400,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'Validate and match blacklist
 		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 		LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist [" & BlackList.Count & "]", MethodInvoker))
@@ -427,7 +427,7 @@ Public Class HostsMain
 			End If
 
 			Dim arstring As String = arrTemp(i)
-			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & rtbLogs.Text, MethodInvoker))
+			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & rtbLogs.Text, MethodInvoker))
 			Dim suc As Boolean = False
 			Using clie As New Net.WebClient
 				Try
@@ -437,13 +437,13 @@ Public Class HostsMain
 					UniString += SourcedD & vbCrLf
 					suc = True
 				Catch ex As Exception
-					rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text, MethodInvoker))
+					rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & rtbLogs.Text, MethodInvoker))
 					errCount += 1
 				End Try
 
 				If suc Then
 					'### Clean Source data
-					rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & rtbLogs.Text, MethodInvoker))
+					rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
 					'Remove Comments
 					Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")).Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
@@ -481,7 +481,7 @@ Public Class HostsMain
 								SourceHash.Add(SafeHost)
 							End If
 						Else
-							rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & rtbLogs.Text, MethodInvoker))
+							rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & rtbLogs.Text, MethodInvoker))
 							errCount += 1
 						End If
 					Next
@@ -511,7 +511,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
 		'remove blacklisted from whitelist
 		WhiteList.ExceptWith(BlackList)
@@ -540,7 +540,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] " & "Adding Target IP" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] " & "Adding Target IP" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'finalize unified data (add target IP and comment/remove items from WhiteList)
 		Dim uniCount As Integer = UniHash.Count
 		Dim TargetIP As String = SetTargetIP
@@ -581,13 +581,13 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & rtbLogs.Text, MethodInvoker))
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
 
 		With FinalList
 			.Add("# Entries: " & uniCount.ToString("#,0"))
-			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture))
+			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using github.com/Laicure/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
@@ -615,9 +615,9 @@ Public Class HostsMain
 		End If
 
 		If errCount > 0 Then
-			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & rtbLogs.Text, MethodInvoker))
+			rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & rtbLogs.Text, MethodInvoker))
 		End If
-		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt UTC", Globalization.CultureInfo.InvariantCulture) & "] Generating Preview" & vbCrLf & rtbLogs.Text, MethodInvoker))
+		rtbLogs.Invoke(DirectCast(Sub() rtbLogs.Text = "[" & DateTime.UtcNow.ToString("hh:mm:ss.ff tt", Globalization.CultureInfo.InvariantCulture) & "] Generating Preview" & vbCrLf & rtbLogs.Text, MethodInvoker))
 
 		Generated = String.Join(vbCrLf, FinalList)
 		If chPreview.Checked Then
