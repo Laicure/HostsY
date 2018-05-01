@@ -1,7 +1,7 @@
 # HostsY
 Just a simplified and multi-threaded revamp of [HostsX](http://github.com/Laicure/HostsX) for Windows.
 
-###### Minimum Requirement: [.NET v4.5.2](https://www.microsoft.com/en-us/download/details.aspx?id=42642)
+###### Minimum Requirement: [.NET v4.6.2](https://www.microsoft.com/en-us/download/details.aspx?id=53344)
 
 #### Auto Parameters (requires admin privileges):
 Required:
