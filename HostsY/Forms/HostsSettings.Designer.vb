@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class HostsSettings
 	Inherits System.Windows.Forms.Form
 
 	'Form overrides dispose to clean up the component list.
-	<System.Diagnostics.DebuggerNonUserCode()> _
+	<System.Diagnostics.DebuggerNonUserCode()>
 	Protected Overrides Sub Dispose(ByVal disposing As Boolean)
 		Try
 			If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class HostsSettings
 	'NOTE: The following procedure is required by the Windows Form Designer
 	'It can be modified using the Windows Form Designer.  
 	'Do not modify it using the code editor.
-	<System.Diagnostics.DebuggerStepThrough()> _
+	<System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
 		Me.chSort = New System.Windows.Forms.CheckBox()
 		Me.Label4 = New System.Windows.Forms.Label()
@@ -32,8 +32,6 @@ Partial Class HostsSettings
 		Me.rtbLoopbacks = New System.Windows.Forms.RichTextBox()
 		Me.numDomainPerLine = New System.Windows.Forms.NumericUpDown()
 		Me.Label2 = New System.Windows.Forms.Label()
-		Me.Label5 = New System.Windows.Forms.Label()
-		Me.Label6 = New System.Windows.Forms.Label()
 		CType(Me.numDomainPerLine, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
@@ -44,14 +42,13 @@ Partial Class HostsSettings
 		Me.chSort.CheckState = System.Windows.Forms.CheckState.Checked
 		Me.chSort.Cursor = System.Windows.Forms.Cursors.Hand
 		Me.chSort.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chSort.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.chSort.Location = New System.Drawing.Point(162, 72)
+		Me.chSort.Location = New System.Drawing.Point(1, 72)
 		Me.chSort.Margin = New System.Windows.Forms.Padding(1, 0, 0, 0)
 		Me.chSort.Name = "chSort"
-		Me.chSort.Size = New System.Drawing.Size(45, 17)
+		Me.chSort.Size = New System.Drawing.Size(206, 17)
 		Me.chSort.TabIndex = 21
 		Me.chSort.TabStop = False
-		Me.chSort.Text = "Sort"
+		Me.chSort.Text = "Sort Domains (ascending)"
 		Me.chSort.UseVisualStyleBackColor = True
 		'
 		'Label4
@@ -71,7 +68,6 @@ Partial Class HostsSettings
 		'
 		Me.txtTargetIP.BackColor = System.Drawing.Color.White
 		Me.txtTargetIP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.txtTargetIP.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.txtTargetIP.ForeColor = System.Drawing.Color.Black
 		Me.txtTargetIP.Location = New System.Drawing.Point(1, 50)
 		Me.txtTargetIP.Margin = New System.Windows.Forms.Padding(0)
@@ -87,14 +83,13 @@ Partial Class HostsSettings
 		Me.chTabs.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
 		Me.chTabs.Cursor = System.Windows.Forms.Cursors.Hand
 		Me.chTabs.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chTabs.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-		Me.chTabs.Location = New System.Drawing.Point(162, 89)
+		Me.chTabs.Location = New System.Drawing.Point(1, 89)
 		Me.chTabs.Margin = New System.Windows.Forms.Padding(1, 0, 0, 0)
 		Me.chTabs.Name = "chTabs"
-		Me.chTabs.Size = New System.Drawing.Size(45, 17)
+		Me.chTabs.Size = New System.Drawing.Size(206, 17)
 		Me.chTabs.TabIndex = 22
 		Me.chTabs.TabStop = False
-		Me.chTabs.Text = "Tabs"
+		Me.chTabs.Text = "Use Tabs instead of Whitespace"
 		Me.chTabs.UseVisualStyleBackColor = True
 		'
 		'LbAbout
@@ -149,7 +144,6 @@ Partial Class HostsSettings
 		Me.rtbLoopbacks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.rtbLoopbacks.DetectUrls = False
 		Me.rtbLoopbacks.Dock = System.Windows.Forms.DockStyle.Bottom
-		Me.rtbLoopbacks.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.rtbLoopbacks.ForeColor = System.Drawing.Color.Black
 		Me.rtbLoopbacks.Location = New System.Drawing.Point(1, 120)
 		Me.rtbLoopbacks.Margin = New System.Windows.Forms.Padding(1)
@@ -164,7 +158,6 @@ Partial Class HostsSettings
 		Me.numDomainPerLine.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
 		Me.numDomainPerLine.BackColor = System.Drawing.Color.White
 		Me.numDomainPerLine.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.numDomainPerLine.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.numDomainPerLine.ForeColor = System.Drawing.Color.Black
 		Me.numDomainPerLine.Location = New System.Drawing.Point(103, 50)
 		Me.numDomainPerLine.Margin = New System.Windows.Forms.Padding(0)
@@ -191,40 +184,12 @@ Partial Class HostsSettings
 		Me.Label2.Text = "Domain per Line"
 		Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		'
-		'Label5
-		'
-		Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.Label5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.Label5.ForeColor = System.Drawing.Color.Black
-		Me.Label5.Location = New System.Drawing.Point(1, 71)
-		Me.Label5.Margin = New System.Windows.Forms.Padding(1)
-		Me.Label5.Name = "Label5"
-		Me.Label5.Size = New System.Drawing.Size(159, 18)
-		Me.Label5.TabIndex = 33
-		Me.Label5.Text = "Sort domains (asc)"
-		Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
-		'Label6
-		'
-		Me.Label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.Label6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.Label6.ForeColor = System.Drawing.Color.Black
-		Me.Label6.Location = New System.Drawing.Point(1, 88)
-		Me.Label6.Margin = New System.Windows.Forms.Padding(1)
-		Me.Label6.Name = "Label6"
-		Me.Label6.Size = New System.Drawing.Size(159, 18)
-		Me.Label6.TabIndex = 34
-		Me.Label6.Text = "TargetIP<Tab/Space>Domain"
-		Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		'
 		'HostsSettings
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
 		Me.ClientSize = New System.Drawing.Size(208, 294)
-		Me.Controls.Add(Me.Label6)
-		Me.Controls.Add(Me.Label5)
 		Me.Controls.Add(Me.Label2)
 		Me.Controls.Add(Me.Label1)
 		Me.Controls.Add(Me.rtbLoopbacks)
@@ -261,6 +226,4 @@ Partial Class HostsSettings
 	Friend WithEvents rtbLoopbacks As RichTextBox
 	Friend WithEvents numDomainPerLine As NumericUpDown
 	Friend WithEvents Label2 As Label
-	Friend WithEvents Label5 As Label
-	Friend WithEvents Label6 As Label
 End Class
