@@ -1,5 +1,6 @@
 # HostsY
-Just a simplified and multi-threaded revamp of [HostsX](http://github.com/Laicure/HostsX) for Windows.
+Simple hosts file compiler for Windows.
+_Inspired by [Steven Black](https://github.com/StevenBlack)'s [hosts repository](https://github.com/StevenBlack/hosts)._
 
 ###### Minimum Requirement: [.NET v4.6.2](https://www.microsoft.com/en-us/download/details.aspx?id=53344)
 
