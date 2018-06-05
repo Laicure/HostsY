@@ -1,7 +1,6 @@
 ##### Custom hosts file's sources and whitelist:
 ```
 https://raw.githubusercontent.com/ZeroDot1/CoinBlockerLists/master/hosts_browser
-https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
 https://raw.githubusercontent.com/StevenBlack/hosts/master/data/StevenBlack/hosts
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
 https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt
