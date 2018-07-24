@@ -9,9 +9,9 @@ https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Dead/hosts
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
 https://raw.githubusercontent.com/lightswitch05/hosts/master/ads-and-tracking-extended.txt
-http://www.malwaredomainlist.com/hostslist/hosts.txt
+https://www.malwaredomainlist.com/hostslist/hosts.txt
 http://winhelp2002.mvps.org/hosts.txt
-http://someonewhocares.org/hosts/zero/hosts
+https://someonewhocares.org/hosts/zero/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 https://hosts-file.net/ad_servers.txt
 https://hosts-file.net/grm.txt
@@ -38,9 +38,9 @@ https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Dead/hosts
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Risk/hosts
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/add.Spam/hosts
 https://raw.githubusercontent.com/lightswitch05/hosts/master/ads-and-tracking-extended.txt
-http://www.malwaredomainlist.com/hostslist/hosts.txt
+https://www.malwaredomainlist.com/hostslist/hosts.txt
 http://winhelp2002.mvps.org/hosts.txt
-http://someonewhocares.org/hosts/zero/hosts
+https://someonewhocares.org/hosts/zero/hosts
 https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&mimetype=plaintext&useip=0.0.0.0
 ```
 ###### [hpHosts](https://hosts-file.net/?s=Download)' _Individual Classifications_ sources:
