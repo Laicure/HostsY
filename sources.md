@@ -18,6 +18,7 @@ https://hosts-file.net/grm.txt
 https://hosts-file.net/hfs.txt
 https://hosts-file.net/hjk.txt
 https://hosts-file.net/mmt.txt
+https://hosts-file.net/pup.txt
 
 bit.ly
 adf.ly
