@@ -20,10 +20,8 @@ https://hosts-file.net/hjk.txt
 https://hosts-file.net/mmt.txt
 https://hosts-file.net/pup.txt
 
-bit.ly
 adf.ly
 www.linkbucks.com
-po.st
 adfoc.us
 ```
 ##### Raw [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
