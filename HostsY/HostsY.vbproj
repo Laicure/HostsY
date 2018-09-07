@@ -119,6 +119,12 @@
     <Compile Include="Forms\HostsMain.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\HostsPreview.Designer.vb">
+      <DependentUpon>HostsPreview.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HostsPreview.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\HostsSettings.Designer.vb">
       <DependentUpon>HostsSettings.vb</DependentUpon>
     </Compile>
@@ -145,6 +151,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\HostsMain.resx">
       <DependentUpon>HostsMain.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HostsPreview.resx">
+      <DependentUpon>HostsPreview.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HostsSettings.resx">
       <DependentUpon>HostsSettings.vb</DependentUpon>

@@ -5,6 +5,7 @@
 	Friend SetTargetIP As String = "0.0.0.0"
 	Friend SetSort As Boolean = True
 	Friend SetTabs As Boolean = False
+	Friend SetParseErrors As Boolean = True
 	Friend SetDomainPerLine As Integer = 1
 	Friend SetLoopBlacks() As String = {"0.0.0.0", "broadcasthost", "ip6-allhosts", "ip6-allnodes", "ip6-allrouters", "ip6-localhost", "ip6-localnet", "ip6-loopback", "ip6-mcastprefix", "local", "localhost", "localhost.localdomain"}
 
@@ -23,20 +24,6 @@
 		End If
 		Return sizer
 	End Function
-
-#End Region
-
-#Region "DoubleBuffered Buff // Use Buff.DoubleBuff(<Control>)"
-
-	Friend NotInheritable Class Buff
-
-		Friend Shared Sub DoubleBuff(Contt As Control)
-			Dim ConttType As Type = Contt.[GetType]()
-			Dim propInfo As System.Reflection.PropertyInfo = ConttType.GetProperty("DoubleBuffered", System.Reflection.BindingFlags.Instance Or System.Reflection.BindingFlags.NonPublic)
-			propInfo.SetValue(Contt, True, Nothing)
-		End Sub
-
-	End Class
 
 #End Region
 

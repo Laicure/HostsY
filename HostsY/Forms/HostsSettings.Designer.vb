@@ -32,6 +32,7 @@ Partial Class HostsSettings
 		Me.rtbLoopbacks = New System.Windows.Forms.RichTextBox()
 		Me.numDomainPerLine = New System.Windows.Forms.NumericUpDown()
 		Me.Label2 = New System.Windows.Forms.Label()
+		Me.chParseErrors = New System.Windows.Forms.CheckBox()
 		CType(Me.numDomainPerLine, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
@@ -115,7 +116,7 @@ Partial Class HostsSettings
 		Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.Label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.Label1.ForeColor = System.Drawing.Color.Black
-		Me.Label1.Location = New System.Drawing.Point(1, 105)
+		Me.Label1.Location = New System.Drawing.Point(1, 122)
 		Me.Label1.Margin = New System.Windows.Forms.Padding(1)
 		Me.Label1.Name = "Label1"
 		Me.Label1.Size = New System.Drawing.Size(206, 17)
@@ -130,7 +131,7 @@ Partial Class HostsSettings
 		Me.LbStatus.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.LbStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbStatus.ForeColor = System.Drawing.Color.Blue
-		Me.LbStatus.Location = New System.Drawing.Point(1, 268)
+		Me.LbStatus.Location = New System.Drawing.Point(1, 285)
 		Me.LbStatus.Margin = New System.Windows.Forms.Padding(1)
 		Me.LbStatus.Name = "LbStatus"
 		Me.LbStatus.Size = New System.Drawing.Size(206, 25)
@@ -145,7 +146,7 @@ Partial Class HostsSettings
 		Me.rtbLoopbacks.DetectUrls = False
 		Me.rtbLoopbacks.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.rtbLoopbacks.ForeColor = System.Drawing.Color.Black
-		Me.rtbLoopbacks.Location = New System.Drawing.Point(1, 120)
+		Me.rtbLoopbacks.Location = New System.Drawing.Point(1, 137)
 		Me.rtbLoopbacks.Margin = New System.Windows.Forms.Padding(1)
 		Me.rtbLoopbacks.Name = "rtbLoopbacks"
 		Me.rtbLoopbacks.Size = New System.Drawing.Size(206, 148)
@@ -184,14 +185,31 @@ Partial Class HostsSettings
 		Me.Label2.Text = "Domain per Line"
 		Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		'
+		'chParseErrors
+		'
+		Me.chParseErrors.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.chParseErrors.Checked = True
+		Me.chParseErrors.CheckState = System.Windows.Forms.CheckState.Checked
+		Me.chParseErrors.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.chParseErrors.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.chParseErrors.Location = New System.Drawing.Point(1, 106)
+		Me.chParseErrors.Margin = New System.Windows.Forms.Padding(1, 0, 0, 0)
+		Me.chParseErrors.Name = "chParseErrors"
+		Me.chParseErrors.Size = New System.Drawing.Size(206, 17)
+		Me.chParseErrors.TabIndex = 32
+		Me.chParseErrors.TabStop = False
+		Me.chParseErrors.Text = "Show Parse Errors"
+		Me.chParseErrors.UseVisualStyleBackColor = True
+		'
 		'HostsSettings
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
-		Me.ClientSize = New System.Drawing.Size(208, 294)
-		Me.Controls.Add(Me.Label2)
+		Me.ClientSize = New System.Drawing.Size(208, 311)
 		Me.Controls.Add(Me.Label1)
+		Me.Controls.Add(Me.chParseErrors)
+		Me.Controls.Add(Me.Label2)
 		Me.Controls.Add(Me.rtbLoopbacks)
 		Me.Controls.Add(Me.LbStatus)
 		Me.Controls.Add(Me.LbAbout)
@@ -226,4 +244,5 @@ Partial Class HostsSettings
 	Friend WithEvents rtbLoopbacks As RichTextBox
 	Friend WithEvents numDomainPerLine As NumericUpDown
 	Friend WithEvents Label2 As Label
+	Friend WithEvents chParseErrors As System.Windows.Forms.CheckBox
 End Class
