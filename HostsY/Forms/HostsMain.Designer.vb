@@ -64,7 +64,7 @@ Partial Class HostsMain
 		Me.LbSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbSettings.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.LbSettings.ForeColor = System.Drawing.Color.Crimson
-		Me.LbSettings.Location = New System.Drawing.Point(383, 1)
+		Me.LbSettings.Location = New System.Drawing.Point(433, 1)
 		Me.LbSettings.Margin = New System.Windows.Forms.Padding(0)
 		Me.LbSettings.Name = "LbSettings"
 		Me.LbSettings.Size = New System.Drawing.Size(100, 25)
@@ -153,7 +153,7 @@ Partial Class HostsMain
 		Me.LbSave.Location = New System.Drawing.Point(196, 419)
 		Me.LbSave.Margin = New System.Windows.Forms.Padding(0)
 		Me.LbSave.Name = "LbSave"
-		Me.LbSave.Size = New System.Drawing.Size(287, 15)
+		Me.LbSave.Size = New System.Drawing.Size(337, 15)
 		Me.LbSave.TabIndex = 12
 		Me.LbSave.Text = "..."
 		Me.LbSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -173,7 +173,7 @@ Partial Class HostsMain
 		Me.txLogs.Name = "txLogs"
 		Me.txLogs.ReadOnly = True
 		Me.txLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-		Me.txLogs.Size = New System.Drawing.Size(287, 395)
+		Me.txLogs.Size = New System.Drawing.Size(337, 395)
 		Me.txLogs.TabIndex = 5
 		Me.txLogs.TabStop = False
 		Me.txLogs.WordWrap = False
@@ -190,7 +190,7 @@ Partial Class HostsMain
 		Me.LbGenerate.Location = New System.Drawing.Point(196, 1)
 		Me.LbGenerate.Margin = New System.Windows.Forms.Padding(0)
 		Me.LbGenerate.Name = "LbGenerate"
-		Me.LbGenerate.Size = New System.Drawing.Size(188, 25)
+		Me.LbGenerate.Size = New System.Drawing.Size(238, 25)
 		Me.LbGenerate.TabIndex = 13
 		Me.LbGenerate.Text = "Generate Hosts File"
 		Me.LbGenerate.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -217,7 +217,7 @@ Partial Class HostsMain
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
-		Me.ClientSize = New System.Drawing.Size(484, 435)
+		Me.ClientSize = New System.Drawing.Size(534, 435)
 		Me.Controls.Add(Me.LbPreview)
 		Me.Controls.Add(Me.LbGenerate)
 		Me.Controls.Add(Me.LbSave)
@@ -234,6 +234,8 @@ Partial Class HostsMain
 		Me.ForeColor = System.Drawing.Color.Black
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
 		Me.MaximizeBox = False
+		Me.MaximumSize = New System.Drawing.Size(550, 474)
+		Me.MinimumSize = New System.Drawing.Size(550, 474)
 		Me.Name = "HostsMain"
 		Me.Padding = New System.Windows.Forms.Padding(1)
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
