@@ -333,17 +333,15 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		If SetPreview Then
-			If HostsPreview.Visible Then HostsPreview.Close()
-			Dim PreviewResult As Integer = MessageBox.Show("Do you want to show the host file preview?" & vbCrLf & vbCrLf & "Not recommended for large hosts files!", "Preview?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
-			If PreviewResult = Windows.Forms.DialogResult.Yes Then
-				preview = True
-			ElseIf PreviewResult = Windows.Forms.DialogResult.No Then
-				preview = False
-				LbPreview.Visible = False
-			Else
-				Exit Sub
-			End If
+		If HostsPreview.Visible Then HostsPreview.Close()
+		Dim PreviewResult As Integer = MessageBox.Show("Do you want to show the host file preview?" & vbCrLf & vbCrLf & "Not recommended for large hosts files!", "Preview?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
+		If PreviewResult = DialogResult.Yes Then
+			preview = True
+		ElseIf PreviewResult = DialogResult.No Then
+			preview = False
+			LbPreview.Visible = False
+		Else
+			Exit Sub
 		End If
 
 		'deactivate controls
