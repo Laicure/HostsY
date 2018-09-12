@@ -6,6 +6,7 @@
 		txtTargetIP.Text = SetTargetIP
 		chSort.Checked = SetSort
 		chTabs.Checked = SetTabs
+		chPreview.Checked = SetPreview
 		chParseErrors.Checked = SetParseErrors
 		numDomainPerLine.Value = SetDomainPerLine
 		rtbLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
@@ -16,6 +17,7 @@
 		SetSort = chSort.Checked
 		SetTabs = chTabs.Checked
 		SetParseErrors = chParseErrors.Checked
+		SetPreview = chPreview.Checked
 		SetDomainPerLine = CInt(numDomainPerLine.Value)
 		If Not String.IsNullOrWhiteSpace(rtbLoopbacks.Text) Then
 			SetLoopBlacks = rtbLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
