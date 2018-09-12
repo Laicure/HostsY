@@ -131,6 +131,8 @@ Public Class HostsMain
 					Dim urx As Uri = Nothing
 					Dim urxError As Boolean = False
 					Dim arrStr As String = arrTempX(y)
+
+					'check domain validity
 					If arrStr.Contains(" #") Then
 						Try
 							urx = New Uri("http://" & Microsoft.VisualBasic.Left(arrStr, arrStr.IndexOf(" #")).Trim)
@@ -333,15 +335,18 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		If HostsPreview.Visible Then HostsPreview.Close()
-		Dim PreviewResult As Integer = MessageBox.Show("Do you want to show the host file preview?" & vbCrLf & vbCrLf & "Not recommended for large hosts files!", "Preview?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
-		If PreviewResult = DialogResult.Yes Then
-			preview = True
-		ElseIf PreviewResult = DialogResult.No Then
-			preview = False
-			LbPreview.Visible = False
-		Else
-			Exit Sub
+		'preview?
+		If SetPreview Then
+			If HostsPreview.Visible Then HostsPreview.Close()
+			Dim PreviewResult As Integer = MessageBox.Show("Do you want to show the host file preview?" & vbCrLf & vbCrLf & "Not recommended for large hosts files!", "Preview?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
+			If PreviewResult = DialogResult.Yes Then
+				preview = True
+			ElseIf PreviewResult = DialogResult.No Then
+				preview = False
+				LbPreview.Visible = False
+			Else
+				Exit Sub
+			End If
 		End If
 
 		'deactivate controls
@@ -468,6 +473,7 @@ Public Class HostsMain
 						Exit Sub
 					End If
 
+					'check domain validity
 					Dim urx As Uri = Nothing
 					Dim urxError As Boolean = False
 					Dim arrStr As String = arrTempX(y)
