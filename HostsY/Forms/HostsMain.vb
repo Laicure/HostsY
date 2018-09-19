@@ -103,7 +103,7 @@ Public Class HostsMain
 			Dim suc As Boolean = False
 			Using clie As New Net.WebClient
 				Try
-					Dim readd As New IO.StreamReader(clie.OpenRead(arrTemp(i)))
+					Dim readd As New IO.StreamReader(clie.OpenRead(arstring))
 					Dim SourcedD As String = readd.ReadToEnd
 					UniString = Nothing
 					UniString += SourcedD & vbCrLf
@@ -168,7 +168,7 @@ Public Class HostsMain
 					If sortt Then
 						SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
 					End If
-					SourceList.Add("[" & domCount & "] " & arrTemp(i))
+					SourceList.Add("[" & domCount & "] " & arstring)
 					UniHash.UnionWith(SourceHash)
 				End If
 			End If
