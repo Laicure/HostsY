@@ -36,29 +36,19 @@ Public Class HostsMain
 		Dim dpl As Boolean = Regex.Match(argg, "(\-dpl)([2-9])").Success
 
 		'Check Directory
-		If Not My.Computer.FileSystem.DirectoryExists(dataSource) Then
-			My.Computer.FileSystem.CreateDirectory(dataSource)
-		End If
+		If Not My.Computer.FileSystem.DirectoryExists(dataSource) Then My.Computer.FileSystem.CreateDirectory(dataSource)
 
 		'Check sources
-		If Not My.Computer.FileSystem.FileExists(dataSource & "\source.txt") Then
-			My.Computer.FileSystem.WriteAllText(dataSource & "\source.txt", "", False)
-		End If
+		If Not My.Computer.FileSystem.FileExists(dataSource & "\source.txt") Then My.Computer.FileSystem.WriteAllText(dataSource & "\source.txt", "", False)
 
 		'Check whitelist
-		If Not My.Computer.FileSystem.FileExists(dataSource & "\white.txt") Then
-			My.Computer.FileSystem.WriteAllText(dataSource & "\white.txt", "", False)
-		End If
+		If Not My.Computer.FileSystem.FileExists(dataSource & "\white.txt") Then My.Computer.FileSystem.WriteAllText(dataSource & "\white.txt", "", False)
 
 		'Check blacklist
-		If Not My.Computer.FileSystem.FileExists(dataSource & "\black.txt") Then
-			My.Computer.FileSystem.WriteAllText(dataSource & "\black.txt", "", False)
-		End If
+		If Not My.Computer.FileSystem.FileExists(dataSource & "\black.txt") Then My.Computer.FileSystem.WriteAllText(dataSource & "\black.txt", "", False)
 
 		'Check Loopbacks
-		If Not My.Computer.FileSystem.FileExists(dataSource & "\loopback.txt") Then
-			My.Computer.FileSystem.WriteAllText(dataSource & "\loopback.txt", String.Join(vbCrLf, SetLoopBlacks), False)
-		End If
+		If Not My.Computer.FileSystem.FileExists(dataSource & "\loopback.txt") Then My.Computer.FileSystem.WriteAllText(dataSource & "\loopback.txt", String.Join(vbCrLf, SetLoopBlacks), False)
 
 		'########################## Start ##########################
 		SourceL = My.Computer.FileSystem.ReadAllText(dataSource & "\source.txt").Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
@@ -148,9 +138,7 @@ Public Class HostsMain
 					End If
 					If Not urxError Then
 						Dim SafeHost As String = urx.DnsSafeHost
-						If Not String.IsNullOrWhiteSpace(SafeHost) Then
-							SourceHash.Add(SafeHost)
-						End If
+						If Not String.IsNullOrWhiteSpace(SafeHost) Then SourceHash.Add(SafeHost)
 					Else
 						Logg = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & Logg
 						errCount += 1
@@ -165,9 +153,7 @@ Public Class HostsMain
 				Dim domCount As String = SourceHash.LongCount.ToString("#,0")
 				Logg = Replace(Logg, "(+Retrieving Domain Count)", "Got " & domCount & " domains!")
 				If Not SourceHash.Count = 0 Then
-					If sortt Then
-						SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
-					End If
+					If sortt Then SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
 					SourceList.Add("[" & domCount & "] " & arstring)
 					UniHash.UnionWith(SourceHash)
 				End If
@@ -299,15 +285,10 @@ Public Class HostsMain
 			End Try
 		End If
 
-		If errCount > 0 Then
-			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & Logg
-		End If
+		If errCount > 0 Then Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & Logg
 		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & Logg
 
-		If logger Then
-			'save logs
-			My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
-		End If
+		If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
 
 		Environment.Exit(0)
 	End Sub
@@ -320,9 +301,7 @@ Public Class HostsMain
 	End Sub
 
 	Private Sub LbGenerate_Click(sender As Object, e As EventArgs) Handles LbGenerate.Click
-		If String.IsNullOrWhiteSpace(txSources.Text) Then
-			Exit Sub
-		End If
+		If String.IsNullOrWhiteSpace(txSources.Text) Then Exit Sub
 
 		If LbGenerate.Text = "Cancel Generation" Then
 			bgGenerate.CancelAsync()
@@ -492,9 +471,7 @@ Public Class HostsMain
 					End If
 					If Not urxError Then
 						Dim SafeHost As String = urx.DnsSafeHost
-						If Not String.IsNullOrWhiteSpace(SafeHost) Then
-							SourceHash.Add(SafeHost)
-						End If
+						If Not String.IsNullOrWhiteSpace(SafeHost) Then SourceHash.Add(SafeHost)
 					Else
 						If SetParseErrors Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & txLogs.Text, MethodInvoker))
 						errCount += 1
@@ -509,9 +486,7 @@ Public Class HostsMain
 				Dim domCount As String = SourceHash.LongCount.ToString("#,0")
 				txLogs.Invoke(DirectCast(Sub() txLogs.Text = Replace(txLogs.Text, "(+Retrieving Domain Count)", "Got " & domCount & " domains!"), MethodInvoker))
 				If Not SourceHash.Count = 0 Then
-					If SetSort Then
-						SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
-					End If
+					If SetSort Then SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
 					SourceList.Add("[" & domCount & "] " & arstring)
 					UniHash.UnionWith(SourceHash)
 				End If
@@ -630,9 +605,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		If errCount > 0 Then
-			txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & txLogs.Text, MethodInvoker))
-		End If
+		If errCount > 0 Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & txLogs.Text, MethodInvoker))
 
 		Generated = String.Join(vbCrLf, FinalList)
 	End Sub
@@ -677,9 +650,7 @@ Public Class HostsMain
 
 	Private Sub HostsMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
 		Me.Hide()
-		If bgGenerate.IsBusy Then
-			bgGenerate.CancelAsync()
-		End If
+		If bgGenerate.IsBusy Then bgGenerate.CancelAsync()
 	End Sub
 
 	Private Sub LbSave_MouseDown(sender As Object, e As MouseEventArgs) Handles LbSave.MouseDown
@@ -709,9 +680,7 @@ Public Class HostsMain
 		ElseIf e.Button = System.Windows.Forms.MouseButtons.Right Then
 			If LbSave.Cursor = Cursors.Hand Then
 				Dim syshostsPath As String = "C:\WINDOWS\system32\drivers\etc\hosts"
-				If MessageBox.Show(IIf(My.Computer.FileSystem.FileExists(syshostsPath), "Active hosts file detected!" & vbCrLf & "Are you sure to replace your active hosts file?", "No active hosts file detected!" & vbCrLf & "Are you sure to add a hosts file to your system?").ToString & vbCrLf & vbCrLf & "DNSCache must be disabled whenever using a large hosts file (~35k+ Entries) or else, your system will be crippled to no internet at all (for about an hour+)!", "Confirm Replace!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = System.Windows.Forms.DialogResult.No Then
-					Exit Sub
-				End If
+				If MessageBox.Show(IIf(My.Computer.FileSystem.FileExists(syshostsPath), "Active hosts file detected!" & vbCrLf & "Are you sure to replace your active hosts file?", "No active hosts file detected!" & vbCrLf & "Are you sure to add a hosts file to your system?").ToString & vbCrLf & vbCrLf & "DNSCache must be disabled whenever using a large hosts file (~35k+ Entries) or else, your system will be crippled to no internet at all (for about an hour+)!", "Confirm Replace!", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = System.Windows.Forms.DialogResult.No Then Exit Sub
 
 				Dim succ As Boolean = False
 				Try
@@ -728,9 +697,7 @@ Public Class HostsMain
 						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & txLogs.Text
 
 						'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
-						If My.Computer.FileSystem.FileExists(syshostsPath) Then
-							Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
-						End If
+						If My.Computer.FileSystem.FileExists(syshostsPath) Then Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
 					End If
 				End If
 			End If
@@ -741,9 +708,7 @@ Public Class HostsMain
 					Dim succ As Boolean = False
 					Try
 						Dim tempoPath As String = "C:\Users\" & Environment.UserName & "\AppData\Local\Temp\hostz"
-						If Not My.Computer.FileSystem.DirectoryExists(tempoPath) Then
-							My.Computer.FileSystem.CreateDirectory(tempoPath)
-						End If
+						If Not My.Computer.FileSystem.DirectoryExists(tempoPath) Then My.Computer.FileSystem.CreateDirectory(tempoPath)
 						My.Computer.FileSystem.WriteAllText(tempoPath & "\hosts", Generated, False, System.Text.Encoding.Default)
 						IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
 						succ = True
