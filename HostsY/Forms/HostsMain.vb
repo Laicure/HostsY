@@ -8,6 +8,7 @@ Public Class HostsMain
 	Dim startExec As DateTime = DateTime.UtcNow
 	Dim errCount As Long = 0
 	Dim preview As Boolean = False
+	Friend sourceCacheList As New List(Of sourceCache)
 
 	Friend Generated As String = Nothing
 
@@ -418,68 +419,11 @@ Public Class HostsMain
 			End If
 
 			Dim arstring As String = arrTemp(i)
-			txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & txLogs.Text, MethodInvoker))
-			Dim suc As Boolean = False
-			Using clie As New Net.WebClient
-				Try
-					Dim readd As New IO.StreamReader(clie.OpenRead(arstring))
-					Dim SourcedD As String = readd.ReadToEnd
-					UniString = Nothing
-					UniString += SourcedD & vbCrLf
-					suc = True
-				Catch ex As Exception
-					txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & txLogs.Text, MethodInvoker))
-					errCount += 1
-				End Try
-			End Using
-			If suc Then
-				'### Clean Source data
-				txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & txLogs.Text, MethodInvoker))
+			'use cache instead of reading again
+			If SetUseCache AndAlso sourceCacheList.Any(Function(x) x.URL = arstring) Then
+				txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Reading saved cache of " & arstring & "..." & vbCrLf & txLogs.Text, MethodInvoker))
 
-				'Remove Comments
-				Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")).Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
-				'Remove Target IPs
-				SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) IIf(Regex.Match(x, "^((([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))\ ").Success, Microsoft.VisualBasic.Right(x, Len(x) - (x.IndexOf(" ") + 1)), x).ToString))
-				'remove ip domains
-				SourceHash = New HashSet(Of String)(SourceHash.Where(Function(x) Not Regex.Match(x, "(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))").Success))
-				'Remove Comment Suffix
-				Dim arrTempX() As String = SourceHash.ToArray
-				SourceHash.Clear()
-				SourceHash.TrimExcess()
-				For y As Integer = 0 To arrTempX.Count - 1
-					If bgGenerate.CancellationPending Then
-						e.Cancel = True
-						Exit Sub
-					End If
-
-					'check domain validity
-					Dim urx As Uri = Nothing
-					Dim urxError As Boolean = False
-					Dim arrStr As String = arrTempX(y)
-					If arrStr.Contains(" #") Then
-						Try
-							urx = New Uri("http://" & Microsoft.VisualBasic.Left(arrStr, arrStr.IndexOf(" #")).Trim)
-						Catch ex As Exception
-							urxError = True
-						End Try
-					Else
-						Try
-							urx = New Uri("http://" & arrStr.Trim)
-						Catch ex As Exception
-							urxError = True
-						End Try
-					End If
-					If Not urxError Then
-						Dim SafeHost As String = urx.DnsSafeHost
-						If Not String.IsNullOrWhiteSpace(SafeHost) Then SourceHash.Add(SafeHost)
-					Else
-						If SetParseErrors Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & txLogs.Text, MethodInvoker))
-						errCount += 1
-					End If
-				Next
-				Erase arrTempX
-				'Remove Loopbacks
-				SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
+				Dim SourceHash As New HashSet(Of String)(sourceCacheList.Where(Function(x) x.URL = arstring).Select(Function(x) x.Domains).FirstOrDefault.Split({vbCr, vbLf, vbCrLf}, StringSplitOptions.RemoveEmptyEntries))
 
 				'show count
 				totalDoms += SourceHash.LongCount
@@ -489,6 +433,84 @@ Public Class HostsMain
 					If SetSort Then SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
 					SourceList.Add("[" & domCount & "] " & arstring)
 					UniHash.UnionWith(SourceHash)
+				End If
+			Else
+				txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & txLogs.Text, MethodInvoker))
+				Dim suc As Boolean = False
+				Using clie As New Net.WebClient
+					Try
+						Dim readd As New IO.StreamReader(clie.OpenRead(arstring))
+						Dim SourcedD As String = readd.ReadToEnd
+						UniString = Nothing
+						UniString += SourcedD & vbCrLf
+						suc = True
+					Catch ex As Exception
+						txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & txLogs.Text, MethodInvoker))
+						errCount += 1
+					End Try
+				End Using
+				If suc Then
+					'### Clean Source data
+					txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & txLogs.Text, MethodInvoker))
+
+					'Remove Comments
+					Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")).Where(Function(x) Not String.IsNullOrWhiteSpace(x)))
+					'Remove Target IPs
+					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) IIf(Regex.Match(x, "^((([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)))\ ").Success, Microsoft.VisualBasic.Right(x, Len(x) - (x.IndexOf(" ") + 1)), x).ToString))
+					'remove ip domains
+					SourceHash = New HashSet(Of String)(SourceHash.Where(Function(x) Not Regex.Match(x, "(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))|((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))").Success))
+					'Remove Comment Suffix
+					Dim arrTempX() As String = SourceHash.ToArray
+					SourceHash.Clear()
+					SourceHash.TrimExcess()
+					For y As Integer = 0 To arrTempX.Count - 1
+						If bgGenerate.CancellationPending Then
+							e.Cancel = True
+							Exit Sub
+						End If
+
+						'check domain validity
+						Dim urx As Uri = Nothing
+						Dim urxError As Boolean = False
+						Dim arrStr As String = arrTempX(y)
+						If arrStr.Contains(" #") Then
+							Try
+								urx = New Uri("http://" & Microsoft.VisualBasic.Left(arrStr, arrStr.IndexOf(" #")).Trim)
+							Catch ex As Exception
+								urxError = True
+							End Try
+						Else
+							Try
+								urx = New Uri("http://" & arrStr.Trim)
+							Catch ex As Exception
+								urxError = True
+							End Try
+						End If
+						If Not urxError Then
+							Dim SafeHost As String = urx.DnsSafeHost
+							If Not String.IsNullOrWhiteSpace(SafeHost) Then SourceHash.Add(SafeHost)
+						Else
+							If SetParseErrors Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & txLogs.Text, MethodInvoker))
+							errCount += 1
+						End If
+					Next
+					Erase arrTempX
+					'Remove Loopbacks
+					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
+
+					'save to cache
+					If sourceCacheList.Any(Function(x) x.URL = arstring) Then sourceCacheList.RemoveAll(Function(x) x.URL = arstring)
+					sourceCacheList.Add(New sourceCache With {.URL = arstring, .Domains = String.Join(vbCrLf, SourceHash)})
+
+					'show count
+					totalDoms += SourceHash.LongCount
+					Dim domCount As String = SourceHash.LongCount.ToString("#,0")
+					txLogs.Invoke(DirectCast(Sub() txLogs.Text = Replace(txLogs.Text, "(+Retrieving Domain Count)", "Got " & domCount & " domains!"), MethodInvoker))
+					If Not SourceHash.Count = 0 Then
+						If SetSort Then SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
+						SourceList.Add("[" & domCount & "] " & arstring)
+						UniHash.UnionWith(SourceHash)
+					End If
 				End If
 			End If
 		Next
@@ -503,8 +525,10 @@ Public Class HostsMain
 		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & txLogs.Text, MethodInvoker))
 
 		'remove blacklisted from whitelist
-		WhiteList.ExceptWith(BlackList)
-		WhiteList.TrimExcess()
+		With WhiteList
+			.ExceptWith(BlackList)
+			.TrimExcess()
+		End With
 
 		'remove whitelisted from unified list
 		UniHash.ExceptWith(WhiteList.Where(Function(x) Not x.Contains("*")))
@@ -520,8 +544,10 @@ Public Class HostsMain
 		UniHash.TrimExcess()
 
 		'remove already unified listed from blacklist
-		BlackList.ExceptWith(UniHash)
-		BlackList.TrimExcess()
+		With BlackList
+			.ExceptWith(UniHash)
+			.TrimExcess()
+		End With
 
 		'### Empty List check
 		If bgGenerate.CancellationPending Then
@@ -734,4 +760,9 @@ Public Class HostsMain
 		HostsSettings.ShowDialog(Me)
 	End Sub
 
+End Class
+
+Friend Class sourceCache
+	Friend Property URL As String
+	Friend Property Domains As String
 End Class

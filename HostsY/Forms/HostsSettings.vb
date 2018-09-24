@@ -7,6 +7,7 @@
 		chSort.Checked = SetSort
 		chTabs.Checked = SetTabs
 		chPreview.Checked = SetPreview
+		chUseCache.Checked = SetUseCache
 		chParseErrors.Checked = SetParseErrors
 		numDomainPerLine.Value = SetDomainPerLine
 		rtbLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
@@ -18,6 +19,7 @@
 		SetTabs = chTabs.Checked
 		SetParseErrors = chParseErrors.Checked
 		SetPreview = chPreview.Checked
+		SetUseCache = chUseCache.Checked
 		SetDomainPerLine = CInt(numDomainPerLine.Value)
 		If Not String.IsNullOrWhiteSpace(rtbLoopbacks.Text) Then
 			SetLoopBlacks = rtbLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
@@ -44,6 +46,20 @@
 				Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
 			Else
 				Process.Start("C:\WINDOWS\system32\drivers\etc")
+			End If
+		End If
+	End Sub
+
+	Private Sub chUseCache_Click(sender As Object, e As EventArgs) Handles chUseCache.Click
+		If Not chUseCache.Checked Then
+			If MessageBox.Show("Disabling cache will clear all saved cached domains per URL." & vbCrLf & "Proceed?", "Confirm Cache Off!", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = System.Windows.Forms.DialogResult.Yes Then
+				With HostsMain
+					.sourceCacheList.Clear()
+					.sourceCacheList.TrimExcess()
+				End With
+				chUseCache.Checked = False
+			Else
+				chUseCache.Checked = True
 			End If
 		End If
 	End Sub
