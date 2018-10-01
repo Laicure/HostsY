@@ -329,6 +329,21 @@ Public Class HostsMain
 			End If
 		End If
 
+		'remove expired cache
+		If SetUseCache Then sourceCacheList.RemoveAll(
+			Function(x)
+				Dim nowTime As DateTime = DateTime.UtcNow
+				Dim cacheSpan As TimeSpan = DateTime.UtcNow - x.TimeStamp
+				Console.WriteLine(nowTime.ToString)
+				Console.WriteLine(x.TimeStamp)
+				Console.WriteLine(cacheSpan.Minutes.ToString)
+				If cacheSpan.Minutes >= SetCacheAge Then
+					Return True
+				Else
+					Return False
+				End If
+			End Function)
+
 		'deactivate controls
 		txSources.ReadOnly = True
 		txWhites.ReadOnly = True
@@ -419,6 +434,7 @@ Public Class HostsMain
 			End If
 
 			Dim arstring As String = arrTemp(i)
+
 			'use cache instead of reading again
 			If SetUseCache AndAlso sourceCacheList.Any(Function(x) x.URL = arstring) Then
 				txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Reading saved cache of " & arstring & "..." & vbCrLf & txLogs.Text, MethodInvoker))
@@ -500,7 +516,7 @@ Public Class HostsMain
 
 					'save to cache
 					If sourceCacheList.Any(Function(x) x.URL = arstring) Then sourceCacheList.RemoveAll(Function(x) x.URL = arstring)
-					sourceCacheList.Add(New sourceCache With {.URL = arstring, .Domains = String.Join(vbCrLf, SourceHash)})
+					sourceCacheList.Add(New sourceCache With {.URL = arstring, .Domains = String.Join(vbCrLf, SourceHash), .TimeStamp = DateTime.UtcNow})
 
 					'show count
 					totalDoms += SourceHash.LongCount
@@ -765,4 +781,5 @@ End Class
 Friend Class sourceCache
 	Friend Property URL As String
 	Friend Property Domains As String
+	Friend Property TimeStamp As DateTime
 End Class
