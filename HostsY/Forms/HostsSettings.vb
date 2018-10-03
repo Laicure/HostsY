@@ -8,7 +8,6 @@
 		chTabs.Checked = SetTabs
 		chPreview.Checked = SetPreview
 		chUseCache.Checked = SetUseCache
-		tbCacheAge.Value = SetCacheAge
 		chParseErrors.Checked = SetParseErrors
 		numDomainPerLine.Value = SetDomainPerLine
 		rtbLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
@@ -21,7 +20,6 @@
 		SetParseErrors = chParseErrors.Checked
 		SetPreview = chPreview.Checked
 		SetUseCache = chUseCache.Checked
-		SetCacheAge = tbCacheAge.Value
 		SetDomainPerLine = CInt(numDomainPerLine.Value)
 		If Not String.IsNullOrWhiteSpace(rtbLoopbacks.Text) Then
 			SetLoopBlacks = rtbLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
@@ -66,22 +64,4 @@
 		End If
 	End Sub
 
-	Private Sub chUseCache_CheckedChanged(sender As Object, e As EventArgs) Handles chUseCache.CheckedChanged
-		tbCacheAge.Enabled = chUseCache.Checked
-	End Sub
-
-	Private Sub tbCacheAge_Scroll(sender As Object, e As EventArgs) Handles tbCacheAge.Scroll
-		Dim CacheAge As Integer = tbCacheAge.Value
-		If CacheAge = 0 Then
-			chUseCache.Text = "Reuse cache (no expiry)"
-		Else
-			Dim cachetxt As String = ""
-			If CacheAge = 1 Then
-				cachetxt = CacheAge.ToString & "min)"
-			Else
-				cachetxt = CacheAge.ToString & "mins)"
-			End If
-			chUseCache.Text = "Reuse cache (expires every " & cachetxt
-		End If
-	End Sub
 End Class
