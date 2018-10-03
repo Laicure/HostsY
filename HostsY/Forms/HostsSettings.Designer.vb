@@ -230,7 +230,7 @@ Partial Class HostsSettings
 		Me.chUseCache.Size = New System.Drawing.Size(206, 17)
 		Me.chUseCache.TabIndex = 34
 		Me.chUseCache.TabStop = False
-		Me.chUseCache.Text = "Use cache for repeated generation"
+		Me.chUseCache.Text = "Use session cache"
 		Me.chUseCache.UseVisualStyleBackColor = True
 		'
 		'HostsSettings
