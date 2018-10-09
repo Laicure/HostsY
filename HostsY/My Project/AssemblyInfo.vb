@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("HostsY")> 
-<Assembly: AssemblyDescription("Just a simplified and multi-threaded revamp of HostsX for Windows.")> 
-<Assembly: AssemblyCompany("CodeMock")> 
-<Assembly: AssemblyProduct("HostsY")> 
-<Assembly: AssemblyCopyright("Copyright © 2018")> 
-<Assembly: AssemblyTrademark("Laicure Leviare")> 
+<Assembly: AssemblyTitle("HostsY")>
+<Assembly: AssemblyDescription("Just a simplified and multi-threaded revamp of HostsX for Windows.")>
+<Assembly: AssemblyCompany("CodeMock")>
+<Assembly: AssemblyProduct("HostsY")>
+<Assembly: AssemblyCopyright("Copyright © 2018")>
+<Assembly: AssemblyTrademark("Laicure Leviare")>
 
-<Assembly: ComVisible(False)> 
+<Assembly: ComVisible(False)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
-<Assembly: Guid("ec6833b5-b816-4787-9dfc-8d2c96ad7648")> 
+<Assembly: Guid("ec6833b5-b816-4787-9dfc-8d2c96ad7648")>
 
 ' Version information for an assembly consists of the following four values:
 '
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.*")> 
-<Assembly: NeutralResourcesLanguageAttribute("en")> 
+<Assembly: AssemblyVersion("1.0.*")>
+<Assembly: NeutralResourcesLanguageAttribute("en")>
