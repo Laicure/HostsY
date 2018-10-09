@@ -297,7 +297,7 @@ Public Class HostsMain
 #End Region
 
 	Private Sub HostsMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-		Me.Text = "HostsY v" & My.Application.Info.Version.ToString
+		Me.Text = "HostsY [Build Date: " & My.Computer.FileSystem.GetFileInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName).LastWriteTimeUtc.ToString("yyyy-MM-dd HH:mm:ss") & " UTC]"
 		Me.Icon = My.Resources.art
 	End Sub
 
