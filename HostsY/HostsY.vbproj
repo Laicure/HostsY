@@ -14,7 +14,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AssemblyVersion>2016.6.8.1728</AssemblyVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-	<Deterministic>true</Deterministic>
+  	<Deterministic>true</Deterministic>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
