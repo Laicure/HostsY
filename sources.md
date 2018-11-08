@@ -2,7 +2,6 @@
 ```
 https://raw.githubusercontent.com/mitchellkrogza/Badd-Boyz-Hosts/master/hosts
 https://zerodot1.gitlab.io/CoinBlockerLists/hosts_browser
-https://raw.githubusercontent.com/azet12/KADhosts/master/KADhosts.txt
 https://raw.githubusercontent.com/StevenBlack/hosts/master/data/StevenBlack/hosts
 https://raw.githubusercontent.com/FadeMind/hosts.extras/master/UncheckyAds/hosts
 https://raw.githubusercontent.com/AdAway/adaway.github.io/master/hosts.txt
