@@ -17,10 +17,10 @@ Required:
 ```
 HostsY.exe
 Data
-\black.txt
-\source.txt
-\white.txt
-\loopback.txt
+----\black.txt
+----\source.txt
+----\white.txt
+----\loopback.txt
 ```
 
 ###### Possible loopbacks:
