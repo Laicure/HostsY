@@ -1,16 +1,16 @@
 ﻿Imports System.Text.RegularExpressions
 
 Public Class HostsMain
-	Dim SourceL() As String = Nothing
-	Dim WhiteL() As String = Nothing
-	Dim BlackL() As String = Nothing
-	Dim Loopbacks As String = Nothing
+	Dim SourceL() As String = {}
+	Dim WhiteL() As String = {}
+	Dim BlackL() As String = {}
+	Dim Loopbacks As String = ""
 	Dim startExec As DateTime = DateTime.UtcNow
 	Dim errCount As Long = 0
 	Dim preview As Boolean = False
 	Friend sourceCacheList As New List(Of sourceCache)
 
-	Friend Generated As String = Nothing
+	Friend Generated As String = ""
 
 #Region "Auto"
 
@@ -83,7 +83,7 @@ Public Class HostsMain
 		Dim UniHash As New HashSet(Of String)
 
 		'Source data Compile to one
-		Dim UniString As String = Nothing
+		Dim UniString As String = ""
 		Dim totalDoms As Long = 0
 		Dim arrTemp() As String = SourceList.ToArray
 		SourceList.Clear()
@@ -96,7 +96,7 @@ Public Class HostsMain
 				Try
 					Dim readd As New IO.StreamReader(clie.OpenRead(arstring))
 					Dim SourcedD As String = readd.ReadToEnd
-					UniString = Nothing
+					UniString = ""
 					UniString += SourcedD & vbCrLf
 					suc = True
 				Catch ex As Exception
@@ -315,20 +315,6 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		'preview?
-		If SetPreview Then
-			If HostsPreview.Visible Then HostsPreview.Close()
-			Dim PreviewResult As Integer = MessageBox.Show("Do you want to show the host file preview?" & vbCrLf & vbCrLf & "Not recommended for large hosts files!", "Preview?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
-			If PreviewResult = DialogResult.Yes Then
-				preview = True
-			ElseIf PreviewResult = DialogResult.No Then
-				preview = False
-				LbPreview.Visible = False
-			Else
-				Exit Sub
-			End If
-		End If
-
 		'deactivate controls
 		txSources.ReadOnly = True
 		txWhites.ReadOnly = True
@@ -336,6 +322,8 @@ Public Class HostsMain
 
 		LbSave.Cursor = Cursors.Default
 		LbSave.Text = "..."
+
+		LbPreview.Visible = False
 		LbSettings.Enabled = False
 
 		'reset content
@@ -347,7 +335,7 @@ Public Class HostsMain
 		'set vars
 		errCount = 0
 		Loopbacks = String.Join("|", SetLoopBlacks.Select(Of String)(Function(x) "\b^" & Regex.Escape(x) & "$"))
-		Generated = Nothing
+		Generated = ""
 
 		LbGenerate.Text = "Cancel Generation"
 		SourceL = txSources.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
@@ -407,7 +395,7 @@ Public Class HostsMain
 		Dim UniHash As New HashSet(Of String)
 
 		'Source data Compile to one
-		Dim UniString As String = Nothing
+		Dim UniString As String = ""
 		Dim totalDoms As Long = 0
 		Dim arrTemp() As String = SourceList.ToArray
 		SourceList.Clear()
@@ -441,7 +429,7 @@ Public Class HostsMain
 					Try
 						Dim readd As New IO.StreamReader(clie.OpenRead(arstring))
 						Dim SourcedD As String = readd.ReadToEnd
-						UniString = Nothing
+						UniString = ""
 						UniString += SourcedD & vbCrLf
 						suc = True
 					Catch ex As Exception
@@ -637,18 +625,12 @@ Public Class HostsMain
 	End Sub
 
 	Private Sub BgGenerate_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgGenerate.RunWorkerCompleted
-		If preview Then
-			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Generating Preview" & vbCrLf & txLogs.Text
-			LbPreview.Visible = True
-			'Preview
-			If Not HostsPreview.Visible Then HostsPreview.Show(Me)
-		End If
-
 		'reactivate controls
 		txSources.ReadOnly = False
 		txWhites.ReadOnly = False
 		txBlacks.ReadOnly = False
 
+		LbPreview.Visible = True
 		LbSettings.Enabled = True
 
 		LbGenerate.Text = "Generate Hosts File"

@@ -6,7 +6,6 @@
 		txtTargetIP.Text = SetTargetIP
 		chSort.Checked = SetSort
 		chTabs.Checked = SetTabs
-		chPreview.Checked = SetPreview
 		chUseCache.Checked = SetUseCache
 		chParseErrors.Checked = SetParseErrors
 		numDomainPerLine.Value = SetDomainPerLine
@@ -18,7 +17,6 @@
 		SetSort = chSort.Checked
 		SetTabs = chTabs.Checked
 		SetParseErrors = chParseErrors.Checked
-		SetPreview = chPreview.Checked
 		SetUseCache = chUseCache.Checked
 		SetDomainPerLine = CInt(numDomainPerLine.Value)
 		If Not String.IsNullOrWhiteSpace(rtbLoopbacks.Text) Then

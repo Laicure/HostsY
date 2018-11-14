@@ -33,7 +33,6 @@ Partial Class HostsSettings
 		Me.numDomainPerLine = New System.Windows.Forms.NumericUpDown()
 		Me.Label2 = New System.Windows.Forms.Label()
 		Me.chParseErrors = New System.Windows.Forms.CheckBox()
-		Me.chPreview = New System.Windows.Forms.CheckBox()
 		Me.chUseCache = New System.Windows.Forms.CheckBox()
 		CType(Me.numDomainPerLine, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
@@ -118,7 +117,7 @@ Partial Class HostsSettings
 		Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.Label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.Label1.ForeColor = System.Drawing.Color.Black
-		Me.Label1.Location = New System.Drawing.Point(1, 157)
+		Me.Label1.Location = New System.Drawing.Point(1, 140)
 		Me.Label1.Margin = New System.Windows.Forms.Padding(1)
 		Me.Label1.Name = "Label1"
 		Me.Label1.Size = New System.Drawing.Size(206, 17)
@@ -133,7 +132,7 @@ Partial Class HostsSettings
 		Me.LbStatus.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.LbStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbStatus.ForeColor = System.Drawing.Color.Blue
-		Me.LbStatus.Location = New System.Drawing.Point(1, 320)
+		Me.LbStatus.Location = New System.Drawing.Point(1, 303)
 		Me.LbStatus.Margin = New System.Windows.Forms.Padding(1)
 		Me.LbStatus.Name = "LbStatus"
 		Me.LbStatus.Size = New System.Drawing.Size(206, 25)
@@ -148,7 +147,7 @@ Partial Class HostsSettings
 		Me.rtbLoopbacks.DetectUrls = False
 		Me.rtbLoopbacks.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.rtbLoopbacks.ForeColor = System.Drawing.Color.Black
-		Me.rtbLoopbacks.Location = New System.Drawing.Point(1, 172)
+		Me.rtbLoopbacks.Location = New System.Drawing.Point(1, 155)
 		Me.rtbLoopbacks.Margin = New System.Windows.Forms.Padding(1)
 		Me.rtbLoopbacks.Name = "rtbLoopbacks"
 		Me.rtbLoopbacks.Size = New System.Drawing.Size(206, 148)
@@ -203,20 +202,6 @@ Partial Class HostsSettings
 		Me.chParseErrors.Text = "Show Parse Errors"
 		Me.chParseErrors.UseVisualStyleBackColor = True
 		'
-		'chPreview
-		'
-		Me.chPreview.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-		Me.chPreview.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.chPreview.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chPreview.Location = New System.Drawing.Point(1, 123)
-		Me.chPreview.Margin = New System.Windows.Forms.Padding(1, 0, 0, 0)
-		Me.chPreview.Name = "chPreview"
-		Me.chPreview.Size = New System.Drawing.Size(206, 17)
-		Me.chPreview.TabIndex = 33
-		Me.chPreview.TabStop = False
-		Me.chPreview.Text = "Ask for a Preview"
-		Me.chPreview.UseVisualStyleBackColor = True
-		'
 		'chUseCache
 		'
 		Me.chUseCache.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -224,7 +209,7 @@ Partial Class HostsSettings
 		Me.chUseCache.CheckState = System.Windows.Forms.CheckState.Checked
 		Me.chUseCache.Cursor = System.Windows.Forms.Cursors.Hand
 		Me.chUseCache.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.chUseCache.Location = New System.Drawing.Point(1, 140)
+		Me.chUseCache.Location = New System.Drawing.Point(1, 123)
 		Me.chUseCache.Margin = New System.Windows.Forms.Padding(1, 0, 0, 0)
 		Me.chUseCache.Name = "chUseCache"
 		Me.chUseCache.Size = New System.Drawing.Size(206, 17)
@@ -238,10 +223,9 @@ Partial Class HostsSettings
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
-		Me.ClientSize = New System.Drawing.Size(208, 346)
+		Me.ClientSize = New System.Drawing.Size(208, 329)
 		Me.Controls.Add(Me.chUseCache)
 		Me.Controls.Add(Me.Label1)
-		Me.Controls.Add(Me.chPreview)
 		Me.Controls.Add(Me.chParseErrors)
 		Me.Controls.Add(Me.Label2)
 		Me.Controls.Add(Me.rtbLoopbacks)
@@ -279,6 +263,5 @@ Partial Class HostsSettings
 	Friend WithEvents numDomainPerLine As NumericUpDown
 	Friend WithEvents Label2 As Label
 	Friend WithEvents chParseErrors As System.Windows.Forms.CheckBox
-	Friend WithEvents chPreview As System.Windows.Forms.CheckBox
 	Friend WithEvents chUseCache As System.Windows.Forms.CheckBox
 End Class
