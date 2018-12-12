@@ -150,7 +150,7 @@ Partial Class HostsMain
 		Me.LbSave.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.LbSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbSave.ForeColor = System.Drawing.Color.DarkGreen
-		Me.LbSave.Location = New System.Drawing.Point(196, 419)
+		Me.LbSave.Location = New System.Drawing.Point(196, 420)
 		Me.LbSave.Margin = New System.Windows.Forms.Padding(0)
 		Me.LbSave.Name = "LbSave"
 		Me.LbSave.Size = New System.Drawing.Size(337, 15)
@@ -173,7 +173,7 @@ Partial Class HostsMain
 		Me.txLogs.Name = "txLogs"
 		Me.txLogs.ReadOnly = True
 		Me.txLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-		Me.txLogs.Size = New System.Drawing.Size(337, 395)
+		Me.txLogs.Size = New System.Drawing.Size(337, 396)
 		Me.txLogs.TabIndex = 5
 		Me.txLogs.TabStop = False
 		Me.txLogs.WordWrap = False
@@ -203,7 +203,7 @@ Partial Class HostsMain
 		Me.LbPreview.Cursor = System.Windows.Forms.Cursors.Hand
 		Me.LbPreview.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbPreview.ForeColor = System.Drawing.Color.Blue
-		Me.LbPreview.Location = New System.Drawing.Point(196, 419)
+		Me.LbPreview.Location = New System.Drawing.Point(196, 420)
 		Me.LbPreview.Margin = New System.Windows.Forms.Padding(0)
 		Me.LbPreview.Name = "LbPreview"
 		Me.LbPreview.Size = New System.Drawing.Size(73, 15)
@@ -217,7 +217,7 @@ Partial Class HostsMain
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
-		Me.ClientSize = New System.Drawing.Size(534, 435)
+		Me.ClientSize = New System.Drawing.Size(534, 436)
 		Me.Controls.Add(Me.LbPreview)
 		Me.Controls.Add(Me.LbGenerate)
 		Me.Controls.Add(Me.LbSave)
@@ -234,8 +234,8 @@ Partial Class HostsMain
 		Me.ForeColor = System.Drawing.Color.Black
 		Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
 		Me.MaximizeBox = False
-		Me.MaximumSize = New System.Drawing.Size(550, 474)
-		Me.MinimumSize = New System.Drawing.Size(550, 474)
+		Me.MaximumSize = New System.Drawing.Size(550, 475)
+		Me.MinimumSize = New System.Drawing.Size(550, 475)
 		Me.Name = "HostsMain"
 		Me.Padding = New System.Windows.Forms.Padding(1)
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

@@ -8,4 +8,11 @@
 		End If
 	End Sub
 
+	Private Sub txPreview_KeyDown(sender As Object, e As KeyEventArgs) Handles txPreview.KeyDown
+		If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.A Then
+			e.SuppressKeyPress = True
+			txPreview.SelectAll()
+		End If
+	End Sub
+
 End Class

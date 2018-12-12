@@ -742,6 +742,27 @@ Public Class HostsMain
 		HostsSettings.ShowDialog(Me)
 	End Sub
 
+	Private Sub txSources_KeyDown(sender As Object, e As KeyEventArgs) Handles txSources.KeyDown
+		If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.A Then
+			e.SuppressKeyPress = True
+			txSources.SelectAll()
+		End If
+	End Sub
+
+	Private Sub txWhites_KeyDown(sender As Object, e As KeyEventArgs) Handles txWhites.KeyDown
+		If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.A Then
+			e.SuppressKeyPress = True
+			txWhites.SelectAll()
+		End If
+	End Sub
+
+	Private Sub txBlacks_KeyDown(sender As Object, e As KeyEventArgs) Handles txBlacks.KeyDown
+		If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.A Then
+			e.SuppressKeyPress = True
+			txBlacks.SelectAll()
+		End If
+	End Sub
+
 End Class
 
 Friend Class sourceCache

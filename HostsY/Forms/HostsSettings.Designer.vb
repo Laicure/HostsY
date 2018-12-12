@@ -29,11 +29,11 @@ Partial Class HostsSettings
 		Me.LbAbout = New System.Windows.Forms.Label()
 		Me.Label1 = New System.Windows.Forms.Label()
 		Me.LbStatus = New System.Windows.Forms.Label()
-		Me.rtbLoopbacks = New System.Windows.Forms.RichTextBox()
 		Me.numDomainPerLine = New System.Windows.Forms.NumericUpDown()
 		Me.Label2 = New System.Windows.Forms.Label()
 		Me.chParseErrors = New System.Windows.Forms.CheckBox()
 		Me.chUseCache = New System.Windows.Forms.CheckBox()
+		Me.txLoopbacks = New System.Windows.Forms.TextBox()
 		CType(Me.numDomainPerLine, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
@@ -140,21 +140,6 @@ Partial Class HostsSettings
 		Me.LbStatus.Text = "Open system ""hosts"" folder"
 		Me.LbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		'
-		'rtbLoopbacks
-		'
-		Me.rtbLoopbacks.BackColor = System.Drawing.Color.White
-		Me.rtbLoopbacks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.rtbLoopbacks.DetectUrls = False
-		Me.rtbLoopbacks.Dock = System.Windows.Forms.DockStyle.Bottom
-		Me.rtbLoopbacks.ForeColor = System.Drawing.Color.Black
-		Me.rtbLoopbacks.Location = New System.Drawing.Point(1, 155)
-		Me.rtbLoopbacks.Margin = New System.Windows.Forms.Padding(1)
-		Me.rtbLoopbacks.Name = "rtbLoopbacks"
-		Me.rtbLoopbacks.Size = New System.Drawing.Size(206, 148)
-		Me.rtbLoopbacks.TabIndex = 29
-		Me.rtbLoopbacks.Text = ""
-		Me.rtbLoopbacks.WordWrap = False
-		'
 		'numDomainPerLine
 		'
 		Me.numDomainPerLine.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -218,18 +203,35 @@ Partial Class HostsSettings
 		Me.chUseCache.Text = "Use session cache"
 		Me.chUseCache.UseVisualStyleBackColor = True
 		'
+		'txLoopbacks
+		'
+		Me.txLoopbacks.BackColor = System.Drawing.Color.White
+		Me.txLoopbacks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+		Me.txLoopbacks.ForeColor = System.Drawing.Color.Black
+		Me.txLoopbacks.Location = New System.Drawing.Point(1, 156)
+		Me.txLoopbacks.Margin = New System.Windows.Forms.Padding(0)
+		Me.txLoopbacks.MaxLength = 2147483647
+		Me.txLoopbacks.Multiline = True
+		Me.txLoopbacks.Name = "txLoopbacks"
+		Me.txLoopbacks.ReadOnly = True
+		Me.txLoopbacks.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+		Me.txLoopbacks.Size = New System.Drawing.Size(206, 148)
+		Me.txLoopbacks.TabIndex = 35
+		Me.txLoopbacks.TabStop = False
+		Me.txLoopbacks.WordWrap = False
+		'
 		'HostsSettings
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
 		Me.ClientSize = New System.Drawing.Size(208, 329)
-		Me.Controls.Add(Me.chUseCache)
+		Me.Controls.Add(Me.LbStatus)
 		Me.Controls.Add(Me.Label1)
+		Me.Controls.Add(Me.txLoopbacks)
+		Me.Controls.Add(Me.chUseCache)
 		Me.Controls.Add(Me.chParseErrors)
 		Me.Controls.Add(Me.Label2)
-		Me.Controls.Add(Me.rtbLoopbacks)
-		Me.Controls.Add(Me.LbStatus)
 		Me.Controls.Add(Me.LbAbout)
 		Me.Controls.Add(Me.Label4)
 		Me.Controls.Add(Me.txtTargetIP)
@@ -259,9 +261,9 @@ Partial Class HostsSettings
 	Friend WithEvents LbAbout As Label
 	Friend WithEvents Label1 As Label
 	Friend WithEvents LbStatus As Label
-	Friend WithEvents rtbLoopbacks As RichTextBox
 	Friend WithEvents numDomainPerLine As NumericUpDown
 	Friend WithEvents Label2 As Label
 	Friend WithEvents chParseErrors As System.Windows.Forms.CheckBox
 	Friend WithEvents chUseCache As System.Windows.Forms.CheckBox
+	Friend WithEvents txLoopbacks As System.Windows.Forms.TextBox
 End Class

@@ -9,7 +9,7 @@
 		chUseCache.Checked = SetUseCache
 		chParseErrors.Checked = SetParseErrors
 		numDomainPerLine.Value = SetDomainPerLine
-		rtbLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
+		txLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
 	End Sub
 
 	Private Sub HostsSettings_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
@@ -19,8 +19,8 @@
 		SetParseErrors = chParseErrors.Checked
 		SetUseCache = chUseCache.Checked
 		SetDomainPerLine = CInt(numDomainPerLine.Value)
-		If Not String.IsNullOrWhiteSpace(rtbLoopbacks.Text) Then
-			SetLoopBlacks = rtbLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
+		If Not String.IsNullOrWhiteSpace(txLoopbacks.Text) Then
+			SetLoopBlacks = txLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
 		Else
 			SetLoopBlacks = {"0.0.0.0", "broadcasthost", "ip6-allhosts", "ip6-allnodes", "ip6-allrouters", "ip6-localhost", "ip6-localnet", "ip6-loopback", "ip6-mcastprefix", "local", "localhost", "localhost.localdomain"}
 		End If
@@ -59,6 +59,13 @@
 			Else
 				chUseCache.Checked = True
 			End If
+		End If
+	End Sub
+
+	Private Sub txLoopbacks_KeyDown(sender As Object, e As KeyEventArgs) Handles txLoopbacks.KeyDown
+		If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.A Then
+			e.SuppressKeyPress = True
+			txLoopbacks.SelectAll()
 		End If
 	End Sub
 
