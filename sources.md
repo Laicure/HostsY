@@ -22,10 +22,6 @@ https://hosts-file.net/hfs.txt
 https://hosts-file.net/hjk.txt
 https://hosts-file.net/mmt.txt
 https://hosts-file.net/pup.txt
-
-adf.ly
-www.linkbucks.com
-adfoc.us
 ```
 ##### Raw [StevenBlack/hosts' data](https://github.com/StevenBlack/hosts/tree/master/data) sources:
 ```
