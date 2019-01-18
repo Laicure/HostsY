@@ -77,7 +77,7 @@ Public Class HostsMain
 
 		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & Logg
 		'Validate and match blacklist
-		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
+		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost.ToLower.Trim).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 
 		'Major Hashset
 		Dim UniHash As New HashSet(Of String)
@@ -138,8 +138,8 @@ Public Class HostsMain
 						End Try
 					End If
 					If Not urxError Then
-						Dim SafeHost As String = urx.DnsSafeHost
-						If Not String.IsNullOrEmpty(SafeHost.Trim) Then SourceHash.Add(SafeHost)
+						Dim SafeHost As String = urx.DnsSafeHost.ToLower.Trim
+						If Not String.IsNullOrEmpty(SafeHost) Then SourceHash.Add(SafeHost)
 					Else
 						Logg = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & Logg
 						errCount += 1
@@ -147,7 +147,7 @@ Public Class HostsMain
 				Next
 				Erase arrTempX
 				'Remove Loopbacks
-				SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
+				SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) x.ToLower.Trim).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 
 				'show count
 				totalDoms += SourceHash.LongCount
@@ -382,7 +382,7 @@ Public Class HostsMain
 
 		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & txLogs.Text, MethodInvoker))
 		'Validate and match blacklist
-		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
+		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost.ToLower.Trim).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 		LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist [" & BlackList.Count & "]", MethodInvoker))
 		txBlacks.Invoke(DirectCast(Sub() txBlacks.Text = String.Join(vbCrLf, BlackList), MethodInvoker))
 
@@ -475,8 +475,8 @@ Public Class HostsMain
 							End Try
 						End If
 						If Not urxError Then
-							Dim SafeHost As String = urx.DnsSafeHost
-							If Not String.IsNullOrEmpty(SafeHost.Trim) Then SourceHash.Add(SafeHost)
+							Dim SafeHost As String = urx.DnsSafeHost.ToLower.Trim
+							If Not String.IsNullOrEmpty(SafeHost) Then SourceHash.Add(SafeHost)
 						Else
 							If SetParseErrors Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & txLogs.Text, MethodInvoker))
 							errCount += 1
@@ -484,7 +484,7 @@ Public Class HostsMain
 					Next
 					Erase arrTempX
 					'Remove Loopbacks
-					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) StrConv(x.Trim, VbStrConv.Lowercase)).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
+					SourceHash = New HashSet(Of String)(SourceHash.Select(Function(x) x.ToLower.Trim).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 
 					'save to cache
 					If sourceCacheList.Any(Function(x) x.URL = arstring) Then sourceCacheList.RemoveAll(Function(x) x.URL = arstring)
