@@ -34,6 +34,7 @@ Partial Class HostsSettings
 		Me.chParseErrors = New System.Windows.Forms.CheckBox()
 		Me.chUseCache = New System.Windows.Forms.CheckBox()
 		Me.txLoopbacks = New System.Windows.Forms.TextBox()
+		Me.lbVersion = New System.Windows.Forms.Label()
 		CType(Me.numDomainPerLine, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
@@ -112,7 +113,7 @@ Partial Class HostsSettings
 		'
 		'Label1
 		'
-		Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+		Me.Label1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
 			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
 		Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.Label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -127,9 +128,10 @@ Partial Class HostsSettings
 		'
 		'LbStatus
 		'
+		Me.LbStatus.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
 		Me.LbStatus.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.LbStatus.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.LbStatus.Dock = System.Windows.Forms.DockStyle.Bottom
 		Me.LbStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbStatus.ForeColor = System.Drawing.Color.Blue
 		Me.LbStatus.Location = New System.Drawing.Point(1, 303)
@@ -220,12 +222,29 @@ Partial Class HostsSettings
 		Me.txLoopbacks.TabStop = False
 		Me.txLoopbacks.WordWrap = False
 		'
+		'lbVersion
+		'
+		Me.lbVersion.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.lbVersion.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+		Me.lbVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.lbVersion.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.lbVersion.ForeColor = System.Drawing.Color.Black
+		Me.lbVersion.Location = New System.Drawing.Point(1, 327)
+		Me.lbVersion.Margin = New System.Windows.Forms.Padding(1)
+		Me.lbVersion.Name = "lbVersion"
+		Me.lbVersion.Size = New System.Drawing.Size(206, 17)
+		Me.lbVersion.TabIndex = 36
+		Me.lbVersion.Text = "<build date>"
+		Me.lbVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+		'
 		'HostsSettings
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
-		Me.ClientSize = New System.Drawing.Size(208, 329)
+		Me.ClientSize = New System.Drawing.Size(208, 345)
+		Me.Controls.Add(Me.lbVersion)
 		Me.Controls.Add(Me.LbStatus)
 		Me.Controls.Add(Me.Label1)
 		Me.Controls.Add(Me.txLoopbacks)
@@ -266,4 +285,5 @@ Partial Class HostsSettings
 	Friend WithEvents chParseErrors As System.Windows.Forms.CheckBox
 	Friend WithEvents chUseCache As System.Windows.Forms.CheckBox
 	Friend WithEvents txLoopbacks As System.Windows.Forms.TextBox
+	Friend WithEvents lbVersion As System.Windows.Forms.Label
 End Class

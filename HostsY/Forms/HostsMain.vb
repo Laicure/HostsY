@@ -297,7 +297,7 @@ Public Class HostsMain
 #End Region
 
 	Private Sub HostsMain_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-		Me.Text = "HostsY [Build Date: " & My.Computer.FileSystem.GetFileInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName).LastWriteTimeUtc.ToString("yyyy-MM-dd HH:mm:ss") & " UTC]"
+		Me.Text = "HostsY"
 		Me.Icon = My.Resources.art
 	End Sub
 
@@ -324,6 +324,7 @@ Public Class HostsMain
 		LbSave.Text = "..."
 
 		LbPreview.Visible = False
+		LbShortcut.Visible = False
 		LbSettings.Enabled = False
 
 		'reset content
@@ -621,7 +622,7 @@ Public Class HostsMain
 
 		If errCount > 0 Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & txLogs.Text, MethodInvoker))
 
-		Generated = String.Join(vbCrLf, FinalList)
+		Generated = String.Join(vbCrLf, FinalList).Trim
 	End Sub
 
 	Private Sub BgGenerate_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgGenerate.RunWorkerCompleted
@@ -630,18 +631,19 @@ Public Class HostsMain
 		txWhites.ReadOnly = False
 		txBlacks.ReadOnly = False
 
-		LbPreview.Visible = True
 		LbSettings.Enabled = True
 
 		LbGenerate.Text = "Generate Hosts File"
 		If e.Cancelled Then
 			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Cancelled!" & vbCrLf & txLogs.Text
 		Else
-			If IsNothing(Generated) Then
+			If String.IsNullOrEmpty(Generated) Then
 				MessageBox.Show("No valid source to parse!", "Nothing!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 			Else
+				LbPreview.Visible = True
+				LbShortcut.Visible = True
 				LbSave.Cursor = Cursors.Hand
-				LbSave.Text = "Click here to Save to a Location"
+				LbSave.Text = "> Save"
 			End If
 			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & txLogs.Text
 		End If
@@ -677,7 +679,7 @@ Public Class HostsMain
 					If succ Then
 						If My.Computer.FileSystem.FileExists(selPathhosts) Then
 							Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
-							LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
+							LbSave.Text = "> Save [" & sizee & "]"
 							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
 							'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 							Process.Start("explorer", "/select, " & selPathhosts)
@@ -701,7 +703,7 @@ Public Class HostsMain
 				If succ Then
 					If My.Computer.FileSystem.FileExists(syshostsPath) Then
 						Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(syshostsPath).Length)
-						LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
+						LbSave.Text = "> Save [" & sizee & "]"
 						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & txLogs.Text
 
 						'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
@@ -727,7 +729,7 @@ Public Class HostsMain
 					If succ Then
 						If My.Computer.FileSystem.FileExists(selPathhosts) Then
 							Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
-							LbSave.Text = "Click here to Save to a Location [" & sizee & "]"
+							LbSave.Text = "> Save [" & sizee & "]"
 							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
 							'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 							Process.Start("explorer", "/select, " & selPathhosts)

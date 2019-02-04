@@ -35,6 +35,7 @@ Partial Class HostsMain
 		Me.txLogs = New System.Windows.Forms.TextBox()
 		Me.LbGenerate = New System.Windows.Forms.Label()
 		Me.LbPreview = New System.Windows.Forms.Label()
+		Me.LbShortcut = New System.Windows.Forms.Label()
 		Me.SuspendLayout()
 		'
 		'LbSource
@@ -206,11 +207,28 @@ Partial Class HostsMain
 		Me.LbPreview.Location = New System.Drawing.Point(196, 420)
 		Me.LbPreview.Margin = New System.Windows.Forms.Padding(0)
 		Me.LbPreview.Name = "LbPreview"
-		Me.LbPreview.Size = New System.Drawing.Size(73, 15)
+		Me.LbPreview.Size = New System.Drawing.Size(50, 15)
 		Me.LbPreview.TabIndex = 14
 		Me.LbPreview.Text = "Preview"
 		Me.LbPreview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		Me.LbPreview.Visible = False
+		'
+		'LbShortcut
+		'
+		Me.LbShortcut.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+		Me.LbShortcut.AutoEllipsis = True
+		Me.LbShortcut.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+		Me.LbShortcut.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.LbShortcut.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.LbShortcut.ForeColor = System.Drawing.Color.Blue
+		Me.LbShortcut.Location = New System.Drawing.Point(245, 420)
+		Me.LbShortcut.Margin = New System.Windows.Forms.Padding(0)
+		Me.LbShortcut.Name = "LbShortcut"
+		Me.LbShortcut.Size = New System.Drawing.Size(83, 15)
+		Me.LbShortcut.TabIndex = 15
+		Me.LbShortcut.Text = "Auto Shortcut"
+		Me.LbShortcut.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+		Me.LbShortcut.Visible = False
 		'
 		'HostsMain
 		'
@@ -218,6 +236,7 @@ Partial Class HostsMain
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
 		Me.ClientSize = New System.Drawing.Size(534, 436)
+		Me.Controls.Add(Me.LbShortcut)
 		Me.Controls.Add(Me.LbPreview)
 		Me.Controls.Add(Me.LbGenerate)
 		Me.Controls.Add(Me.LbSave)
@@ -239,7 +258,7 @@ Partial Class HostsMain
 		Me.Name = "HostsMain"
 		Me.Padding = New System.Windows.Forms.Padding(1)
 		Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-		Me.Text = "HostsY v<Version>"
+		Me.Text = "HostsY"
 		Me.ResumeLayout(False)
 		Me.PerformLayout()
 
@@ -257,4 +276,5 @@ Partial Class HostsMain
 	Private WithEvents txLogs As System.Windows.Forms.TextBox
 	Friend WithEvents LbGenerate As System.Windows.Forms.Label
 	Friend WithEvents LbPreview As System.Windows.Forms.Label
+	Friend WithEvents LbShortcut As System.Windows.Forms.Label
 End Class
