@@ -324,7 +324,6 @@ Public Class HostsMain
 		LbSave.Text = "..."
 
 		LbPreview.Visible = False
-		LbShortcut.Visible = False
 		LbSettings.Enabled = False
 
 		'reset content
@@ -641,7 +640,6 @@ Public Class HostsMain
 				MessageBox.Show("No valid source to parse!", "Nothing!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 			Else
 				LbPreview.Visible = True
-				LbShortcut.Visible = True
 				LbSave.Cursor = Cursors.Hand
 				LbSave.Text = "> Save"
 			End If
