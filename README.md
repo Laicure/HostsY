@@ -9,7 +9,7 @@ Required:
 * \-auto
 	* Initializes Auto Generate State
 	* Directly replaces the hosts file in **C:\\Windows\\System32\\drivers\\etc**
-	* Requires Data folder beside the app
+	* Requires a **Data** folder beside the app
 		* Required: **source.txt** for the _host sources_
 		* Optional: **black.txt** for domain _blacklist_
 		* Optional: **white.txt** for domain _whitelist_
