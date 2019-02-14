@@ -10,7 +10,7 @@ Required:
 	* Initializes Auto Generate State
 	* Directly replaces the hosts file in **C:\\Windows\\System32\\drivers\\etc**
 	* Requires Data folder beside the app
-		* Must have the **source.txt** that contains the _host sources_
+		* Required: **source.txt** for the _host sources_
 		* Optional: **black.txt** for domain _blacklist_
 		* Optional: **white.txt** for domain _whitelist_
 		* Optional: **loopback.txt** for domain _loopbacks_
