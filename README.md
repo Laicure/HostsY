@@ -45,7 +45,7 @@ Optional:
 * \-tab
 	* Uses tab instead of spaces between Target IP and Domain Name
 * \-logs
-	* Generate generation logs; auto-generates a logs.txt file
+	* Generate generation logs; auto-generates a logs.txt inside the **Data** folder
 * \-dpl<n>
 	* indicates that it will generate <2 to 9> number of domains per line (e.g. -dpl4) to reduce the file size
 * \-zip
