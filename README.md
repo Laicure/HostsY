@@ -47,7 +47,7 @@ Optional:
 * \-logs
 	* Generate generation logs; auto-generates a logs.txt inside the **Data** folder
 * \-dpl<n>
-	* Indicates that it will generate <2 to 9> number of domains per line (e.g. -dpl4) to reduce the file size
+	* Indicates that it will generate <2~9> number of domains per line (e.g. -dpl4) to reduce the file size
 * \-zip
 	* Generates a zipped hosts file inside the Data folder
 	
