@@ -7,10 +7,10 @@ Public Class HostsMain
 	Dim Loopbacks As String = ""
 	Dim startExec As DateTime = DateTime.UtcNow
 	Dim errCount As Long = 0
-	Dim preview As Boolean = False
 	Friend sourceCacheList As New List(Of sourceCache)
 
 	Friend Generated As String = ""
+	Dim GeneratedCount As String = ""
 
 #Region "Auto"
 
@@ -234,8 +234,10 @@ Public Class HostsMain
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
 
+		GeneratedCount = uniCount.ToString("#,0")
+
 		With FinalList
-			.Add("# Entries: " & uniCount.ToString("#,0"))
+			.Add("# Entries: " & GeneratedCount)
 			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using dev.azure.com/Laicure/OpenSource/_git/HostsY")
 			.Add("")
@@ -287,7 +289,9 @@ Public Class HostsMain
 		End If
 
 		If errCount > 0 Then Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & Logg
+
 		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & Logg
+		Logg = "~ Entries: " & GeneratedCount & vbCrLf & Logg
 
 		If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
 
@@ -590,8 +594,10 @@ Public Class HostsMain
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
 
+		GeneratedCount = uniCount.ToString("#,0")
+
 		With FinalList
-			.Add("# Entries: " & uniCount.ToString("#,0"))
+			.Add("# Entries: " & GeneratedCount)
 			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using dev.azure.com/Laicure/OpenSource/_git/HostsY")
 			.Add("")
@@ -645,7 +651,9 @@ Public Class HostsMain
 			End If
 			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & txLogs.Text
 		End If
+
 		txLogs.Text = "~ Took " & Microsoft.VisualBasic.Left(DateTime.UtcNow.Subtract(startExec).ToString, 11) & vbCrLf & txLogs.Text
+		txLogs.Text = "~ Entries: " & GeneratedCount & vbCrLf & txLogs.Text
 
 		Erase SourceL
 		Erase WhiteL

@@ -35,6 +35,7 @@ Partial Class HostsSettings
 		Me.chUseCache = New System.Windows.Forms.CheckBox()
 		Me.txLoopbacks = New System.Windows.Forms.TextBox()
 		Me.lbVersion = New System.Windows.Forms.Label()
+		Me.lbParameters = New System.Windows.Forms.Label()
 		CType(Me.numDomainPerLine, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
@@ -230,7 +231,7 @@ Partial Class HostsSettings
 		Me.lbVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.lbVersion.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.lbVersion.ForeColor = System.Drawing.Color.Black
-		Me.lbVersion.Location = New System.Drawing.Point(1, 327)
+		Me.lbVersion.Location = New System.Drawing.Point(1, 343)
 		Me.lbVersion.Margin = New System.Windows.Forms.Padding(1)
 		Me.lbVersion.Name = "lbVersion"
 		Me.lbVersion.Size = New System.Drawing.Size(206, 17)
@@ -238,12 +239,29 @@ Partial Class HostsSettings
 		Me.lbVersion.Text = "<build date>"
 		Me.lbVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		'
+		'lbParameters
+		'
+		Me.lbParameters.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+			Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.lbParameters.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+		Me.lbParameters.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.lbParameters.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.lbParameters.ForeColor = System.Drawing.Color.Blue
+		Me.lbParameters.Location = New System.Drawing.Point(1, 327)
+		Me.lbParameters.Margin = New System.Windows.Forms.Padding(1)
+		Me.lbParameters.Name = "lbParameters"
+		Me.lbParameters.Size = New System.Drawing.Size(206, 17)
+		Me.lbParameters.TabIndex = 37
+		Me.lbParameters.Text = "Supported Parameters"
+		Me.lbParameters.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+		'
 		'HostsSettings
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
-		Me.ClientSize = New System.Drawing.Size(208, 345)
+		Me.ClientSize = New System.Drawing.Size(208, 361)
+		Me.Controls.Add(Me.lbParameters)
 		Me.Controls.Add(Me.lbVersion)
 		Me.Controls.Add(Me.LbStatus)
 		Me.Controls.Add(Me.Label1)
@@ -286,4 +304,5 @@ Partial Class HostsSettings
 	Friend WithEvents chUseCache As System.Windows.Forms.CheckBox
 	Friend WithEvents txLoopbacks As System.Windows.Forms.TextBox
 	Friend WithEvents lbVersion As System.Windows.Forms.Label
+	Friend WithEvents lbParameters As System.Windows.Forms.Label
 End Class

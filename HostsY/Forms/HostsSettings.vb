@@ -71,4 +71,26 @@
 		End If
 	End Sub
 
+	Private Sub lbParameters_Click(sender As Object, e As EventArgs) Handles lbParameters.Click
+		MessageBox.Show("Required:" & vbCrLf _
+						& "-auto" & vbCrLf _
+						& "> Initializes Auto Generate State" & vbCrLf _
+						& "> Directly replaces the hosts file in C:\Windows\System32\drivers\etc" & vbCrLf _
+						& "> Requires a ""Data"" folder beside the app" & vbCrLf _
+						& ">> Required: source.txt for the host sources" & vbCrLf _
+						& ">> Optional: black.txt for domain blacklist" & vbCrLf _
+						& ">> Optional: white.txt for domain whitelist" & vbCrLf _
+						& ">> Optional: loopback.txt for domain loopbacks" & vbCrLf & vbCrLf _
+						& "Optional:" & vbCrLf _
+						& "-sort" & vbCrLf _
+						& "> Sorts the Domains (ascending; source-wise)" & vbCrLf _
+						& "-tab" & vbCrLf _
+						& "> Uses tab instead of spaces between Target IP and Domain Name" & vbCrLf _
+						& "-logs" & vbCrLf _
+						& "> Generate generation logs; auto-generates a logs.txt inside the Data folder" & vbCrLf _
+						& "-dpl<n>" & vbCrLf _
+						& "> Indicates that it will generate <2~9> number of domains per line (e.g. -dpl4) to reduce the file size" & vbCrLf _
+						& "-zip" & vbCrLf _
+						& "> Generates a zipped hosts file inside the Data folder", "Parameters", MessageBoxButtons.OK, MessageBoxIcon.Information)
+	End Sub
 End Class

@@ -22,6 +22,7 @@ Partial Class HostsMain
 	'Do not modify it using the code editor.
 	<System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
+		Me.components = New System.ComponentModel.Container()
 		Me.LbSource = New System.Windows.Forms.Label()
 		Me.bgGenerate = New System.ComponentModel.BackgroundWorker()
 		Me.fdBrowse = New System.Windows.Forms.FolderBrowserDialog()
@@ -35,6 +36,7 @@ Partial Class HostsMain
 		Me.txLogs = New System.Windows.Forms.TextBox()
 		Me.LbGenerate = New System.Windows.Forms.Label()
 		Me.LbPreview = New System.Windows.Forms.Label()
+		Me.tipper = New System.Windows.Forms.ToolTip(Me.components)
 		Me.SuspendLayout()
 		'
 		'LbSource
@@ -157,6 +159,8 @@ Partial Class HostsMain
 		Me.LbSave.TabIndex = 12
 		Me.LbSave.Text = "..."
 		Me.LbSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+		Me.tipper.SetToolTip(Me.LbSave, "Left-click: Save to specified location" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Right-click: Replace active system hosts " & _
+		"file" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Middle-click: Save to specified location (zipped)")
 		'
 		'txLogs
 		'
@@ -168,11 +172,11 @@ Partial Class HostsMain
 		Me.txLogs.ForeColor = System.Drawing.Color.Black
 		Me.txLogs.Location = New System.Drawing.Point(196, 25)
 		Me.txLogs.Margin = New System.Windows.Forms.Padding(0)
-		Me.txLogs.MaxLength = 2147483647
 		Me.txLogs.Multiline = True
 		Me.txLogs.Name = "txLogs"
 		Me.txLogs.ReadOnly = True
 		Me.txLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+		Me.txLogs.ShortcutsEnabled = False
 		Me.txLogs.Size = New System.Drawing.Size(337, 396)
 		Me.txLogs.TabIndex = 5
 		Me.txLogs.TabStop = False
@@ -210,7 +214,17 @@ Partial Class HostsMain
 		Me.LbPreview.TabIndex = 14
 		Me.LbPreview.Text = "Preview"
 		Me.LbPreview.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+		Me.tipper.SetToolTip(Me.LbPreview, "Show a preview of the generated hosts file (7777 characters)")
 		Me.LbPreview.Visible = False
+		'
+		'tipper
+		'
+		Me.tipper.BackColor = System.Drawing.Color.White
+		Me.tipper.ForeColor = System.Drawing.Color.Black
+		Me.tipper.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info
+		Me.tipper.ToolTipTitle = "HostsY"
+		Me.tipper.UseAnimation = False
+		Me.tipper.UseFading = False
 		'
 		'HostsMain
 		'
@@ -257,4 +271,5 @@ Partial Class HostsMain
 	Private WithEvents txLogs As System.Windows.Forms.TextBox
 	Friend WithEvents LbGenerate As System.Windows.Forms.Label
 	Friend WithEvents LbPreview As System.Windows.Forms.Label
+	Friend WithEvents tipper As System.Windows.Forms.ToolTip
 End Class
