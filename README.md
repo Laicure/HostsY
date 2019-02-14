@@ -49,7 +49,7 @@ Optional:
 * \-dpl<n>
 	* Indicates that it will generate <2~9> number of domains per line (e.g. -dpl4) to reduce the file size
 * \-zip
-	* Generates a zipped hosts file inside the Data folder
+	* Generates a zipped hosts file inside the **Data** folder
 	
 ### _DNS Client_ service (on Windows) must be [disabled](http://support.simpledns.com/kb/a61/disabling-the-windows-dns-client-service.aspx) if using one of the hosts file below!
 
