@@ -93,4 +93,5 @@
 						& "-zip" & vbCrLf _
 						& "> Generates a zipped hosts file inside the Data folder", "Parameters", MessageBoxButtons.OK, MessageBoxIcon.Information)
 	End Sub
+
 End Class
