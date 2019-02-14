@@ -7,6 +7,7 @@
 		chSort.Checked = SetSort
 		chTabs.Checked = SetTabs
 		chUseCache.Checked = SetUseCache
+		chAdblock.Checked = SetAdblock
 		chParseErrors.Checked = SetParseErrors
 		numDomainPerLine.Value = SetDomainPerLine
 		txLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
@@ -20,6 +21,7 @@
 		SetTabs = chTabs.Checked
 		SetParseErrors = chParseErrors.Checked
 		SetUseCache = chUseCache.Checked
+		SetAdblock = chAdblock.Checked
 		SetDomainPerLine = CInt(numDomainPerLine.Value)
 		If Not String.IsNullOrWhiteSpace(txLoopbacks.Text) Then
 			SetLoopBlacks = txLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray

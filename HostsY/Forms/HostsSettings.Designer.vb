@@ -36,6 +36,7 @@ Partial Class HostsSettings
 		Me.txLoopbacks = New System.Windows.Forms.TextBox()
 		Me.lbVersion = New System.Windows.Forms.Label()
 		Me.lbParameters = New System.Windows.Forms.Label()
+		Me.chAdblock = New System.Windows.Forms.CheckBox()
 		CType(Me.numDomainPerLine, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
@@ -119,7 +120,7 @@ Partial Class HostsSettings
 		Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.Label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.Label1.ForeColor = System.Drawing.Color.Black
-		Me.Label1.Location = New System.Drawing.Point(1, 140)
+		Me.Label1.Location = New System.Drawing.Point(1, 157)
 		Me.Label1.Margin = New System.Windows.Forms.Padding(1)
 		Me.Label1.Name = "Label1"
 		Me.Label1.Size = New System.Drawing.Size(206, 17)
@@ -135,7 +136,7 @@ Partial Class HostsSettings
 		Me.LbStatus.Cursor = System.Windows.Forms.Cursors.Hand
 		Me.LbStatus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.LbStatus.ForeColor = System.Drawing.Color.Blue
-		Me.LbStatus.Location = New System.Drawing.Point(1, 303)
+		Me.LbStatus.Location = New System.Drawing.Point(1, 320)
 		Me.LbStatus.Margin = New System.Windows.Forms.Padding(1)
 		Me.LbStatus.Name = "LbStatus"
 		Me.LbStatus.Size = New System.Drawing.Size(206, 25)
@@ -211,7 +212,7 @@ Partial Class HostsSettings
 		Me.txLoopbacks.BackColor = System.Drawing.Color.White
 		Me.txLoopbacks.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.txLoopbacks.ForeColor = System.Drawing.Color.Black
-		Me.txLoopbacks.Location = New System.Drawing.Point(1, 156)
+		Me.txLoopbacks.Location = New System.Drawing.Point(1, 173)
 		Me.txLoopbacks.Margin = New System.Windows.Forms.Padding(0)
 		Me.txLoopbacks.MaxLength = 2147483647
 		Me.txLoopbacks.Multiline = True
@@ -231,7 +232,7 @@ Partial Class HostsSettings
 		Me.lbVersion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.lbVersion.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
 		Me.lbVersion.ForeColor = System.Drawing.Color.Black
-		Me.lbVersion.Location = New System.Drawing.Point(1, 343)
+		Me.lbVersion.Location = New System.Drawing.Point(1, 360)
 		Me.lbVersion.Margin = New System.Windows.Forms.Padding(1)
 		Me.lbVersion.Name = "lbVersion"
 		Me.lbVersion.Size = New System.Drawing.Size(206, 17)
@@ -247,7 +248,7 @@ Partial Class HostsSettings
 		Me.lbParameters.Cursor = System.Windows.Forms.Cursors.Hand
 		Me.lbParameters.FlatStyle = System.Windows.Forms.FlatStyle.Flat
 		Me.lbParameters.ForeColor = System.Drawing.Color.Blue
-		Me.lbParameters.Location = New System.Drawing.Point(1, 327)
+		Me.lbParameters.Location = New System.Drawing.Point(1, 344)
 		Me.lbParameters.Margin = New System.Windows.Forms.Padding(1)
 		Me.lbParameters.Name = "lbParameters"
 		Me.lbParameters.Size = New System.Drawing.Size(206, 17)
@@ -255,12 +256,27 @@ Partial Class HostsSettings
 		Me.lbParameters.Text = "Supported Parameters"
 		Me.lbParameters.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		'
+		'chAdblock
+		'
+		Me.chAdblock.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.chAdblock.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.chAdblock.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.chAdblock.Location = New System.Drawing.Point(1, 140)
+		Me.chAdblock.Margin = New System.Windows.Forms.Padding(1, 0, 0, 0)
+		Me.chAdblock.Name = "chAdblock"
+		Me.chAdblock.Size = New System.Drawing.Size(206, 17)
+		Me.chAdblock.TabIndex = 38
+		Me.chAdblock.TabStop = False
+		Me.chAdblock.Text = "Generate AdBlock format"
+		Me.chAdblock.UseVisualStyleBackColor = True
+		'
 		'HostsSettings
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
-		Me.ClientSize = New System.Drawing.Size(208, 361)
+		Me.ClientSize = New System.Drawing.Size(208, 378)
+		Me.Controls.Add(Me.chAdblock)
 		Me.Controls.Add(Me.lbParameters)
 		Me.Controls.Add(Me.lbVersion)
 		Me.Controls.Add(Me.LbStatus)
@@ -305,4 +321,5 @@ Partial Class HostsSettings
 	Friend WithEvents txLoopbacks As System.Windows.Forms.TextBox
 	Friend WithEvents lbVersion As System.Windows.Forms.Label
 	Friend WithEvents lbParameters As System.Windows.Forms.Label
+	Friend WithEvents chAdblock As System.Windows.Forms.CheckBox
 End Class
