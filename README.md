@@ -9,8 +9,8 @@ Required:
 * \-auto
 	* Initializes Auto Generate State
 	* Directly replaces the hosts file in **C:\\Windows\\System32\\drivers\\etc**
-	* Requires Data folder beside the app
-		* Must have the **source.txt** that contains the _host sources_
+	* Requires a **Data** folder beside the app
+		* Required: **source.txt** for the _host sources_
 		* Optional: **black.txt** for domain _blacklist_
 		* Optional: **white.txt** for domain _whitelist_
 		* Optional: **loopback.txt** for domain _loopbacks_
@@ -45,11 +45,11 @@ Optional:
 * \-tab
 	* Uses tab instead of spaces between Target IP and Domain Name
 * \-logs
-	* Generate generation logs; auto-generates a logs.txt file
+	* Generate generation logs; auto-generates a logs.txt inside the **Data** folder
 * \-dpl<n>
-	* indicates that it will generate <2 to 9> number of domains per line (e.g. -dpl4) to reduce the file size
+	* Indicates that it will generate <2~9> number of domains per line (e.g. -dpl4) to reduce the file size
 * \-zip
-	* Generates a zipped hosts file inside the Data folder
+	* Generates a zipped hosts file inside the **Data** folder
 	
 ### _DNS Client_ service (on Windows) must be [disabled](http://support.simpledns.com/kb/a61/disabling-the-windows-dns-client-service.aspx) if using one of the hosts file below!
 
