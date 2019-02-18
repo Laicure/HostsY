@@ -676,7 +676,7 @@ Public Class HostsMain
 	End Sub
 
 	Private Sub LbPreview_Click(sender As Object, e As EventArgs) Handles LbPreview.Click
-		If Not HostsPreview.Visible Then HostsPreview.Show(Me)
+		If Not HostsPreview.Visible Then HostsPreview.ShowDialog(Me)
 	End Sub
 
 	Private Sub HostsMain_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
