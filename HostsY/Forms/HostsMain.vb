@@ -61,7 +61,7 @@ Public Class HostsMain
 
 		startExec = DateTime.UtcNow
 		'Init Logging
-		Dim Logg As String = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
+		Dim Logg As String = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
 		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & Logg
 
 		'Validate Sources
@@ -240,7 +240,7 @@ Public Class HostsMain
 
 		With FinalList
 			.Add("# Entries: " & GeneratedCount)
-			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
+			.Add("# As of " & DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using dev.azure.com/Laicure/OpenSource/_git/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
@@ -267,9 +267,9 @@ Public Class HostsMain
 			My.Computer.FileSystem.WriteAllText("C:\Windows\System32\drivers\etc\hosts", String.Join(vbCrLf, FinalList), False)
 			'final Logs
 			Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo("C:\Windows\System32\drivers\etc\hosts").Length)
-			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & "C:\Windows\System32\drivers\etc\hosts" & " (" & sizee & ")" & vbCrLf & Logg
+			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & "C:\Windows\System32\drivers\etc\hosts" & " (" & sizee & ")" & vbCrLf & Logg
 		Catch ex As Exception
-			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
+			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
 		End Try
 
 		'-zip?
@@ -284,15 +284,15 @@ Public Class HostsMain
 				IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
 
 				Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
-				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & dataSource & " (" & sizee & ")" & vbCrLf & Logg
+				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & dataSource & " (" & sizee & ")" & vbCrLf & Logg
 			Catch ex As Exception
-				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
+				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
 			End Try
 		End If
 
 		If errCount > 0 Then Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & Logg
 
-		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & Logg
+		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & Logg
 		Logg = "~ Entries: " & GeneratedCount & vbCrLf & Logg
 
 		If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
@@ -357,7 +357,7 @@ Public Class HostsMain
 
 		txLogs.Invoke(DirectCast(
 					   Sub()
-						   txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
+						   txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
 						   txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & txLogs.Text
 					   End Sub, MethodInvoker))
 		'Download and Validate Source List
@@ -612,7 +612,7 @@ Public Class HostsMain
 
 		With FinalList
 			.Add("# Entries: " & GeneratedCount)
-			.Add("# As of " & DateTime.UtcNow.ToString("MM/dd/yyyy HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
+			.Add("# As of " & DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using dev.azure.com/Laicure/OpenSource/_git/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
@@ -654,7 +654,7 @@ Public Class HostsMain
 
 		LbGenerate.Text = "Generate Hosts File"
 		If e.Cancelled Then
-			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Cancelled!" & vbCrLf & txLogs.Text
+			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Cancelled!" & vbCrLf & txLogs.Text
 		Else
 			If String.IsNullOrEmpty(Generated) Then
 				MessageBox.Show("No valid source to parse!", "Nothing!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
@@ -664,7 +664,7 @@ Public Class HostsMain
 				LbSave.Cursor = Cursors.Hand
 				LbSave.Text = "> Save"
 			End If
-			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & txLogs.Text
+			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & txLogs.Text
 		End If
 
 		txLogs.Text = "~ Took " & Microsoft.VisualBasic.Left(DateTime.UtcNow.Subtract(startExec).ToString, 11) & vbCrLf & txLogs.Text
@@ -694,14 +694,14 @@ Public Class HostsMain
 						My.Computer.FileSystem.WriteAllText(selPathhosts, Generated, False, System.Text.Encoding.Default)
 						succ = True
 					Catch ex As Exception
-						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
+						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
 					End Try
 
 					If succ Then
 						If My.Computer.FileSystem.FileExists(selPathhosts) Then
 							Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
 							LbSave.Text = "> Save [" & sizee & "]"
-							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
+							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
 							'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 							Process.Start("explorer", "/select, " & selPathhosts)
 						End If
@@ -718,14 +718,14 @@ Public Class HostsMain
 					My.Computer.FileSystem.WriteAllText(syshostsPath, Generated, False, System.Text.Encoding.Default)
 					succ = True
 				Catch ex As Exception
-					txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
+					txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
 				End Try
 
 				If succ Then
 					If My.Computer.FileSystem.FileExists(syshostsPath) Then
 						Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(syshostsPath).Length)
 						LbSave.Text = "> Save [" & sizee & "]"
-						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & txLogs.Text
+						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & txLogs.Text
 
 						'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 						If My.Computer.FileSystem.FileExists(syshostsPath) Then Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
@@ -744,14 +744,14 @@ Public Class HostsMain
 						IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
 						succ = True
 					Catch ex As Exception
-						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
+						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
 					End Try
 
 					If succ Then
 						If My.Computer.FileSystem.FileExists(selPathhosts) Then
 							Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
 							LbSave.Text = "> Save [" & sizee & "]"
-							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
+							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
 							'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 							Process.Start("explorer", "/select, " & selPathhosts)
 						End If
@@ -799,12 +799,12 @@ Public Class HostsMain
 					My.Computer.FileSystem.WriteAllText(selPathhosts, genAdblock, False, System.Text.Encoding.Default)
 					succ = True
 				Catch ex As Exception
-					txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
+					txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
 				End Try
 
 				If succ Then
 					If My.Computer.FileSystem.FileExists(selPathhosts) Then
-						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & vbCrLf & txLogs.Text
+						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & vbCrLf & txLogs.Text
 						'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 						Process.Start("explorer", "/select, " & selPathhosts)
 					End If
