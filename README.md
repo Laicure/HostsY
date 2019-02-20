@@ -51,20 +51,5 @@ Optional:
 * \-zip
 	* Generates a zipped hosts file inside the **Data** folder
 	
-### _DNS Client_ service (on Windows) must be [disabled](http://support.simpledns.com/kb/a61/disabling-the-windows-dns-client-service.aspx) if using one of the hosts file below!
-
-
-##### Frequent/Weekly Updated Generated [custom](https://github.com/Laicure/HostsY_hosts/blob/master/README.md) host file _with whitelist_; mostly for my personal usage:
-```
-https://bitbucket.org/Laicure/publicview/downloads/hosts
-```
-##### Frequent/Weekly Updated Generated hosts file from [StevenBlack/hosts' main sources](https://github.com/StevenBlack/hosts/tree/master/data) _with no whitelist_:
-```
-https://bitbucket.org/Laicure/publicview/downloads/hosts2
-```
-##### Frequent/Weekly Updated Generated hosts file from [hpHosts](https://hosts-file.net/?s=Download) (Individual Classifications merged) _with no whitelist_:
-```
-https://bitbucket.org/Laicure/publicview/downloads/hosts3
-```
-###### Other sources can be found from AdAway's [wiki](https://github.com/AdAway/AdAway/wiki/HostsSources)
+###### Check [HostY_host](https://github.com/Laicure/HostsY_hosts) for the generated files
 
