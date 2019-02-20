@@ -37,6 +37,7 @@ Partial Class HostsSettings
 		Me.lbVersion = New System.Windows.Forms.Label()
 		Me.lbParameters = New System.Windows.Forms.Label()
 		Me.chAdblock = New System.Windows.Forms.CheckBox()
+		Me.chAdblock3rd = New System.Windows.Forms.CheckBox()
 		CType(Me.numDomainPerLine, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
@@ -264,11 +265,26 @@ Partial Class HostsSettings
 		Me.chAdblock.Location = New System.Drawing.Point(1, 140)
 		Me.chAdblock.Margin = New System.Windows.Forms.Padding(1, 0, 0, 0)
 		Me.chAdblock.Name = "chAdblock"
-		Me.chAdblock.Size = New System.Drawing.Size(206, 17)
+		Me.chAdblock.Size = New System.Drawing.Size(103, 17)
 		Me.chAdblock.TabIndex = 38
 		Me.chAdblock.TabStop = False
-		Me.chAdblock.Text = "Generate AdBlock format"
+		Me.chAdblock.Text = "AdBlock format"
 		Me.chAdblock.UseVisualStyleBackColor = True
+		'
+		'chAdblock3rd
+		'
+		Me.chAdblock3rd.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+		Me.chAdblock3rd.Cursor = System.Windows.Forms.Cursors.Hand
+		Me.chAdblock3rd.Enabled = False
+		Me.chAdblock3rd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+		Me.chAdblock3rd.Location = New System.Drawing.Point(103, 140)
+		Me.chAdblock3rd.Margin = New System.Windows.Forms.Padding(1, 0, 0, 0)
+		Me.chAdblock3rd.Name = "chAdblock3rd"
+		Me.chAdblock3rd.Size = New System.Drawing.Size(104, 17)
+		Me.chAdblock3rd.TabIndex = 39
+		Me.chAdblock3rd.TabStop = False
+		Me.chAdblock3rd.Text = "as Third-Party"
+		Me.chAdblock3rd.UseVisualStyleBackColor = True
 		'
 		'HostsSettings
 		'
@@ -276,6 +292,7 @@ Partial Class HostsSettings
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
 		Me.ClientSize = New System.Drawing.Size(208, 378)
+		Me.Controls.Add(Me.chAdblock3rd)
 		Me.Controls.Add(Me.chAdblock)
 		Me.Controls.Add(Me.lbParameters)
 		Me.Controls.Add(Me.lbVersion)
@@ -322,4 +339,5 @@ Partial Class HostsSettings
 	Friend WithEvents lbVersion As System.Windows.Forms.Label
 	Friend WithEvents lbParameters As System.Windows.Forms.Label
 	Friend WithEvents chAdblock As System.Windows.Forms.CheckBox
+	Friend WithEvents chAdblock3rd As CheckBox
 End Class

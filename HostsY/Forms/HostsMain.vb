@@ -7,7 +7,7 @@ Public Class HostsMain
 	Dim Loopbacks As String = ""
 	Dim startExec As DateTime = DateTime.UtcNow
 	Dim errCount As Long = 0
-	Friend sourceCacheList As New List(Of sourceCache)
+	Friend sourceCacheList As New List(Of SourceCache)
 
 	Friend Generated As String = ""
 	Dim GeneratedCount As String = ""
@@ -495,7 +495,7 @@ Public Class HostsMain
 
 					'save to cache
 					If sourceCacheList.Any(Function(x) x.URL = arstring) Then sourceCacheList.RemoveAll(Function(x) x.URL = arstring)
-					sourceCacheList.Add(New sourceCache With {.URL = arstring, .Domains = String.Join(vbCrLf, SourceHash)})
+					sourceCacheList.Add(New SourceCache With {.URL = arstring, .Domains = String.Join(vbCrLf, SourceHash)})
 
 					'show count
 					totalDoms += SourceHash.LongCount
@@ -594,7 +594,7 @@ Public Class HostsMain
 				UniHash.Add(TargetIP & tabSpace & arrtem)
 
 				'adblock
-				If SetAdblock Then GeneratedAdblock.Add("||" & Regex.Replace(arrtem, "^www\.", "") & "^")
+				If SetAdblock Then GeneratedAdblock.Add("||" & Regex.Replace(arrtem, "^www\.", "") & "^" & IIf(SetAdblock3rd, "$third-party", "").ToString)
 			Next
 		End If
 		Erase arrTemp
@@ -765,28 +765,28 @@ Public Class HostsMain
 		HostsSettings.ShowDialog(Me)
 	End Sub
 
-	Private Sub txSources_KeyDown(sender As Object, e As KeyEventArgs) Handles txSources.KeyDown
+	Private Sub TxSources_KeyDown(sender As Object, e As KeyEventArgs) Handles txSources.KeyDown
 		If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.A Then
 			e.SuppressKeyPress = True
 			txSources.SelectAll()
 		End If
 	End Sub
 
-	Private Sub txWhites_KeyDown(sender As Object, e As KeyEventArgs) Handles txWhites.KeyDown
+	Private Sub TxWhites_KeyDown(sender As Object, e As KeyEventArgs) Handles txWhites.KeyDown
 		If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.A Then
 			e.SuppressKeyPress = True
 			txWhites.SelectAll()
 		End If
 	End Sub
 
-	Private Sub txBlacks_KeyDown(sender As Object, e As KeyEventArgs) Handles txBlacks.KeyDown
+	Private Sub TxBlacks_KeyDown(sender As Object, e As KeyEventArgs) Handles txBlacks.KeyDown
 		If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.A Then
 			e.SuppressKeyPress = True
 			txBlacks.SelectAll()
 		End If
 	End Sub
 
-	Private Sub lbAdblocked_Click(sender As Object, e As EventArgs) Handles lbAdblocked.Click
+	Private Sub LbAdblocked_Click(sender As Object, e As EventArgs) Handles lbAdblocked.Click
 		If GeneratedAdblock.Count > 0 Then
 			Dim genAdblock As String = "[Adblock Plus 1.3]" & vbCrLf _
 									   & "! Entries: " & GeneratedAdblock.Count.ToString("#,0") & vbCrLf _
@@ -817,7 +817,7 @@ Public Class HostsMain
 
 End Class
 
-Friend Class sourceCache
+Friend Class SourceCache
 	Friend Property URL As String
 	Friend Property Domains As String
 End Class

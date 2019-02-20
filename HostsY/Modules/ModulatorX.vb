@@ -8,6 +8,7 @@
 	Friend SetParseErrors As Boolean = True
 	Friend SetUseCache As Boolean = True
 	Friend SetAdblock As Boolean = False
+	Friend SetAdblock3rd As Boolean = False
 	Friend SetDomainPerLine As Integer = 1
 	Friend SetLoopBlacks() As String = {"0.0.0.0", "broadcasthost", "ip6-allhosts", "ip6-allnodes", "ip6-allrouters", "ip6-localhost", "ip6-localnet", "ip6-loopback", "ip6-mcastprefix", "local", "localhost", "localhost.localdomain"}
 

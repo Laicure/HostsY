@@ -8,6 +8,7 @@
 		chTabs.Checked = SetTabs
 		chUseCache.Checked = SetUseCache
 		chAdblock.Checked = SetAdblock
+		chAdblock3rd.Checked = SetAdblock3rd
 		chParseErrors.Checked = SetParseErrors
 		numDomainPerLine.Value = SetDomainPerLine
 		txLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
@@ -22,6 +23,7 @@
 		SetParseErrors = chParseErrors.Checked
 		SetUseCache = chUseCache.Checked
 		SetAdblock = chAdblock.Checked
+		SetAdblock3rd = chAdblock3rd.Checked
 		SetDomainPerLine = CInt(numDomainPerLine.Value)
 		If Not String.IsNullOrWhiteSpace(txLoopbacks.Text) Then
 			SetLoopBlacks = txLoopbacks.Lines.Distinct.Where(Function(x) Not String.IsNullOrWhiteSpace(x)).ToArray
@@ -94,6 +96,10 @@
 						& "> Indicates that it will generate <2~9> number of domains per line (e.g. -dpl4) to reduce the file size" & vbCrLf _
 						& "-zip" & vbCrLf _
 						& "> Generates a zipped hosts file inside the Data folder", "Parameters", MessageBoxButtons.OK, MessageBoxIcon.Information)
+	End Sub
+
+	Private Sub chAdblock_CheckedChanged(sender As Object, e As EventArgs) Handles chAdblock.CheckedChanged
+		chAdblock3rd.Enabled = chAdblock.Checked
 	End Sub
 
 End Class
