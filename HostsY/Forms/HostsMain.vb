@@ -241,7 +241,7 @@ Public Class HostsMain
 		With FinalList
 			.Add("# Entries: " & GeneratedCount)
 			.Add("# As of " & DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
-			.Add("# Generated using dev.azure.com/Laicure/OpenSource/_git/HostsY")
+			.Add("# Generated using github.com/Laicure/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
 			.AddRange(SourceList.Select(Function(x) "# " & x))
@@ -613,7 +613,7 @@ Public Class HostsMain
 		With FinalList
 			.Add("# Entries: " & GeneratedCount)
 			.Add("# As of " & DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
-			.Add("# Generated using dev.azure.com/Laicure/OpenSource/_git/HostsY")
+			.Add("# Generated using github.com/Laicure/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
 			.AddRange(SourceList.Select(Function(x) "# " & x))
@@ -790,7 +790,7 @@ Public Class HostsMain
 		If GeneratedAdblock.Count > 0 Then
 			Dim genAdblock As String = "[Adblock Plus 1.3]" & vbCrLf _
 									   & "! Entries: " & GeneratedAdblock.Count.ToString("#,0") & vbCrLf _
-									   & "! Generated using dev.azure.com/Laicure/OpenSource/_git/HostsY" & vbCrLf & vbCrLf _
+									   & "! Generated using github.com/Laicure/HostsY" & vbCrLf & vbCrLf _
 									   & String.Join(vbCrLf, GeneratedAdblock)
 			If fdBrowse.ShowDialog = System.Windows.Forms.DialogResult.OK Then
 				Dim selPathhosts As String = fdBrowse.SelectedPath & "\adblock_hosts.txt"

@@ -110,7 +110,7 @@ Partial Class HostsSettings
 		Me.LbAbout.Name = "LbAbout"
 		Me.LbAbout.Size = New System.Drawing.Size(206, 17)
 		Me.LbAbout.TabIndex = 25
-		Me.LbAbout.Text = "Azure DevOps"
+		Me.LbAbout.Text = "Github"
 		Me.LbAbout.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		'
 		'Label1

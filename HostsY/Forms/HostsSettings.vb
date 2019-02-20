@@ -31,7 +31,7 @@
 	End Sub
 
 	Private Sub LbAbout_Click(sender As Object, e As EventArgs) Handles LbAbout.Click
-		Process.Start("https://dev.azure.com/Laicure/OpenSource/_git/HostsY")
+		Process.Start("https://github.com/Laicure/HostsY")
 	End Sub
 
 	Private Sub TxtTargetIP_Leave(sender As Object, e As EventArgs) Handles txtTargetIP.Leave
