@@ -1,4 +1,6 @@
 # HostsY
+[![Github All Releases](https://img.shields.io/github/downloads/Laicure/HostsY/total.svg)]()
+
 Simple hosts file compiler for Windows.
 _Inspired by [Steven Black](https://github.com/StevenBlack)'s [hosts repository](https://github.com/StevenBlack/hosts)._
 
