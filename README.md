@@ -3,7 +3,6 @@
 <a href="https://github.com/Laicure/HostsY/commits/master"><img src="https://img.shields.io/github/last-commit/Laicure/HostsY.svg"></img></a>
 <a href="https://github.com/Laicure/HostsY"><img src="https://img.shields.io/github/repo-size/Laicure/HostsY.svg"></img></a>
 <a href="https://github.com/Laicure/HostsY/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Laicure/HostsY.svg"></img></a>
-<a href="https://github.com/Laicure/HostsY"><img src="https://img.shields.io/github/commit-activity/m/Laicure/HostsY.svg"></img></a>
 
 Simple hosts file compiler for Windows.
 _Inspired by [Steven Black](https://github.com/StevenBlack)'s [hosts repository](https://github.com/StevenBlack/hosts)._
