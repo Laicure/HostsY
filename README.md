@@ -8,7 +8,7 @@ Simple hosts file compiler for Windows.
 _Inspired by [Steven Black](https://github.com/StevenBlack)'s [hosts repository](https://github.com/StevenBlack/hosts)._
 
 ###### Minimum Requirement: [.NET v4.5.2](https://www.microsoft.com/en/download/details.aspx?id=42642)
-
+---------
 #### Auto Parameters (requires admin privileges):
 Required:
 * \-auto
@@ -44,6 +44,7 @@ localhost
 localhost.localdomain
 
 ```
+---------
 Optional:
 * \-sort
 	* Sorts the Domains (ascending; source-wise)
@@ -55,6 +56,6 @@ Optional:
 	* Indicates that it will generate <2~9> number of domains per line (e.g. -dpl4) to reduce the file size
 * \-zip
 	* Generates a zipped hosts file inside the **Data** folder
-	
+---------
 ###### Check [HostY_host](https://github.com/Laicure/HostsY_hosts) for the generated files
 
