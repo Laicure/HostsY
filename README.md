@@ -7,7 +7,7 @@
 Simple hosts file compiler for Windows.
 _Inspired by [Steven Black](https://github.com/StevenBlack)'s [hosts repository](https://github.com/StevenBlack/hosts)._
 
-###### Minimum Requirement: [.NET v4.5.2](https://www.microsoft.com/en/download/details.aspx?id=42642)
+###### Minimum Requirement: [.NET v4.5](https://www.microsoft.com/en/download/details.aspx?id=30653)
 ---------
 #### Auto Parameters (requires admin privileges):
 Required:
