@@ -1,4 +1,4 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class HostsMain
 	Inherits System.Windows.Forms.Form
 
@@ -37,7 +37,6 @@ Partial Class HostsMain
 		Me.LbGenerate = New System.Windows.Forms.Label()
 		Me.LbPreview = New System.Windows.Forms.Label()
 		Me.tipper = New System.Windows.Forms.ToolTip(Me.components)
-		Me.lbAdblocked = New System.Windows.Forms.Label()
 		Me.SuspendLayout()
 		'
 		'LbSource
@@ -160,7 +159,7 @@ Partial Class HostsMain
 		Me.LbSave.TabIndex = 12
 		Me.LbSave.Text = "..."
 		Me.LbSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-		Me.tipper.SetToolTip(Me.LbSave, "Left-click: Save to specified location" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Right-click: Replace active system hosts " & _
+		Me.tipper.SetToolTip(Me.LbSave, "Left-click: Save to specified location" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Right-click: Replace active system hosts " &
 		"file" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Middle-click: Save to specified location (zipped)")
 		'
 		'txLogs
@@ -227,31 +226,12 @@ Partial Class HostsMain
 		Me.tipper.UseAnimation = False
 		Me.tipper.UseFading = False
 		'
-		'lbAdblocked
-		'
-		Me.lbAdblocked.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-		Me.lbAdblocked.AutoEllipsis = True
-		Me.lbAdblocked.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-		Me.lbAdblocked.Cursor = System.Windows.Forms.Cursors.Hand
-		Me.lbAdblocked.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-		Me.lbAdblocked.ForeColor = System.Drawing.Color.Green
-		Me.lbAdblocked.Location = New System.Drawing.Point(245, 420)
-		Me.lbAdblocked.Margin = New System.Windows.Forms.Padding(0)
-		Me.lbAdblocked.Name = "lbAdblocked"
-		Me.lbAdblocked.Size = New System.Drawing.Size(75, 15)
-		Me.lbAdblocked.TabIndex = 15
-		Me.lbAdblocked.Text = "AdBlocked"
-		Me.lbAdblocked.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-		Me.tipper.SetToolTip(Me.lbAdblocked, "Save an Adblock-syntaxed domain names")
-		Me.lbAdblocked.Visible = False
-		'
 		'HostsMain
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.BackColor = System.Drawing.Color.White
 		Me.ClientSize = New System.Drawing.Size(534, 436)
-		Me.Controls.Add(Me.lbAdblocked)
 		Me.Controls.Add(Me.LbPreview)
 		Me.Controls.Add(Me.LbGenerate)
 		Me.Controls.Add(Me.LbSave)
@@ -292,5 +272,4 @@ Partial Class HostsMain
 	Friend WithEvents LbGenerate As System.Windows.Forms.Label
 	Friend WithEvents LbPreview As System.Windows.Forms.Label
 	Friend WithEvents tipper As System.Windows.Forms.ToolTip
-	Friend WithEvents lbAdblocked As System.Windows.Forms.Label
 End Class

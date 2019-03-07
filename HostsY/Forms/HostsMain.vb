@@ -12,8 +12,6 @@ Public Class HostsMain
 	Friend Generated As String = ""
 	Dim GeneratedCount As String = ""
 
-	Dim GeneratedAdblock As New HashSet(Of String)
-
 #Region "Auto"
 
 	Protected Overrides Sub SetVisibleCore(ByVal value As Boolean)
@@ -330,7 +328,6 @@ Public Class HostsMain
 		LbSave.Text = "..."
 
 		LbPreview.Visible = False
-		lbAdblocked.Visible = False
 		LbSettings.Enabled = False
 
 		'reset content
@@ -560,12 +557,6 @@ Public Class HostsMain
 		UniHash.Clear()
 		UniHash.TrimExcess()
 
-		'adblock
-		If GeneratedAdblock.Count > 1 Then
-			GeneratedAdblock.Clear()
-			GeneratedAdblock.TrimExcess()
-		End If
-
 		Dim arrTempCount As Integer = arrTemp.Count - 1
 		If SetDomainPerLine > 1 Then
 			Dim artemp As String = ""
@@ -592,9 +583,6 @@ Public Class HostsMain
 				Dim arrtem As String = arrTemp(i)
 
 				UniHash.Add(TargetIP & tabSpace & arrtem)
-
-				'adblock
-				If SetAdblock Then GeneratedAdblock.Add("||" & Regex.Replace(arrtem, "^www\.", "") & "^" & IIf(SetAdblock3rd, "$third-party", "").ToString)
 			Next
 		End If
 		Erase arrTemp
@@ -660,7 +648,6 @@ Public Class HostsMain
 				MessageBox.Show("No valid source to parse!", "Nothing!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 			Else
 				LbPreview.Visible = True
-				lbAdblocked.Visible = SetAdblock
 				LbSave.Cursor = Cursors.Hand
 				LbSave.Text = "> Save"
 			End If
@@ -783,35 +770,6 @@ Public Class HostsMain
 		If e.Modifiers = Keys.Control AndAlso e.KeyCode = Keys.A Then
 			e.SuppressKeyPress = True
 			txBlacks.SelectAll()
-		End If
-	End Sub
-
-	Private Sub LbAdblocked_Click(sender As Object, e As EventArgs) Handles lbAdblocked.Click
-		If GeneratedAdblock.Count > 0 Then
-			Dim genAdblock As String = "[Adblock Plus 1.3]" & vbCrLf _
-									   & "! Entries: " & GeneratedAdblock.Count.ToString("#,0") & vbCrLf _
-									   & "! Generated using github.com/Laicure/HostsY" & vbCrLf & vbCrLf _
-									   & String.Join(vbCrLf, GeneratedAdblock)
-			If fdBrowse.ShowDialog = System.Windows.Forms.DialogResult.OK Then
-				Dim selPathhosts As String = fdBrowse.SelectedPath & "\adblock_hosts.txt"
-				Dim succ As Boolean = False
-				Try
-					My.Computer.FileSystem.WriteAllText(selPathhosts, genAdblock, False, System.Text.Encoding.Default)
-					succ = True
-				Catch ex As Exception
-					txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
-				End Try
-
-				If succ Then
-					If My.Computer.FileSystem.FileExists(selPathhosts) Then
-						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & vbCrLf & txLogs.Text
-						'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
-						Process.Start("explorer", "/select, " & selPathhosts)
-					End If
-				End If
-			End If
-		Else
-			MessageBox.Show("Nothing to Export!" & vbCrLf & "Note: Multi-Domain per Line is not supported", "Nope, sorry. Nothing.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 		End If
 	End Sub
 
