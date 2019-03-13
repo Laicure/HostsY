@@ -69,6 +69,7 @@ Public Class HostsMain
 		'Exit if Source is empty
 		If SourceList.Count = 0 Then
 			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & Logg
+			If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
 			Environment.Exit(3)
 			Exit Sub
 		End If
@@ -169,6 +170,7 @@ Public Class HostsMain
 		'### if UniHash empty
 		If UniHash.LongCount = 0 Then
 			Logg = "Nothing to Generate!" & vbCrLf & Logg
+			If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
 			Environment.Exit(1)
 			Exit Sub
 		End If
@@ -199,6 +201,7 @@ Public Class HostsMain
 		'### Empty List check
 		If UniHash.LongCount = 0 Then
 			Logg = "Empty Parsed List!" & vbCrLf & Logg
+			If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
 			Environment.Exit(1)
 			Exit Sub
 		End If
@@ -295,7 +298,7 @@ Public Class HostsMain
 		If errCount > 0 Then Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & Logg
 
 		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & Logg
-		Logg = "~ Entries: " & GeneratedCount & vbCrLf & Logg
+		If Not GeneratedCount = "" Then Logg = "~ Entries: " & GeneratedCount & vbCrLf & Logg
 
 		If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
 
@@ -662,7 +665,7 @@ Public Class HostsMain
 			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Cancelled!" & vbCrLf & txLogs.Text
 		Else
 			If String.IsNullOrEmpty(Generated) Then
-				MessageBox.Show("No valid source to parse!", "Nothing!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+				MessageBox.Show("Nothing to generate!", "Nothing!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
 			Else
 				LbPreview.Visible = True
 				lbAdblocked.Visible = SetAdblock
@@ -673,7 +676,7 @@ Public Class HostsMain
 		End If
 
 		txLogs.Text = "~ Took " & Microsoft.VisualBasic.Left(DateTime.UtcNow.Subtract(startExec).ToString, 11) & vbCrLf & txLogs.Text
-		txLogs.Text = "~ Entries: " & GeneratedCount & vbCrLf & txLogs.Text
+		If Not GeneratedCount = "" Then txLogs.Text = "~ Entries: " & GeneratedCount & vbCrLf & txLogs.Text
 
 		Erase SourceL
 		Erase WhiteL
