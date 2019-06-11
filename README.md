@@ -1,5 +1,5 @@
 # HostsY
-<a href="https://github.com/Laicure/HostsY/releases/tag/Experimental"><img alt="GitHub Pre-Releases" src="https://img.shields.io/github/downloads-pre/laicure/hostsy/Experimental/total.svg"></a>
+<a href="https://github.com/Laicure/HostsY/releases/tag/Experimental"><img alt="GitHub Pre-Releases" src="https://img.shields.io/github/downloads-pre/laicure/hostsy/Beta/total.svg"></a>
 <a href="https://github.com/Laicure/HostsY/commits/Experimental"><img alt="GitHub last commit (branch)" src="https://img.shields.io/github/last-commit/laicure/hostsy/Experimental.svg"></img></a>
 <a href="https://github.com/Laicure/HostsY"><img src="https://img.shields.io/github/repo-size/Laicure/HostsY.svg"></img></a>
 <a href="https://github.com/Laicure/HostsY/blob/Experimental/LICENSE"><img src="https://img.shields.io/github/license/Laicure/HostsY.svg"></img></a>
