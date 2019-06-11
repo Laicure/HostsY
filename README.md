@@ -2,7 +2,7 @@
 
 <img src="https://img.shields.io/github/downloads/laicure/hostsy/total.svg"></img>
 <img src="https://img.shields.io/github/license/laicure/hostsy.svg"></img>
-<img src="https://img.shields.io/github/last-commit/laicure/sqlx.svg"></img>
+<img src="https://img.shields.io/github/last-commit/laicure/hostsy.svg"></img>
 
 Simple hosts file compiler for Windows.
 _Inspired by [Steven Black](https://github.com/StevenBlack)'s [hosts repository](https://github.com/StevenBlack/hosts)._
