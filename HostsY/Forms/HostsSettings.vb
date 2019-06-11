@@ -13,7 +13,7 @@
 		numDomainPerLine.Value = SetDomainPerLine
 		txLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
 
-		lbVersion.Text = "Build Date: " & My.Computer.FileSystem.GetFileInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName).LastWriteTimeUtc.ToString("yyyy-MM-dd HH:mm:ss") & " UTC"
+		lbVersion.Text = "v" & My.Computer.FileSystem.GetFileInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName).LastWriteTimeUtc.ToString("yyyy.MM.dd_HH.mm.ss")
 	End Sub
 
 	Private Sub HostsSettings_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
