@@ -1,6 +1,6 @@
 # HostsY
 
-<a href="https://github.com/Laicure/HostsY/releases/latest"><img alt="GitHub Releases" src="https://img.shields.io/github/downloads/laicure/hostsy/Stable/total.svg"></a>
+<a href="https://github.com/Laicure/HostsY/releases/tag/Stable"><img alt="GitHub Releases" src="https://img.shields.io/github/downloads/laicure/hostsy/Stable/total.svg"></a>
 <a href="https://github.com/Laicure/HostsY/commits/ master"><img alt="GitHub last commit (branch)" src="https://img.shields.io/github/last-commit/laicure/hostsy/master.svg"></img></a>
 <a href="https://github.com/Laicure/HostsY"><img src="https://img.shields.io/github/repo-size/Laicure/HostsY.svg"></img></a>
 <a href="https://github.com/Laicure/HostsY/blob/ master/LICENSE"><img src="https://img.shields.io/github/license/Laicure/HostsY.svg"></img></a>
