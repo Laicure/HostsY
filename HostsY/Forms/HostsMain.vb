@@ -84,7 +84,6 @@ Public Class HostsMain
 		Dim UniHash As New HashSet(Of String)
 
 		'Source data Compile to one
-		Dim UniString As String = ""
 		Dim totalDoms As Long = 0
 		Dim arrTemp() As String = SourceList.ToArray
 		SourceList.Clear()
@@ -92,19 +91,17 @@ Public Class HostsMain
 		For i As Integer = 0 To arrTemp.Count - 1
 			Dim arstring As String = arrTemp(i)
 			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & Logg
+			Dim UniString As String = ""
 			Dim suc As Boolean = False
-			Using clie As New Net.WebClient
-				Try
-					Dim readd As New IO.StreamReader(clie.OpenRead(arstring))
-					Dim SourcedD As String = readd.ReadToEnd
-					UniString = ""
-					UniString += SourcedD & vbCrLf
-					suc = True
-				Catch ex As Exception
-					Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & Logg
-					errCount += 1
-				End Try
-			End Using
+			Try
+				Using clie As New Net.WebClient, readd As New IO.StreamReader(clie.OpenRead(arstring))
+					UniString = readd.ReadToEnd
+				End Using
+				suc = True
+			Catch ex As Exception
+				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & Logg
+				errCount += 1
+			End Try
 			If suc Then
 				'### Clean Source data
 				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & Logg
@@ -402,7 +399,6 @@ Public Class HostsMain
 		Dim UniHash As New HashSet(Of String)
 
 		'Source data Compile to one
-		Dim UniString As String = ""
 		Dim totalDoms As Long = 0
 		Dim arrTemp() As String = SourceList.ToArray
 		SourceList.Clear()
@@ -431,19 +427,17 @@ Public Class HostsMain
 				End If
 			Else
 				txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & txLogs.Text, MethodInvoker))
+				Dim UniString As String = ""
 				Dim suc As Boolean = False
-				Using clie As New Net.WebClient
-					Try
-						Dim readd As New IO.StreamReader(clie.OpenRead(arstring))
-						Dim SourcedD As String = readd.ReadToEnd
-						UniString = ""
-						UniString += SourcedD & vbCrLf
-						suc = True
-					Catch ex As Exception
-						txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & txLogs.Text, MethodInvoker))
-						errCount += 1
-					End Try
-				End Using
+				Try
+					Using clie As New Net.WebClient, readd As New IO.StreamReader(clie.OpenRead(arstring))
+						UniString = readd.ReadToEnd
+					End Using
+					suc = True
+				Catch ex As Exception
+					txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & txLogs.Text, MethodInvoker))
+					errCount += 1
+				End Try
 				If suc Then
 					'### Clean Source data
 					txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & txLogs.Text, MethodInvoker))

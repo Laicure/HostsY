@@ -176,7 +176,6 @@ Partial Class HostsMain
 		Me.txLogs.Name = "txLogs"
 		Me.txLogs.ReadOnly = True
 		Me.txLogs.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-		Me.txLogs.ShortcutsEnabled = False
 		Me.txLogs.Size = New System.Drawing.Size(337, 396)
 		Me.txLogs.TabIndex = 5
 		Me.txLogs.TabStop = False
