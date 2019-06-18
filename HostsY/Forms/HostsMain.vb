@@ -94,8 +94,8 @@ Public Class HostsMain
 			Dim UniString As String = ""
 			Dim suc As Boolean = False
 			Try
-				Using clie As New Net.WebClient, readd As New IO.StreamReader(clie.OpenRead(arstring))
-					UniString = readd.ReadToEnd
+				Using clie As New Net.WebClient
+					UniString = clie.DownloadString(arstring)
 				End Using
 				suc = True
 			Catch ex As Exception
@@ -430,8 +430,8 @@ Public Class HostsMain
 				Dim UniString As String = ""
 				Dim suc As Boolean = False
 				Try
-					Using clie As New Net.WebClient, readd As New IO.StreamReader(clie.OpenRead(arstring))
-						UniString = readd.ReadToEnd
+					Using clie As New Net.WebClient
+						UniString = clie.DownloadString(arstring)
 					End Using
 					suc = True
 				Catch ex As Exception
