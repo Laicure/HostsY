@@ -95,6 +95,7 @@ Public Class HostsMain
 			Dim suc As Boolean = False
 			Try
 				Using clie As New Net.WebClient
+					clie.UseDefaultCredentials = True
 					UniString = clie.DownloadString(arstring)
 				End Using
 				suc = True
@@ -431,6 +432,7 @@ Public Class HostsMain
 				Dim suc As Boolean = False
 				Try
 					Using clie As New Net.WebClient
+						clie.UseDefaultCredentials = True
 						UniString = clie.DownloadString(arstring)
 					End Using
 					suc = True
