@@ -244,7 +244,7 @@ Public Class HostsMain
 
 		With FinalList
 			.Add("# Entries: " & GeneratedCount)
-			.Add("# As of " & DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
+			.Add("# As of " & DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using github.com/Laicure/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
@@ -361,8 +361,8 @@ Public Class HostsMain
 
 		txLogs.Invoke(DirectCast(
 					   Sub()
-						   txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
-						   txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & txLogs.Text
+						   txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
+						   txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & txLogs.Text
 					   End Sub, MethodInvoker))
 		'Download and Validate Source List
 		Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
@@ -371,7 +371,7 @@ Public Class HostsMain
 
 		If SourceList.Count = 0 Then
 			LbSource.Invoke(DirectCast(Sub() LbSource.Text = "Sources", MethodInvoker))
-			txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & txLogs.Text, MethodInvoker))
+			txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & txLogs.Text, MethodInvoker))
 			Exit Sub
 		End If
 
@@ -380,7 +380,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Whitelist" & vbCrLf & txLogs.Text, MethodInvoker))
+		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Validating Whitelist" & vbCrLf & txLogs.Text, MethodInvoker))
 		'Validate whitelist
 		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not IsLoopback(x)))
 		LbWhites.Invoke(DirectCast(Sub() LbWhites.Text = "Whitelist [" & WhiteList.Count & "]", MethodInvoker))
@@ -391,7 +391,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & txLogs.Text, MethodInvoker))
+		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & txLogs.Text, MethodInvoker))
 		'Validate and match blacklist
 		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost.ToLower.Trim).Where(Function(x) Not IsLoopback(x)))
 		LbBlacks.Invoke(DirectCast(Sub() LbBlacks.Text = "Blacklist [" & BlackList.Count & "]", MethodInvoker))
@@ -419,7 +419,7 @@ Public Class HostsMain
 			Dim arstring As String = arrTemp(i)
 			'use cache instead of reading again
 			If SetUseCache AndAlso sourceCacheList.Any(Function(x) x.URL = arstring) Then
-				txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Reading saved cache of " & arstring & "..." & vbCrLf & txLogs.Text, MethodInvoker))
+				txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Reading saved cache of " & arstring & "..." & vbCrLf & txLogs.Text, MethodInvoker))
 
 				Dim SourceHash As New HashSet(Of String)(sourceCacheList.Where(Function(x) x.URL = arstring).Select(Function(x) x.Domains).FirstOrDefault.Split({vbCr, vbLf, vbCrLf}, StringSplitOptions.RemoveEmptyEntries))
 
@@ -433,7 +433,7 @@ Public Class HostsMain
 					UniHash.UnionWith(SourceHash)
 				End If
 			Else
-				txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & txLogs.Text, MethodInvoker))
+				txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & txLogs.Text, MethodInvoker))
 				Dim UniString As String = ""
 				Dim suc As Boolean = False
 				Try
@@ -443,12 +443,12 @@ Public Class HostsMain
 					End Using
 					suc = True
 				Catch ex As Exception
-					txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & txLogs.Text, MethodInvoker))
+					txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & txLogs.Text, MethodInvoker))
 					errCount += 1
 				End Try
 				If suc Then
 					'### Clean Source data
-					txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & txLogs.Text, MethodInvoker))
+					txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & txLogs.Text, MethodInvoker))
 
 					'Remove Comments
 					Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")).Where(Function(x) Not String.IsNullOrEmpty(x.Trim)))
@@ -484,13 +484,13 @@ Public Class HostsMain
 						If Not urxError Then
 							Dim SafeHost As String = urx.DnsSafeHost.ToLower.Trim
 							If IsIPAddress(SafeHost) Then
-								If SetParseErrors Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & txLogs.Text, MethodInvoker))
+								If SetParseErrors Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & txLogs.Text, MethodInvoker))
 								errCount += 1
 							Else
 								If Not String.IsNullOrEmpty(SafeHost) Then SourceHash.Add(SafeHost)
 							End If
 						Else
-							If SetParseErrors Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & txLogs.Text, MethodInvoker))
+							If SetParseErrors Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & txLogs.Text, MethodInvoker))
 							errCount += 1
 						End If
 					Next
@@ -527,7 +527,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & txLogs.Text, MethodInvoker))
+		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & txLogs.Text, MethodInvoker))
 
 		'remove blacklisted from whitelist
 		With WhiteList
@@ -562,7 +562,7 @@ Public Class HostsMain
 
 		Dim tabSpace As String = IIf(SetTabs, vbTab, " ").ToString
 
-		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] " & "Adding Target IP" & vbCrLf & txLogs.Text, MethodInvoker))
+		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] " & "Adding Target IP" & vbCrLf & txLogs.Text, MethodInvoker))
 		'finalize unified data (add target IP and comment/remove items from WhiteList)
 		Dim uniCount As Integer = UniHash.Count
 		Dim TargetIP As String = SetTargetIP
@@ -605,7 +605,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & txLogs.Text, MethodInvoker))
+		txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & txLogs.Text, MethodInvoker))
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
 
@@ -613,7 +613,7 @@ Public Class HostsMain
 
 		With FinalList
 			.Add("# Entries: " & GeneratedCount)
-			.Add("# As of " & DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture))
+			.Add("# As of " & DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture))
 			.Add("# Generated using github.com/Laicure/HostsY")
 			.Add("")
 			.Add("# Sources [" & SourceList.Count.ToString("#,0") & " @ " & totalDoms.ToString("#,0") & "]")
@@ -640,7 +640,7 @@ Public Class HostsMain
 			Exit Sub
 		End If
 
-		If errCount > 0 Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & txLogs.Text, MethodInvoker))
+		If errCount > 0 Then txLogs.Invoke(DirectCast(Sub() txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & txLogs.Text, MethodInvoker))
 
 		Generated = String.Join(vbCrLf, FinalList).Trim
 	End Sub
@@ -655,7 +655,7 @@ Public Class HostsMain
 
 		LbGenerate.Text = "Generate Hosts File"
 		If e.Cancelled Then
-			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Cancelled!" & vbCrLf & txLogs.Text
+			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Cancelled!" & vbCrLf & txLogs.Text
 		Else
 			If String.IsNullOrEmpty(Generated) Then
 				MessageBox.Show("Nothing to generate!", "Nothing!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
@@ -664,7 +664,7 @@ Public Class HostsMain
 				LbSave.Cursor = Cursors.Hand
 				LbSave.Text = "> Save"
 			End If
-			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & txLogs.Text
+			txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & txLogs.Text
 		End If
 
 		txLogs.Text = "~ Took " & Microsoft.VisualBasic.Left(DateTime.UtcNow.Subtract(startExec).ToString, 11) & vbCrLf & txLogs.Text
@@ -694,14 +694,14 @@ Public Class HostsMain
 						My.Computer.FileSystem.WriteAllText(selPathhosts, Generated, False, System.Text.Encoding.Default)
 						succ = True
 					Catch ex As Exception
-						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
+						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
 					End Try
 
 					If succ Then
 						If My.Computer.FileSystem.FileExists(selPathhosts) Then
 							Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
 							LbSave.Text = "> Save [" & sizee & "]"
-							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
+							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
 							'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 							Process.Start("explorer", "/select, " & selPathhosts)
 						End If
@@ -718,14 +718,14 @@ Public Class HostsMain
 					My.Computer.FileSystem.WriteAllText(syshostsPath, Generated, False, System.Text.Encoding.Default)
 					succ = True
 				Catch ex As Exception
-					txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
+					txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
 				End Try
 
 				If succ Then
 					If My.Computer.FileSystem.FileExists(syshostsPath) Then
 						Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(syshostsPath).Length)
 						LbSave.Text = "> Save [" & sizee & "]"
-						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & txLogs.Text
+						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @C:\WINDOWS\system32\drivers\etc (" & sizee & ")" & vbCrLf & txLogs.Text
 
 						'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 						If My.Computer.FileSystem.FileExists(syshostsPath) Then Process.Start("explorer", "/select, C:\WINDOWS\system32\drivers\etc\hosts")
@@ -744,14 +744,14 @@ Public Class HostsMain
 						IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
 						succ = True
 					Catch ex As Exception
-						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
+						txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & txLogs.Text
 					End Try
 
 					If succ Then
 						If My.Computer.FileSystem.FileExists(selPathhosts) Then
 							Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
 							LbSave.Text = "> Save [" & sizee & "]"
-							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
+							txLogs.Text = "[" & DateTime.UtcNow.ToString("HH:mm:ss UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & fdBrowse.SelectedPath & " (" & sizee & ")" & vbCrLf & txLogs.Text
 							'www.vbforfree.com/open-a-folderdirectory-and-selecthighlight-a-specific-file/
 							Process.Start("explorer", "/select, " & selPathhosts)
 						End If
