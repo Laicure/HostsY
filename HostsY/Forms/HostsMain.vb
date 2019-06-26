@@ -8,6 +8,7 @@ Public Class HostsMain
 	Dim startExec As DateTime = DateTime.UtcNow
 	Dim errCount As Long = 0
 	Friend sourceCacheList As New List(Of SourceCache)
+	Dim Logg As New HashSet(Of String)
 
 	Friend Generated As String = ""
 	Dim GeneratedCount As String = ""
@@ -59,24 +60,24 @@ Public Class HostsMain
 
 		startExec = DateTime.UtcNow
 		'Init Logging
-		Dim Logg As String = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Started!"
-		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Sources" & vbCrLf & Logg
+		Logg.Add("Generation Started!")
+		Logg.Add("Validating Sources")
 
 		'Validate Sources
 		Dim SourceList As HashSet(Of String) = New HashSet(Of String)(SourceL.Select(Function(x) x.Replace(vbTab, "").Trim).Where(Function(x) Uri.TryCreate(x, UriKind.Absolute, Nothing)))
 		'Exit if Source is empty
 		If SourceList.Count = 0 Then
-			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] No valid sources listed!" & vbCrLf & Logg
-			If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
+			Logg.Add("No valid sources listed!")
+			If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", String.Join(vbCrLf, Logg), False)
 			Environment.Exit(3)
 			Exit Sub
 		End If
 
-		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Whitelist" & vbCrLf & Logg
+		Logg.Add("Validating Whitelist")
 		'Validate whitelist
 		Dim WhiteList As HashSet(Of String) = New HashSet(Of String)(WhiteL.Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 
-		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Validating Blacklist" & vbCrLf & Logg
+		Logg.Add("Validating Blacklist")
 		'Validate and match blacklist
 		Dim BlackList As HashSet(Of String) = New HashSet(Of String)(BlackL.Select(Function(x) New Uri("http://" & x).DnsSafeHost.ToLower.Trim).Where(Function(x) Not Regex.Match(x, Loopbacks, RegexOptions.IgnoreCase).Success))
 
@@ -90,7 +91,7 @@ Public Class HostsMain
 		SourceList.TrimExcess()
 		For i As Integer = 0 To arrTemp.Count - 1
 			Dim arstring As String = arrTemp(i)
-			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Reading " & arstring & "..." & vbCrLf & Logg
+			Logg.Add("Reading " & arstring & "...")
 			Dim UniString As String = ""
 			Dim suc As Boolean = False
 			Try
@@ -100,12 +101,12 @@ Public Class HostsMain
 				End Using
 				suc = True
 			Catch ex As Exception
-				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & Logg
+				Logg.Add("Error Reading " & arstring & vbCrLf & "> (" & ex.Source & ") " & ex.Message)
 				errCount += 1
 			End Try
 			If suc Then
 				'### Clean Source data
-				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Cleaning Source... (+Retrieving Domain Count)" & vbCrLf & Logg
+				Logg.Add("Cleaning Source...")
 
 				'Remove Comments
 				Dim SourceHash As HashSet(Of String) = New HashSet(Of String)(UniString.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries).Select(Function(x) Regex.Replace(Replace(x, vbTab, " "), " {2,}", " ").Trim).Where(Function(x) Not x.StartsWith("#")).Where(Function(x) Not String.IsNullOrEmpty(x.Trim)))
@@ -140,7 +141,7 @@ Public Class HostsMain
 						Dim SafeHost As String = urx.DnsSafeHost.ToLower.Trim
 						If Not String.IsNullOrEmpty(SafeHost) Then SourceHash.Add(SafeHost)
 					Else
-						Logg = "~ [" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Parse Error: " & arrStr & vbCrLf & Logg
+						Logg.Add("Parse Error: " & arrStr)
 						errCount += 1
 					End If
 				Next
@@ -151,7 +152,7 @@ Public Class HostsMain
 				'show count
 				totalDoms += SourceHash.LongCount
 				Dim domCount As String = SourceHash.LongCount.ToString("#,0")
-				Logg = Replace(Logg, "(+Retrieving Domain Count)", "Got " & domCount & " domains!")
+				Logg.Add("Got " & domCount & " domains!")
 				If Not SourceHash.Count = 0 Then
 					If sortt Then SourceHash = New HashSet(Of String)(SourceHash.OrderBy(Function(x) x))
 					SourceList.Add("[" & domCount & "] " & arstring)
@@ -163,13 +164,13 @@ Public Class HostsMain
 
 		'### if UniHash empty
 		If UniHash.LongCount = 0 Then
-			Logg = "Nothing to Generate!" & vbCrLf & Logg
-			If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
+			Logg.Add("Nothing to Generate!")
+			If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", String.Join(vbCrLf, Logg), False)
 			Environment.Exit(1)
 			Exit Sub
 		End If
 
-		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Merging Lists" & vbCrLf & Logg
+		Logg.Add("Merging Lists")
 
 		'remove blacklisted from whitelist
 		WhiteList.ExceptWith(BlackList)
@@ -194,15 +195,15 @@ Public Class HostsMain
 
 		'### Empty List check
 		If UniHash.LongCount = 0 Then
-			Logg = "Empty Parsed List!" & vbCrLf & Logg
-			If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
+			Logg.Add("Empty Parsed List!")
+			If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", String.Join(vbCrLf, Logg), False)
 			Environment.Exit(1)
 			Exit Sub
 		End If
 
 		Dim tabSpace As String = IIf(tabb, vbTab, " ").ToString
 
-		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Adding Target IP" & vbCrLf & Logg
+		Logg.Add("Adding Target IP")
 
 		'finalize unified data (add target IP and comment/remove items from WhiteList)
 		Dim uniCount As Integer = UniHash.Count
@@ -231,7 +232,7 @@ Public Class HostsMain
 		End If
 		Erase arrTemp
 
-		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Finalizing Output" & vbCrLf & Logg
+		Logg.Add("Finalizing Output")
 		'Append Entry Count and etc~
 		Dim FinalList As New List(Of String)
 
@@ -266,9 +267,9 @@ Public Class HostsMain
 			My.Computer.FileSystem.WriteAllText("C:\Windows\System32\drivers\etc\hosts", String.Join(vbCrLf, FinalList), False)
 			'final Logs
 			Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo("C:\Windows\System32\drivers\etc\hosts").Length)
-			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & "C:\Windows\System32\drivers\etc\hosts" & " (" & sizee & ")" & vbCrLf & Logg
+			Logg.Add("Exported! @" & "C:\Windows\System32\drivers\etc\hosts" & " (" & sizee & ")")
 		Catch ex As Exception
-			Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
+			Logg.Add("Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString)
 		End Try
 
 		'-zip?
@@ -283,18 +284,18 @@ Public Class HostsMain
 				IO.Compression.ZipFile.CreateFromDirectory(tempoPath, selPathhosts, IO.Compression.CompressionLevel.Optimal, False)
 
 				Dim sizee As String = GetFileSize(My.Computer.FileSystem.GetFileInfo(selPathhosts).Length)
-				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Exported! @" & dataSource & " (" & sizee & ")" & vbCrLf & Logg
+				Logg.Add("Exported! @" & dataSource & " (" & sizee & ")")
 			Catch ex As Exception
-				Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString & vbCrLf & Logg
+				Logg.Add("Cannot Export!" & vbCrLf & "> (" & ex.Source & ") " & ex.Message & vbCrLf & IIf(ex.Message.Contains("denied"), "> Run this app as admin!", "").ToString)
 			End Try
 		End If
 
-		If errCount > 0 Then Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] Error Count: " & errCount.ToString("#,0") & vbCrLf & Logg
+		If errCount > 0 Then Logg.Add("Error Count: " & errCount.ToString("#,0"))
 
-		Logg = "[" & DateTime.UtcNow.ToString("HH:mm:ss.ff UTC", Globalization.CultureInfo.InvariantCulture) & "] Generation Ended!" & vbCrLf & Logg
-		If Not GeneratedCount = "" Then Logg = "~ Entries: " & GeneratedCount & vbCrLf & Logg
+		Logg.Add("Generation Ended!")
+		If Not GeneratedCount = "" Then Logg.Add("~ Entries: " & GeneratedCount)
 
-		If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", Logg, False)
+		If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", String.Join(vbCrLf, Logg), False)
 
 		Environment.Exit(0)
 	End Sub
@@ -770,6 +771,10 @@ Public Class HostsMain
 			e.SuppressKeyPress = True
 			txBlacks.SelectAll()
 		End If
+	End Sub
+
+	Private Sub AutoLog(ByVal log As String)
+		Logg.Add("[" & DateTime.UtcNow.ToString("HH:mm:ss.ff", Globalization.CultureInfo.InvariantCulture) & "] " & log)
 	End Sub
 
 End Class
