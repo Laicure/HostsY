@@ -36,6 +36,7 @@ Public Class HostsMain
 		Dim logger As Boolean = argg.Contains("-logs")
 		Dim zipp As Boolean = argg.Contains("-zip")
 		Dim dpl As Boolean = Regex.Match(argg, "(\-dpl)([2-9])").Success
+		GeneratedCount = ""
 
 		'Check Directory
 		If Not My.Computer.FileSystem.DirectoryExists(dataSource) Then My.Computer.FileSystem.CreateDirectory(dataSource)
@@ -345,6 +346,7 @@ Public Class HostsMain
 		errCount = 0
 		Loopbacks = String.Join("|", SetLoopBlacks.Select(Of String)(Function(x) "\b^" & Regex.Escape(x) & "$"))
 		Generated = ""
+		GeneratedCount = ""
 
 		LbGenerate.Text = "Cancel Generation"
 		SourceL = txSources.Text.Split({vbCrLf, vbCr, vbLf}, StringSplitOptions.RemoveEmptyEntries)
@@ -515,6 +517,11 @@ Public Class HostsMain
 		Erase arrTemp
 
 		'### if UniHash empty
+		If UniHash.LongCount = 0 Then
+			txLogs.Invoke(DirectCast(Sub() txLogs.Text = "~ Nothing to Generate" & vbCrLf & txLogs.Text, MethodInvoker))
+			Exit Sub
+		End If
+
 		If bgGenerate.CancellationPending Then
 			e.Cancel = True
 			Exit Sub
