@@ -299,7 +299,7 @@ Public Class HostsMain
 		Logg.Add("Generation Ended!")
 		If Not GeneratedCount = "" Then Logg.Add("~ Entries: " & GeneratedCount)
 
-		If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", String.Join(vbCrLf, Logg), False)
+		If logger Then My.Computer.FileSystem.WriteAllText(dataSource & "\logs.txt", String.Join(vbCrLf, Logg.Reverse), False)
 
 		Environment.Exit(0)
 	End Sub
