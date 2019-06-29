@@ -1,4 +1,5 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System.Net
+Imports System.Text.RegularExpressions
 
 Public Class HostsMain
 	Dim SourceL() As String = {}
@@ -8,7 +9,7 @@ Public Class HostsMain
 	Dim startExec As DateTime = DateTime.UtcNow
 	Dim errCount As Long = 0
 	Friend sourceCacheList As New List(Of SourceCache)
-	Dim Logg As New HashSet(Of String)
+	Private ReadOnly Logg As New HashSet(Of String)
 
 	Friend Generated As String = ""
 	Dim GeneratedCount As String = ""
@@ -16,6 +17,7 @@ Public Class HostsMain
 #Region "Auto"
 
 	Protected Overrides Sub SetVisibleCore(ByVal value As Boolean)
+		ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 Or SecurityProtocolType.Tls Or SecurityProtocolType.Tls11 Or SecurityProtocolType.Tls12
 		If Not Me.IsHandleCreated Then
 			Me.CreateHandle()
 			If Environment.GetCommandLineArgs.LongLength > 1 AndAlso Environment.CommandLine.Contains("-auto") Then
@@ -96,8 +98,7 @@ Public Class HostsMain
 			Dim UniString As String = ""
 			Dim suc As Boolean = False
 			Try
-				Using clie As New Net.WebClient
-					clie.UseDefaultCredentials = True
+				Using clie As New WebClient
 					UniString = clie.DownloadString(arstring)
 				End Using
 				suc = True
@@ -437,7 +438,7 @@ Public Class HostsMain
 				Dim UniString As String = ""
 				Dim suc As Boolean = False
 				Try
-					Using clie As New Net.WebClient
+					Using clie As New WebClient
 						clie.UseDefaultCredentials = True
 						UniString = clie.DownloadString(arstring)
 					End Using
@@ -784,10 +785,6 @@ Public Class HostsMain
 			e.SuppressKeyPress = True
 			txBlacks.SelectAll()
 		End If
-	End Sub
-
-	Private Sub AutoLog(ByVal log As String)
-		Logg.Add("[" & DateTime.UtcNow.ToString("HH:mm:ss", Globalization.CultureInfo.InvariantCulture) & "] " & log)
 	End Sub
 
 	Private Function IsIPAddress(ByVal input As String) As Boolean
