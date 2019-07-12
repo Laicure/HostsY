@@ -11,7 +11,7 @@
 		numDomainPerLine.Value = SetDomainPerLine
 		txLoopbacks.Text = String.Join(vbCrLf, SetLoopBlacks)
 
-		lbVersion.Text = "v" & My.Computer.FileSystem.GetFileInfo(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName).LastWriteTimeUtc.ToString("yyyy.MM.dd_HH.mm.ss")
+		lbVersion.Text = "v" & My.Application.Info.Version.ToString
 	End Sub
 
 	Private Sub HostsSettings_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing

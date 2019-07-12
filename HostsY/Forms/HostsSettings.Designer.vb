@@ -236,7 +236,7 @@ Partial Class HostsSettings
 		Me.lbVersion.Name = "lbVersion"
 		Me.lbVersion.Size = New System.Drawing.Size(206, 17)
 		Me.lbVersion.TabIndex = 36
-		Me.lbVersion.Text = "<build date>"
+		Me.lbVersion.Text = "<version>"
 		Me.lbVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
 		'
 		'lbParameters
