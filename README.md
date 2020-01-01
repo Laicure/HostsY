@@ -8,7 +8,7 @@
 Simple hosts file compiler for Windows.
 _Inspired by [Steven Black](https://github.com/StevenBlack)'s [hosts repository](https://github.com/StevenBlack/hosts)._
 
-##### C# version in [HostsZ](https://github.com/Laicure/HostsZ)
+##### Revamped C# version in [HostsZ](https://github.com/Laicure/HostsZ)
 
 ###### Minimum Requirement: [.NET v4.5](https://www.microsoft.com/en/download/details.aspx?id=30653)
 ---------
